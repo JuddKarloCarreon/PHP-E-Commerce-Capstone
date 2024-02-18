@@ -1,0 +1,1134 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+@font-face {
+  font-family: roboto_light;
+  src: url("../../fonts/Roboto-Light.ttf");
+}
+@font-face {
+  font-family: roboto_regular;
+  src: url("../../fonts/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: roboto_medium;
+  src: url("../../fonts/Roboto-Medium.ttf");
+}
+@font-face {
+  font-family: roboto_bold;
+  src: url("../../fonts/Roboto-Bold.ttf");
+}
+@font-face {
+  font-family: roboto_black;
+  src: url("../../fonts/Roboto-BLack.ttf");
+}
+@font-face {
+  font-family: proxima_nova_regular;
+  src: url("../../fonts/ProximaNova-Regular.otf");
+}
+@font-face {
+  font-family: proxima_nova_black;
+  src: url("../../fonts/Proxima Nova Black.otf");
+}
+@font-face {
+  font-family: proxima_nova_bold;
+  src: url("../../fonts/Proxima Nova Bold.otf");
+}
+@font-face {
+  font-family: proxima_nova_extra_bold;
+  src: url("../../fonts/Proxima Nova Extrabold.otf");
+}
+@font-face {
+  font-family: proxima_nova_thin;
+  src: url("../../fonts/Proxima Nova Thin.otf");
+}
+@font-face {
+  font-family: proxima_nova_thin;
+  src: url("../../fonts/Proxima Nova Thin.otf");
+}
+body {
+  background-color: #212332;
+}
+body .wrapper {
+  display: table;
+  width: 100%;
+}
+body .wrapper aside {
+  background-color: #2A2D3E;
+  height: 100vh;
+  position: fixed;
+  text-align: left;
+  vertical-align: top;
+  width: 269px;
+  z-index: 2;
+}
+body .wrapper aside > a {
+  display: inline-block;
+  height: 80px;
+  vertical-align: top;
+  width: 100%;
+  border-bottom: 1px solid #3D4054;
+  padding-left: 30px;
+}
+body .wrapper aside > a img {
+  margin-top: 19px;
+}
+body .wrapper aside ul {
+  margin-top: 44px;
+  padding: 0px 30px 0px 0px;
+}
+body .wrapper aside ul li a {
+  background-position: -65px 0px;
+  border-radius: 0px 20px 20px 0px;
+  display: inline-block;
+  height: 65px;
+  vertical-align: top;
+  width: 100%;
+  font: 16px/19px proxima_nova_regular, sans-serif;
+  color: #C3C5D5;
+  text-decoration: none;
+  padding: 24px 30px;
+}
+body .wrapper aside ul li a::before {
+  width: 21px;
+  height: 21px;
+  content: "";
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 20px;
+  background-image: url("../../images/product_icon.svg");
+  background-position: 80% 50%;
+  opacity: 0.3;
+}
+body .wrapper aside ul li.active a {
+  background-color: #413F65;
+  background-position: 0px 0px;
+  font: 16px/19px proxima_nova_bold, sans-serif;
+  color: #FFFFFF;
+}
+body .wrapper aside ul li.active a::before {
+  background-position: 21% 50%;
+  opacity: 1;
+}
+body .wrapper header {
+  background-color: #000000;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.03);
+  display: block;
+  height: 155px;
+  padding: 18px 60px 18px 330px;
+  position: fixed;
+  text-align: left;
+  width: 100%;
+  z-index: 2;
+  background-image: url("../../images/vegetable_bg_2.png");
+  background-size: cover;
+}
+body .wrapper header h1 {
+  color: #ADA9C0;
+  display: inline-block;
+  font: 14px/23px proxima_nova_regular, sans-serif;
+  margin-top: 8px;
+}
+body .wrapper header h1::before {
+  background-image: url("../../images/leaf.svg");
+  content: "";
+  display: inline-block;
+  height: 23px;
+  margin-right: 15px;
+  vertical-align: top;
+  width: 25px;
+}
+body .wrapper header h2 {
+  font: 36px/44px proxima_nova_bold;
+  color: #fff;
+  margin-top: 8px;
+}
+body .wrapper header div {
+  position: absolute;
+  right: 90px;
+  top: 17px;
+}
+body .wrapper header div button {
+  border-radius: 10px;
+  border: none;
+  font: 16px/42px roboto, sans-serif;
+  height: 45px;
+  transition: 0.21s;
+  width: 95px;
+}
+body .wrapper header div button:hover {
+  opacity: 0.8;
+}
+body .wrapper header div button.signup_btn {
+  border: 1px solid #9C89FF;
+  color: #9C89FF;
+  margin-right: 5px;
+  background-color: #fff;
+}
+body .wrapper header div button.login_btn {
+  background-color: #9C89FF;
+  color: #fff;
+}
+body .wrapper header div a.switch {
+  width: 154px;
+  color: #fff;
+  border: 1px solid #9C89FF;
+  background-color: transparent;
+  font: 14px/17px proxima_nova_regular, sans-serif;
+  margin-right: 15px;
+  padding: 15px;
+  border-radius: 10px;
+}
+body .wrapper header div a.switch:hover {
+  color: #9C89FF;
+  background-color: #fff;
+  opacity: 1;
+}
+body .wrapper header div button.profile {
+  border: none;
+  width: auto;
+  border-radius: 0px;
+  background-color: transparent;
+}
+body .wrapper header div button.profile img {
+  border-radius: 50%;
+}
+body .wrapper > section {
+  padding: 128px 60px 0px 330px;
+  position: relative;
+}
+body .wrapper > section .search_form {
+  border-right: 1px solid #C0CDDA;
+  display: inline-block;
+  margin-bottom: 47px;
+  margin-right: 26px;
+  padding-right: 30px;
+  vertical-align: top;
+  position: sticky;
+  top: 70px;
+  z-index: 3;
+}
+body .wrapper > section .search_form::after {
+  width: 21px;
+  height: 21px;
+  content: "";
+  background-image: url("../../images/search.svg");
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  top: 16px;
+  right: 47px;
+}
+body .wrapper > section .search_form input {
+  background-color: #413F65;
+  border-radius: 10px;
+  border: none;
+  height: 55px;
+  padding: 0px 22px;
+  width: 440px;
+  font: 16px/19px proxima_nova_regular, sans-serif;
+  color: #C3C5D5;
+}
+body .wrapper > section .search_form input::placeholder {
+  color: #A1A1A1;
+}
+body .wrapper > section .add_product {
+  background-color: #9C89FF;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  display: inline-block;
+  font: 16px/16px proxima_nova_regular, sans-serif;
+  height: 55px;
+  transition: 0.21s;
+  vertical-align: top;
+  width: 176px;
+  position: sticky;
+  top: 70px;
+  z-index: 3;
+}
+body .wrapper > section .add_product:hover {
+  opacity: 0.8;
+}
+body .wrapper > section .add_product::before {
+  background-image: url("../../images/plus.svg");
+  content: "";
+  display: inline-block;
+  height: 14px;
+  margin: 0px 10px 0px 0px;
+  vertical-align: top;
+  width: 14px;
+}
+body .wrapper > section .status_form,
+body .wrapper > section .categories_form {
+  display: inline-block;
+  position: fixed;
+  top: 230px;
+  vertical-align: top;
+  left: 329px;
+  width: 117px;
+}
+body .wrapper > section .status_form h3,
+body .wrapper > section .categories_form h3 {
+  color: #fff;
+  font: 18px/22px proxima_nova_bold, sans-serif;
+  margin-bottom: 23px;
+}
+body .wrapper > section .status_form ul,
+body .wrapper > section .categories_form ul {
+  list-style: none;
+}
+body .wrapper > section .status_form ul li button,
+body .wrapper > section .categories_form ul li button {
+  background-color: #2C2F41;
+  border-radius: 15px;
+  border: 2px solid #2C2F41;
+  height: 90px;
+  margin-bottom: 8px;
+  position: relative;
+  transition: 0.21s;
+  width: 90px;
+}
+body .wrapper > section .status_form ul li button.active,
+body .wrapper > section .categories_form ul li button.active {
+  border: 2px solid #7971D9;
+}
+body .wrapper > section .status_form ul li button span,
+body .wrapper > section .categories_form ul li button span {
+  background-color: #3C4269;
+  border-radius: 50%;
+  color: #9987FA;
+  display: inline-block;
+  font: 12px/15px proxima_nova_bold, sans-serif;
+  height: 22px;
+  min-width: 22px;
+  padding: 4px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  vertical-align: top;
+}
+body .wrapper > section .status_form ul li button h4,
+body .wrapper > section .categories_form ul li button h4 {
+  color: #8F99D3;
+  font: 11px/14px proxima_nova_reglar, sans-serif;
+}
+body .wrapper > section .status_form ul li button:hover,
+body .wrapper > section .categories_form ul li button:hover {
+  box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.38);
+  opacity: 0.6;
+}
+body .wrapper > section .status_form ul li button img,
+body .wrapper > section .categories_form ul li button img {
+  margin-bottom: 4px;
+  margin-top: 14px;
+  width: 41px;
+  height: 41px;
+  object-fit: cover;
+}
+body .wrapper > section .product_content > div {
+  padding-left: 195px;
+}
+body .wrapper > section .product_content > div h3 {
+  color: #fff;
+  font: 18px/22px proxima_nova_bold, sans-serif;
+  margin-bottom: 23px;
+}
+body .wrapper > section .product_content > div table {
+  width: 100%;
+}
+body .wrapper > section .product_content > div table thead tr th {
+  color: #656882;
+  font: 14px/17px roboto_regular, sans-serif;
+  text-align: center;
+  padding-bottom: 0px;
+}
+body .wrapper > section .product_content > div table thead tr th:nth-child(3) {
+  text-align: left;
+  padding: 0px 0px 16px 20px;
+}
+body .wrapper > section .product_content > div table thead tr th:nth-child(5) {
+  text-align: left;
+  padding: 0px 0px 16px 20px;
+}
+body .wrapper > section .product_content > div table tbody tr td {
+  text-align: center;
+}
+body .wrapper > section .product_content > div table tbody tr td > span {
+  background-color: #2A2D3E;
+  display: block;
+  height: 79px;
+  margin-bottom: 10px;
+  color: #fff;
+  padding: 32px 20px;
+}
+body .wrapper > section .product_content > div table tbody tr td form {
+  background-color: #2A2D3E;
+  display: inline-block;
+  height: 79px;
+  vertical-align: top;
+  width: 100%;
+  margin-top: -10px;
+}
+body .wrapper > section .product_content > div table tbody tr td:first-child > span {
+  border-radius: 20px 0px 0px 20px;
+  font: 16px/17px roboto_bold, sans-serif;
+}
+body .wrapper > section .product_content > div table tbody tr td:nth-child(2) > span {
+  font: 14px/17px roboto_regular, sans-serif;
+  color: #7E808E;
+}
+body .wrapper > section .product_content > div table tbody tr td:nth-child(3) > span {
+  font: 14px/17px roboto_regular, sans-serif;
+  color: #fff;
+  text-align: left;
+  padding: 25px 20px;
+}
+body .wrapper > section .product_content > div table tbody tr td:nth-child(3) > span span {
+  font: 12px/17px roboto_regular, sans-serif;
+  color: #7E808E;
+  display: block;
+}
+body .wrapper > section .product_content > div table tbody tr td:nth-child(4) > span {
+  border-left: 1px solid #45495D;
+  padding: 29px 20px;
+}
+body .wrapper > section .product_content > div table tbody tr td:last-child {
+  width: 225px;
+}
+body .wrapper > section .product_content > div table tbody tr td:last-child form {
+  border-radius: 0px 20px 20px 0px;
+  padding: 20px 0px;
+}
+body .wrapper > section .product_content > div table tbody tr td:last-child form .bootstrap-select .dropdown-toggle {
+  background-color: #2A2D3E;
+  border: 1px solid #EDC679;
+  border-radius: 10px;
+  width: 174px;
+}
+body .wrapper > section .product_content > div table tbody tr td:last-child form .bootstrap-select .dropdown-toggle::after {
+  border-top: 0.3em solid #fff;
+}
+body .wrapper > section .product_content > div table tbody tr td:last-child form .bootstrap-select .dropdown-toggle .filter-option .filter-option-inner .filter-option-inner-inner {
+  color: #fff;
+  font: 14px/14px proxima_nova_regular, sans-serif;
+  margin: 6px 0px;
+}
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(1) {
+  text-align: left;
+}
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(2),
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(3),
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(4),
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(5),
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(6) {
+  width: 10%;
+  text-align: center;
+  padding: 0px 0px 16px 0px;
+}
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(2) span,
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(3) span,
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(4) span,
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(5) span,
+body .wrapper > section .product_content > div .products_table thead tr th:nth-child(6) span {
+  text-align: center;
+}
+body .wrapper > section .product_content > div .products_table tbody tr {
+  transition: 0.41s;
+}
+body .wrapper > section .product_content > div .products_table tbody tr.no_data td span {
+  width: 100%;
+  text-align: left;
+  padding: 31px 40px !important;
+  border: none !important;
+  font: 13px/17px roboto_regular, sans-serif;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(1) {
+  text-align: left;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(1) span {
+  padding: 0px;
+  border-right: 1px solid #45495D;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(1) span img {
+  width: 79px;
+  height: 79px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-right: 30px;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(3) span {
+  padding: 32px 20px;
+  text-align: center;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(4) span,
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(5) span,
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(6) span {
+  font: 14px/17px roboto_regular, sans-serif;
+  color: #7E808E;
+  text-align: center;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(4) span {
+  border: none;
+  padding: 32px 20px;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child {
+  text-align: right;
+  width: 190px;
+  position: relative;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child form {
+  padding: 0px;
+  border-left: 1px solid #45495D;
+  border-radius: 0px 20px 20px 0px;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child form .edit_product {
+  width: 90px;
+  height: 40px;
+  background-color: #373A4B;
+  border-radius: 10px;
+  border: none;
+  color: #CAC0FF;
+  font: 15px/17px roboto_regular, sans-serif;
+  transition: .21s;
+  display: inline-block;
+  vertical-align: top;
+  margin: 19px 10px 0px 0px;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child form .edit_product:hover {
+  background-color: #9C89FF;
+  color: #fff;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child form .delete_product {
+  width: 55px;
+  height: 79px;
+  border: none;
+  background-image: url("../../images/close_2.svg");
+  background-color: transparent;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child form .delete_product:hover {
+  background-position-x: -55px;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child .delete_product_form {
+  position: absolute;
+  width: 316px;
+  height: 119px;
+  background-color: #fff;
+  top: -9px;
+  right: 0px;
+  z-index: -1;
+  border-radius: 20px;
+  box-shadow: 0px 4.37332px 21.8666px rgba(0, 0, 0, 0.07);
+  padding: 24px;
+  transition: 0.41s;
+  opacity: 0;
+  display: inline-block;
+  text-align: left;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child .delete_product_form p {
+  font: 14px/20px roboto_regular, sans-serif;
+  color: #B8B8B8;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child .delete_product_form button {
+  width: 80px;
+  height: 34px;
+  font: 14px/17px roboto_regular, sans-serif;
+  border: 1px solid #E6F0F9;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #A1A1A1;
+}
+body .wrapper > section .product_content > div .products_table tbody tr td:last-child .delete_product_form button[type=submit] {
+  border-color: #E98D8D;
+  color: #E98D8D;
+}
+body .wrapper > section .product_content > div .products_table tbody tr.show_delete {
+  position: relative;
+  z-index: 101;
+}
+body .wrapper > section .product_content > div .products_table tbody tr.show_delete td:last-child form {
+  opacity: 1;
+  z-index: 2;
+  right: 53px;
+}
+body .wrapper > section > div {
+  padding-left: 195px;
+}
+body .wrapper > section > div h3 {
+  color: #fff;
+  font: 18px/22px proxima_nova_bold, sans-serif;
+  margin-bottom: 23px;
+}
+body .wrapper > section > div table {
+  width: 100%;
+}
+body .wrapper > section > div table thead tr th {
+  color: #656882;
+  font: 14px/17px roboto_regular, sans-serif;
+  text-align: center;
+  padding-bottom: 16px;
+}
+body .wrapper > section > div table thead tr th:nth-child(3) {
+  text-align: left;
+  padding: 0px 0px 16px 20px;
+}
+body .wrapper > section > div table thead tr th:nth-child(5) {
+  text-align: left;
+  padding: 0px 0px 16px 20px;
+}
+body .wrapper > section > div table tbody tr td {
+  text-align: center;
+}
+body .wrapper > section > div table tbody tr td > span {
+  background-color: #2A2D3E;
+  display: block;
+  height: 79px;
+  margin-bottom: 10px;
+  color: #fff;
+  padding: 32px 20px;
+}
+body .wrapper > section > div table tbody tr td form {
+  background-color: #2A2D3E;
+  display: inline-block;
+  height: 79px;
+  vertical-align: top;
+  width: 100%;
+  margin-top: -10px;
+}
+body .wrapper > section > div table tbody tr td:first-child > span {
+  border-radius: 20px 0px 0px 20px;
+  font: 16px/17px roboto_bold, sans-serif;
+}
+body .wrapper > section > div table tbody tr td:nth-child(2) > span {
+  font: 14px/17px roboto_regular, sans-serif;
+  color: #7E808E;
+}
+body .wrapper > section > div table tbody tr td:nth-child(3) > span {
+  font: 14px/17px roboto_regular, sans-serif;
+  color: #fff;
+  text-align: left;
+  padding: 25px 20px;
+}
+body .wrapper > section > div table tbody tr td:nth-child(3) > span span {
+  font: 12px/17px roboto_regular, sans-serif;
+  color: #7E808E;
+  display: block;
+}
+body .wrapper > section > div table tbody tr td:nth-child(4) > span {
+  border-left: 1px solid #45495D;
+  padding: 29px 20px;
+}
+body .wrapper > section > div table tbody tr td:last-child {
+  width: 225px;
+}
+body .wrapper > section > div table tbody tr td:last-child form {
+  border-radius: 0px 20px 20px 0px;
+  padding: 20px 0px;
+}
+body .wrapper > section > div table tbody tr td:last-child form .bootstrap-select .dropdown-toggle {
+  background-color: #2A2D3E;
+  border: 1px solid #EDC679;
+  border-radius: 10px;
+  width: 174px;
+}
+body .wrapper > section > div table tbody tr td:last-child form .bootstrap-select .dropdown-toggle::after {
+  border-top: 0.3em solid #fff;
+}
+body .wrapper > section > div table tbody tr td:last-child form .bootstrap-select .dropdown-toggle .filter-option .filter-option-inner .filter-option-inner-inner {
+  color: #fff;
+  font: 14px/14px proxima_nova_regular, sans-serif;
+  margin: 6px 0px;
+}
+body .wrapper > section > div .products_table thead tr th:nth-child(1) {
+  text-align: left;
+}
+body .wrapper > section > div .products_table thead tr th:nth-child(2),
+body .wrapper > section > div .products_table thead tr th:nth-child(3),
+body .wrapper > section > div .products_table thead tr th:nth-child(4),
+body .wrapper > section > div .products_table thead tr th:nth-child(5),
+body .wrapper > section > div .products_table thead tr th:nth-child(6) {
+  width: 10%;
+  text-align: center;
+  padding: 0px 0px 16px 0px;
+}
+body .wrapper > section > div .products_table thead tr th:nth-child(2) span,
+body .wrapper > section > div .products_table thead tr th:nth-child(3) span,
+body .wrapper > section > div .products_table thead tr th:nth-child(4) span,
+body .wrapper > section > div .products_table thead tr th:nth-child(5) span,
+body .wrapper > section > div .products_table thead tr th:nth-child(6) span {
+  text-align: center;
+}
+body .wrapper > section > div .products_table tbody tr {
+  transition: 0.41s;
+}
+body .wrapper > section > div .products_table tbody tr.no_data td span {
+  width: 100%;
+  text-align: left;
+  padding: 31px 40px !important;
+  border: none !important;
+  font: 13px/17px roboto_regular, sans-serif;
+}
+body .wrapper > section > div .products_table tbody tr td:nth-child(1) {
+  text-align: left;
+}
+body .wrapper > section > div .products_table tbody tr td:nth-child(1) span {
+  padding: 0px;
+  border-right: 1px solid #45495D;
+}
+body .wrapper > section > div .products_table tbody tr td:nth-child(1) span img {
+  width: 79px;
+  height: 79px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-right: 30px;
+}
+body .wrapper > section > div .products_table tbody tr td:nth-child(3) span {
+  padding: 32px 20px;
+  text-align: center;
+}
+body .wrapper > section > div .products_table tbody tr td:nth-child(4) span,
+body .wrapper > section > div .products_table tbody tr td:nth-child(5) span,
+body .wrapper > section > div .products_table tbody tr td:nth-child(6) span {
+  font: 14px/17px roboto_regular, sans-serif;
+  color: #7E808E;
+  text-align: center;
+}
+body .wrapper > section > div .products_table tbody tr td:nth-child(4) span {
+  border: none;
+  padding: 32px 20px;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child {
+  text-align: right;
+  width: 190px;
+  position: relative;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child form {
+  padding: 0px;
+  border-left: 1px solid #45495D;
+  border-radius: 0px 20px 20px 0px;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child form .edit_product {
+  width: 90px;
+  height: 40px;
+  background-color: #373A4B;
+  border-radius: 10px;
+  border: none;
+  color: #CAC0FF;
+  font: 15px/17px roboto_regular, sans-serif;
+  transition: .21s;
+  display: inline-block;
+  vertical-align: top;
+  margin: 19px 10px 0px 0px;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child form .edit_product:hover {
+  background-color: #9C89FF;
+  color: #fff;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child form .delete_product {
+  width: 55px;
+  height: 79px;
+  border: none;
+  background-image: url("../../images/close_2.svg");
+  background-color: transparent;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child form .delete_product:hover {
+  background-position-x: -55px;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child .delete_product_form {
+  position: absolute;
+  width: 316px;
+  height: 119px;
+  background-color: #fff;
+  top: -9px;
+  right: 0px;
+  z-index: -1;
+  border-radius: 20px;
+  box-shadow: 0px 4.37332px 21.8666px rgba(0, 0, 0, 0.07);
+  padding: 24px;
+  transition: 0.41s;
+  opacity: 0;
+  display: inline-block;
+  text-align: left;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child .delete_product_form p {
+  font: 14px/20px roboto_regular, sans-serif;
+  color: #B8B8B8;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child .delete_product_form button {
+  width: 80px;
+  height: 34px;
+  font: 14px/17px roboto_regular, sans-serif;
+  border: 1px solid #E6F0F9;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #A1A1A1;
+}
+body .wrapper > section > div .products_table tbody tr td:last-child .delete_product_form button[type=submit] {
+  border-color: #E98D8D;
+  color: #E98D8D;
+}
+body .wrapper > section > div .products_table tbody tr.show_delete {
+  position: relative;
+  z-index: 101;
+}
+body .wrapper > section > div .products_table tbody tr.show_delete td:last-child form {
+  opacity: 1;
+  z-index: 2;
+  right: 53px;
+}
+body .wrapper > section .order_preview {
+  color: #fff;
+}
+body .wrapper > section .order_preview h1 {
+  margin: 80px 0px 60px 0px;
+}
+body .wrapper > section .order_preview h3 span {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+  width: 80px;
+  color: #7E808E;
+}
+body .wrapper > section .order_preview label {
+  margin-right: 20px;
+}
+body .wrapper > section .order_preview table {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+body .wrapper > section .order_preview table thead tr {
+  border-bottom: 1px solid #45495D;
+}
+body .wrapper > section .order_preview table thead tr th {
+  text-align: center !important;
+}
+body .wrapper > section .order_preview table tbody tr td {
+  border-bottom: 1px solid #45495D;
+  height: 70px;
+  color: #fff;
+  text-align: center !important;
+}
+body .wrapper > section .order_preview .amount {
+  background-color: #2A2D3E;
+  border-radius: 20px;
+  padding: 40px;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 50px;
+}
+body .wrapper > section .order_preview .amount h4 {
+  font-size: 20px;
+}
+body .wrapper > section .order_preview .amount h4 span {
+  font-size: 14px;
+  display: inline-block;
+  margin-right: 20px;
+  color: #7E808E;
+}
+body .popover_overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #696596;
+  z-index: 100;
+  opacity: 0.7;
+  display: none;
+}
+body .form_modal .modal-dialog {
+  max-width: 714px;
+}
+body .form_modal .modal-dialog .modal-content {
+  text-align: right;
+  position: relative;
+  border-radius: 23px;
+}
+body .form_modal .modal-dialog .modal-content .close_modal {
+  background-color: transparent;
+  background-image: url("../../images/close.svg");
+  border: none;
+  height: 14px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 14px;
+  z-index: 99;
+}
+body .form_modal .modal-dialog .modal-content form {
+  position: relative;
+  text-align: right;
+}
+body .form_modal .modal-dialog .modal-content form h2 {
+  color: #7D7D7D;
+  font: 22px/22px roboto_medium, sans-serif;
+  margin-bottom: 40px;
+  margin-top: 47px;
+  padding-left: 50px;
+  text-align: left;
+}
+body .form_modal .modal-dialog .modal-content form > ul {
+  border-bottom: 1px solid #E2E2E2;
+  margin-bottom: 33px;
+  padding: 0px 40px;
+  padding-bottom: 45px;
+  text-align: left;
+  list-style: none;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li {
+  position: relative;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(4),
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(5) {
+  display: inline-block;
+  vertical-align: top;
+  width: 124px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(4) {
+  margin-right: 13px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(3) {
+  display: inline-block;
+  vertical-align: top;
+  width: 349px;
+  margin-right: 13px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(3) .bootstrap-select {
+  width: 100%;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(3) .bootstrap-select .dropdown-toggle {
+  height: 50px;
+  border: 1px solid #C1B5FF;
+  border-radius: 7px;
+  background-color: #fff;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(3) .bootstrap-select .dropdown-toggle .filter-option .filter-option-inner .filter-option-inner-inner {
+  padding-top: 5px;
+  padding-left: 10px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(3) label {
+  top: -13px;
+  z-index: 1234;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) label {
+  position: static;
+  display: block;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) label span {
+  color: #F84F4F;
+  font: 12px/12px proxima_nova_regular, sans-serif;
+  margin-left: 10px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) .upload_image {
+  width: 142px;
+  height: 142px;
+  border: 1px dashed #DAD3FF;
+  border-radius: 10px;
+  background-image: url("../../images/upload_image.svg");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-color: #fff;
+  transition: 0.21s;
+  margin-right: 13px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) .upload_image:hover {
+  background-color: #F3F1FF;
+  border: 1px solid #DAD3FF;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > input {
+  display: none;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul {
+  list-style: none;
+  font-size: 0px;
+  display: inline-block;
+  vertical-align: top;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin-right: 22px;
+  height: 188px;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: 0.21s;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li:last-child {
+  margin-right: 0px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li img {
+  width: 141px;
+  height: 142px;
+  object-fit: cover;
+  border: 1px solid #C1C1C1;
+  border-radius: 10px;
+  display: block;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li .delete_image {
+  width: 25px;
+  height: 25px;
+  background-image: url("../../images/close.svg");
+  border: none;
+  background-color: #fff;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li label {
+  font: 14px/14px proxima_nova_regular, sans-serif;
+  color: #A1A1A1;
+  display: inline-block;
+  vertical-align: top;
+  padding: 15px 0px 0px 0px;
+  transition: 0.21s;
+  opacity: 0.5;
+  cursor: pointer;
+  width: 100%;
+  height: 46px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li label input {
+  margin-right: 7px;
+  display: inline-block;
+  vertical-align: top;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li:hover {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li:hover label {
+  padding: 15px 0px 0px 15px;
+  opacity: 1;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li > input,
+body .form_modal .modal-dialog .modal-content form > ul > li > textarea {
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #DAD3FF;
+  height: 48px;
+  margin-bottom: 25px;
+  outline: none;
+  padding-left: 13px;
+  transition: 0.1s;
+  width: 100%;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li > input:focus,
+body .form_modal .modal-dialog .modal-content form > ul > li > textarea:focus,
+body .form_modal .modal-dialog .modal-content form > ul > li > input:valid,
+body .form_modal .modal-dialog .modal-content form > ul > li > textarea:valid {
+  border-color: #9C89FF;
+  padding: 0px 0px 0px 19px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li > input:focus + label,
+body .form_modal .modal-dialog .modal-content form > ul > li > textarea:focus + label,
+body .form_modal .modal-dialog .modal-content form > ul > li > input:valid + label,
+body .form_modal .modal-dialog .modal-content form > ul > li > textarea:valid + label {
+  color: #78716C;
+  left: 12px;
+  top: -12px;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li input::-webkit-outer-spin-button,
+body .form_modal .modal-dialog .modal-content form > ul > li input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li > textarea {
+  resize: none;
+  height: 125px;
+  padding-top: 15px !important;
+  padding-right: 20px !important;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li > label {
+  background-color: #fff;
+  color: #A1A1A1;
+  font: 16px/26px proxima_nova_regular, sans-serif;
+  left: 15px;
+  padding: 0px 7px;
+  pointer-events: none;
+  position: absolute;
+  top: 12px;
+  transition: 0.21s;
+}
+body .form_modal .modal-dialog .modal-content form h3 {
+  color: #B8B8B8;
+  font: 16px/20px roboto_regular, sans-serif;
+  padding-right: 50px;
+  text-align: right;
+}
+body .form_modal .modal-dialog .modal-content form h3 span {
+  color: #9C89FF;
+  font: 22px/20px roboto_medium, sans-serif;
+  margin-left: 30px;
+}
+body .form_modal .modal-dialog .modal-content form > button {
+  background-color: #9C89FF;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font: 16px/19px proxima_nova_bold, sans-serif;
+  height: 55px;
+  margin: 10px 0px 50px 0px;
+  transition: 0.21s;
+  display: inline-block;
+  vertical-align: top;
+  width: 120px;
+}
+body .form_modal .modal-dialog .modal-content form > button:hover {
+  opacity: 0.8;
+}
+body .form_modal .modal-dialog .modal-content form > button[type=submit] {
+  margin-right: 50px;
+}
+body .form_modal .modal-dialog .modal-content form > button[type=button] {
+  background-color: #fff;
+  border: 1px solid #E2E2E2;
+  color: #B1B1B1;
+  margin-right: 5px;
+}
+.hidden {
+  display: none !important;
+}
+.show_popover_overlay {
+  overflow: hidden;
+  padding-right: 15px;
+}
+.edit_product{
+  width: 90px;
+  height: 37px;
+  border-radius: 10px;
+  background: #373A4B;
+  color: #CAC0FF;
+  border: none;
+  position: relative;
+  bottom: 10px;
+  right: 30px;
+}
+.delete_product{
+  color: #474B67;
+  border: none;
+  background: none;
+  position: relative;
+  bottom: 12px;
+  right: 7px;
+}
+.delete_product:hover{
+  color: #5F72FF;
+}
+.profile_dropdown {
+  position: absolute;
+  left: 7px;
+  top: 5px;
+  border: none !important;
+  background: none !important;
+}
+.admin_dropdown.show {
+  top: 20px !important;
+  left: -55px !important;
+  background: #2A2D3E;
+}
+.admin_dropdown a{
+  color: #FFFFFF;
+}
