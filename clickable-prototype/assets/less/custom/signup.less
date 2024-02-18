@@ -1,0 +1,134 @@
+body {
+    background-color: #F3F8FD;
+    .wrapper {
+        text-align: center;
+        > a {
+            display: inline-block;
+            vertical-align: top;
+        }
+        img {
+            margin: 100px auto 0px auto;
+            display: block;
+        }
+        form {
+            width: 742px;
+            background-color: #fff;
+            box-shadow: 0px 4.37332px 94.87px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            margin: 60px auto 0px auto;
+            position: relative;
+            text-align: left;
+            padding: 0px 165px 0px 0px;
+            position: relative;
+            overflow: hidden;
+            &::after {
+                width: 165px;
+                height: 1051px;
+                content: "";
+                display: inline-block;
+                vertical-align: top;
+                position: absolute;
+                bottom: 0px;
+                right: 0px;
+                background-image: url("../../images/vegetable_bg.png");
+                border-radius: 0px 20px 20px 0px;
+                background-position: 50% 100%;
+            }
+            h2 {
+                color: #7D7D7D;
+                font: 22px/24px roboto_medium, sans-serif;
+                margin-bottom: 46px;
+                margin-top: 73px;
+                padding-left: 60px;
+                text-align: left;
+                display: inline-block;
+                vertical-align: top;
+            }
+            a {
+                position: absolute;
+                top: 74px;
+                right: 224px;
+                color: #9C89FF;
+                text-decoration: none;
+                font: 16px/19px proxima_nova_regular, sans-serif;
+            }
+            ul {
+                border-bottom: 1px solid #E2E2E2;
+                margin-bottom: 33px;
+                text-align: left;
+                padding-left: 60px;
+                padding-bottom: 20px;
+                padding-right: 60px;
+                li {
+                    width: 100%;
+                    position: relative;
+                    margin-bottom: 30px;
+                    &:nth-child(1) {
+                        margin-right: 8px;
+                    }
+                    &:nth-child(1), &:nth-child(2) {
+                        width: 222px;
+                        display: inline-block;
+                        vertical-align: top;
+                    }
+                    input {
+                        background-color: #fff !important;
+                        border-radius: 6px;
+                        border: 1px solid #DAD3FF;
+                        height: 48px;
+                        outline: none;
+                        padding-left: 13px;
+                        transition: 0.1s;
+                        width: 100%;
+                        &:focus, &:valid {
+                            border-color: #9C89FF;
+                            padding: 0px 0px 0px 19px;
+                            & + label {
+                                color: #78716C;
+                                left: 12px;
+                                top: -12px;
+                            }
+                        }
+                    }
+                    label {
+                        background-color: #fff;
+                        color: #A1A1A1;
+                        font: 16px/26px proxima_nova_regular, sans-serif;
+                        left: 15px;
+                        padding: 0px 7px;
+                        pointer-events: none;
+                        position: absolute;
+                        top: 12px;
+                        transition: 0.21s;
+                    }
+                    span {
+                        font: 12px/12px proxima_nova_regular, sans-serif;
+                        color: #F84F4F;
+                    }
+                }
+            }
+            button {
+                background-color: #9C89FF;
+                border-radius: 10px;
+                border: none;
+                color: #fff;
+                font: 16px/19px proxima_nova_bold, sans-serif;
+                height: 55px;
+                margin: 10px 0px 50px 60px;
+                transition: 0.21s;
+                width: 457px;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+        .login_form {
+            ul {
+                li {
+                    display: block;
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,516 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+@font-face {
+    font-family: roboto_light;
+    src: url("../../fonts/Roboto-Light.ttf");
+}
+@font-face {
+    font-family: roboto_regular;
+    src: url("../../fonts/Roboto-Regular.ttf");
+}
+@font-face {
+    font-family: roboto_medium;
+    src: url("../../fonts/Roboto-Medium.ttf");
+}
+@font-face {
+    font-family: roboto_bold;
+    src: url("../../fonts/Roboto-Bold.ttf");
+}
+@font-face {
+    font-family: roboto_black;
+    src: url("../../fonts/Roboto-BLack.ttf");
+}
+@font-face {
+    font-family: proxima_nova_regular;
+    src: url("../../fonts/ProximaNova-Regular.otf");
+}
+@font-face {
+    font-family: proxima_nova_black;
+    src: url("../../fonts/Proxima Nova Black.otf");
+}
+@font-face {
+    font-family: proxima_nova_bold;
+    src: url("../../fonts/Proxima Nova Bold.otf");
+}
+@font-face {
+    font-family: proxima_nova_extra_bold;
+    src: url("../../fonts/Proxima Nova Extrabold.otf");
+}
+@font-face {
+    font-family: proxima_nova_thin;
+    src: url("../../fonts/Proxima Nova Thin.otf");
+}
+@font-face {
+    font-family: proxima_nova_thin;
+    src: url("../../fonts/Proxima Nova Thin.otf");
+}
+.modal-backdrop.show {
+    opacity: 0.7;
+    background-color: #696596;
+}
+body {
+    background-color: #F3F8FD;
+    transition: 0.21s;
+    .wrapper {
+        display: table;
+        width: 100%;
+        aside {
+            background-color: #fff;
+            border-right: 1px solid #E5EDF5;
+            height: 100vh;
+            padding: 0px 7px;
+            position: fixed;
+            text-align: center;
+            vertical-align: top;
+            width: 80px;
+            z-index: 2;
+            > a {
+                display: inline-block;
+                height: 80px;
+                vertical-align: top;
+                width: 100%;
+                img {
+                    margin-top: 19px;
+                }
+            }
+            ul {
+                margin-top: 17px;
+                li {
+                    a {
+                        background-image: url("../../images/product_icon.svg");
+                        background-position: -65px 0px;
+                        border-radius: 20px;
+                        display: inline-block;
+                        height: 65px;
+                        vertical-align: top;
+                        width: 65px;
+                    }
+                    &.active {
+                        a {
+                            background-color: #F3F8FD;
+                            background-position: 0px 0px;
+                        }
+                    }
+                }
+            }
+        }
+        header {
+            background-color: #fff;
+            box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.03);
+            display: block;
+            height: 80px;
+            padding: 18px 60px 18px 138px;
+            position: fixed;
+            text-align: right;
+            width: 100%;
+            z-index: 2;
+            h1 {
+                color: #ADA9C0;
+                display: inline-block;
+                font: 22px/27px proxima_nova_bold, sans-serif;
+                margin-top: 8px;
+                position: absolute;
+                left: 140px;
+                &::before {
+                    background-image: url("../../images/leaf.svg");
+                    content: "";
+                    display: inline-block;
+                    height: 23px;
+                    margin-right: 27px;
+                    vertical-align: top;
+                    width: 25px;
+                }
+            }
+            div {
+                display: inline-block;
+                vertical-align: top;
+                a {
+                    border-radius: 10px;
+                    border: none;
+                    font: 16px/42px roboto, sans-serif;
+                    height: 45px;
+                    transition: 0.21s;
+                    width: 95px;
+                    display: inline-block;
+                    vertical-align: top;
+                    text-align: center;
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                    &.signup_btn {
+                        background-color: #fff;
+                        border: 1px solid #9C89FF;
+                        color: #9C89FF;
+                        margin-right: 5px;
+                    }
+                    &.login_btn {
+                        background-color: #9C89FF;
+                        color: #fff;
+                    }
+                }
+                .profile_btn {
+                    font: 18px/46px proxima_nova_bold, sans-serif;
+                    color: #A1A1A1;
+                    width: auto;
+                    background-color: transparent;
+                    border: none;
+                    span {
+                        width: 42px;
+                        height: 42px;
+                        background-color: #E6E2FF;
+                        border-radius: 50%;
+                        font: 18px/21px proxima_nova_bold, sans-serif;
+                        color: #9987FA;
+                        display: inline-block;
+                        vertical-align: top;
+                        text-align: center;
+                        padding: 13px 0px;
+                        margin-right: 5px;
+                    }
+                }
+
+            }
+        }
+        ul {
+            list-style: none;
+        }
+        > section {
+            padding: 141px 60px 0px 140px;
+            position: relative;
+            .search_form {
+                border-right: 1px solid #C0CDDA;
+                display: inline-block;
+                margin-bottom: 47px;
+                margin-right: 26px;
+                padding-right: 30px;
+                vertical-align: top;
+                position: sticky;
+                top: 12px;
+                z-index: 3;
+                &::after {
+                    width: 21px;
+                    height: 21px;
+                    content: "";
+                    background-image: url("../../images/search.svg");
+                    display: inline-block;
+                    vertical-align: top;
+                    position: absolute;
+                    top: 16px;
+                    right: 47px;
+                }
+                input {
+                    background-color: #FFFFFF;
+                    border-radius: 10px;
+                    border: 1px solid #D4E1EC;
+                    height: 55px;
+                    padding: 0px 22px;
+                    width: 440px;
+                    font: 16px/19px proxima_nova_regular, sans-serif;
+                    color: #787878;
+
+                    &::placeholder {
+                        color: #A1A1A1;
+                    }
+                }
+            }
+            .show_cart {
+                background-color: #9C89FF;
+                border-radius: 10px;
+                border: none;
+                color: #fff;
+                display: inline-block;
+                font: 16px/19px proxima_nova_regular, sans-serif;
+                height: 55px;
+                transition: 0.21s;
+                vertical-align: top;
+                width: 120px;
+                text-align: center;
+                padding: 17px 0px;
+                text-decoration: none;
+                position: sticky;
+                top: 12px;
+                z-index: 3;
+                &:hover {
+                    opacity: 0.8;
+                }
+                &::before {
+                    background-image: url("../../images/cart.svg");
+                    content: "";
+                    display: inline-block;
+                    height: 20px;
+                    margin: 0px 10px 0px 0px;
+                    vertical-align: top;
+                    width: 20px;
+                }
+            }
+        }
+    }
+    .form_modal {
+        .modal-dialog {
+            max-width: 557px;
+            .modal-content {
+                text-align: right;
+                position: relative;
+                border-radius: 23px;
+                .close_modal {
+                    background-color: transparent;
+                    background-image: url("../../images/close.svg");
+                    border: none;
+                    height: 14px;
+                    position: absolute;
+                    right: 20px;
+                    top: 20px;
+                    width: 14px;
+                    z-index: 99;
+                }
+                form {
+                    position: relative;
+                    text-align: center;
+                    &::before {
+                        background-image: url("../../images/visa_mastercard.png");
+                        content: "";
+                        display: inline-block;
+                        height: 52px;
+                        left: 50px;
+                        position: absolute;
+                        top: 50px;
+                        vertical-align: top;
+                        width: 200px;
+                    }
+                    h2 {
+                        color: #7D7D7D;
+                        font: 16px/20px roboto_medium, sans-serif;
+                        margin-bottom: 26px;
+                        margin-top: 147px;
+                        padding-left: 50px;
+                        text-align: left;
+                    }
+                    ul {
+                        border-bottom: 1px solid #E2E2E2;
+                        margin-bottom: 33px;
+                        padding-bottom: 25px;
+                        padding: 0px 50px;
+                        text-align: left;
+                        li {
+                            position: relative;
+                            &:nth-child(3), &:nth-child(4) {
+                                display: inline-block;
+                                vertical-align: top;
+                                width: 219px;
+                            }
+                            &:nth-child(3) {
+                                margin-right: 10px;
+                            }
+                            input {
+                                background-color: #fff;
+                                border-radius: 6px;
+                                border: 1px solid #DAD3FF;
+                                height: 48px;
+                                margin-bottom: 25px;
+                                outline: none;
+                                padding-left: 13px;
+                                transition: 0.1s;
+                                width: 100%;
+                                &:focus, &:valid {
+                                    border-color: #9C89FF;
+                                    padding: 0px 0px 0px 19px;
+                                    & + label {
+                                        color: #78716C;
+                                        left: 12px;
+                                        top: -12px;
+                                    }
+                                }
+                            }
+                            label {
+                                background-color: #fff;
+                                color: #A1A1A1;
+                                font: 16px/26px proxima_nova_regular, sans-serif;
+                                left: 15px;
+                                padding: 0px 7px;
+                                pointer-events: none;
+                                position: absolute;
+                                top: 12px;
+                                transition: 0.21s;
+                            }
+                        }
+                    }
+                    h3 {
+                        color: #B8B8B8;
+                        font: 16px/20px roboto_regular, sans-serif;
+                        padding-right: 50px;
+                        text-align: right;
+                        span {
+                            color: #9C89FF;
+                            font: 22px/20px roboto_medium, sans-serif;
+                            margin-left: 30px;
+                        }
+                    }
+                    button {
+                        background-color: #9C89FF;
+                        border-radius: 10px;
+                        border: none;
+                        color: #fff;
+                        font: 16px/19px proxima_nova_bold, sans-serif;
+                        height: 55px;
+                        margin: 10px 0px 50px 0px;
+                        transition: 0.21s;
+                        width: 457px;
+                        &:hover {
+                            opacity: 0.8;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    #login_modal, #signup_modal {
+        .modal-dialog {
+            max-width: 741px;
+            .modal-content {
+                padding-right: 165px;
+                position: relative;
+                .close_modal {
+                    background-color: #fff;
+                    width: 38px;
+                    height: 38px;
+                    background-repeat: no-repeat;
+                    border-radius: 50%;
+                    background-position: 50%;
+                }
+                &::after {
+                    width: 165px;
+                    height: 522px;
+                    content: "";
+                    display: inline-block;
+                    vertical-align: top;
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    background-image: url("../../images/vegetable_bg.png");
+                    border-radius: 0px 20px 20px 0px;
+                    background-position: 50% 100%;
+                }
+                form {
+                    h2 {
+                        margin-bottom: 40px;
+                    }
+                    &::before {
+                        width: 50px;
+                    }
+                    ul {
+                        padding-bottom: 20px;
+                    }
+                    .switch_to_signup {
+                        font: 16px/19px proxima_nova_regular, sans-serif;
+                        color: #9C89FF;
+                        background-color: transparent;
+                        width: auto;
+                        height: auto;
+                        margin: 0px;
+                        position: absolute;
+                        top: 148px;
+                        right: 50px;
+                    }
+                    button {
+                        width: 474px;
+                    }
+                }
+            }
+        }
+    }
+    #signup_modal  {
+        .modal-dialog {
+            .modal-content {
+                &::after {
+                    height: 668px;
+                }
+                form {
+                    li {
+                        width: 100%;
+                        &:nth-child(1), &:nth-child(2) {
+                            display: inline-block;
+                            width: 229px;
+                        }
+                        &:nth-child(1) {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .popover_overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #696596;
+        z-index: 100;
+        opacity: 0.7;
+        display: none;
+    }
+}
+.logout_btn {
+    background-color: #fff;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    box-shadow: 0px 4.37332px 21.8666px rgba(0, 0, 0, 0.07);
+    color: #787878;
+    display: inline-block;
+    font: 16px/22px proxima_nova_regular, sans-serif;
+    height: 64px;
+    opacity: 0;
+    padding: 21px 20px;
+    pointer-events: none;
+    position: fixed;
+    right: 60px;
+    top: 0px;
+    transition: 0.41s;
+    vertical-align: top;
+    width: 197px;
+    z-index: -121212;
+    &::after {
+        width: 18px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: top;
+        background-image: url("../../images/logout.svg");
+        content: "";
+        position: absolute;
+        right: 20px;
+    }
+    &:hover {
+        color: #9C89FF;
+        box-shadow: 0px 4.37332px 12px rgba(156, 137, 255, 0.28);
+        border: 1px solid #9C89FF;
+    }
+    &.show {
+        opacity: 1;
+        z-index: 999;
+        top: 70px;
+        pointer-events: auto;
+    }
+}
+.category {
+    display: inline-block;
+    vertical-align: top;
+    text-transform: capitalize;
+    &::before {
+        background-image: url("../../images/star.svg");
+        display: inline-block;
+        height: 13px;
+        margin-right: 3px;
+        vertical-align: top;
+        width: 13px;
+        content: "";
+    }
+}
+.error {
+    border: 1px solid #F84F4F !important;
+}
+.show_popover_overlay {
+    overflow: hidden;
+}

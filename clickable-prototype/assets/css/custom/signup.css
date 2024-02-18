@@ -1,0 +1,132 @@
+body {
+  background-color: #F3F8FD;
+}
+body .wrapper {
+  text-align: center;
+}
+body .wrapper > a {
+  display: inline-block;
+  vertical-align: top;
+}
+body .wrapper img {
+  margin: 100px auto 0px auto;
+  display: block;
+}
+body .wrapper form {
+  width: 742px;
+  background-color: #fff;
+  box-shadow: 0px 4.37332px 94.87px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  margin: 60px auto 0px auto;
+  text-align: left;
+  padding: 0px 165px 0px 0px;
+  position: relative;
+  overflow: hidden;
+}
+body .wrapper form::after {
+  width: 165px;
+  height: 1051px;
+  content: "";
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background-image: url("../../images/vegetable_bg.png");
+  border-radius: 0px 20px 20px 0px;
+  background-position: 50% 100%;
+}
+body .wrapper form h2 {
+  color: #7D7D7D;
+  font: 22px/24px roboto_medium, sans-serif;
+  margin-bottom: 46px;
+  margin-top: 73px;
+  padding-left: 60px;
+  text-align: left;
+  display: inline-block;
+  vertical-align: top;
+}
+body .wrapper form a {
+  position: absolute;
+  top: 74px;
+  right: 224px;
+  color: #9C89FF;
+  text-decoration: none;
+  font: 16px/19px proxima_nova_regular, sans-serif;
+}
+body .wrapper form ul {
+  border-bottom: 1px solid #E2E2E2;
+  margin-bottom: 33px;
+  text-align: left;
+  padding-left: 60px;
+  padding-bottom: 20px;
+  padding-right: 60px;
+}
+body .wrapper form ul li {
+  width: 100%;
+  position: relative;
+  margin-bottom: 30px;
+}
+body .wrapper form ul li:nth-child(1) {
+  margin-right: 8px;
+}
+body .wrapper form ul li:nth-child(1),
+body .wrapper form ul li:nth-child(2) {
+  width: 222px;
+  display: inline-block;
+  vertical-align: top;
+}
+body .wrapper form ul li input {
+  background-color: #fff !important;
+  border-radius: 6px;
+  border: 1px solid #DAD3FF;
+  height: 48px;
+  outline: none;
+  padding-left: 13px;
+  transition: 0.1s;
+  width: 100%;
+}
+body .wrapper form ul li input:focus,
+body .wrapper form ul li input:valid {
+  border-color: #9C89FF;
+  padding: 0px 0px 0px 19px;
+}
+body .wrapper form ul li input:focus + label,
+body .wrapper form ul li input:valid + label {
+  color: #78716C;
+  left: 12px;
+  top: -12px;
+}
+body .wrapper form ul li label {
+  background-color: #fff;
+  color: #A1A1A1;
+  font: 16px/26px proxima_nova_regular, sans-serif;
+  left: 15px;
+  padding: 0px 7px;
+  pointer-events: none;
+  position: absolute;
+  top: 12px;
+  transition: 0.21s;
+}
+body .wrapper form ul li span {
+  font: 12px/12px proxima_nova_regular, sans-serif;
+  color: #F84F4F;
+}
+body .wrapper form button {
+  background-color: #9C89FF;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font: 16px/19px proxima_nova_bold, sans-serif;
+  height: 55px;
+  margin: 10px 0px 50px 60px;
+  transition: 0.21s;
+  width: 457px;
+}
+body .wrapper form button:hover {
+  opacity: 0.8;
+}
+body .wrapper .login_form ul li {
+  display: block;
+  width: 100% !important;
+}

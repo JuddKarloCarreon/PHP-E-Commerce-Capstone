@@ -1,0 +1,509 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+@font-face {
+  font-family: roboto_light;
+  src: url("../../fonts/Roboto-Light.ttf");
+}
+@font-face {
+  font-family: roboto_regular;
+  src: url("../../fonts/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: roboto_medium;
+  src: url("../../fonts/Roboto-Medium.ttf");
+}
+@font-face {
+  font-family: roboto_bold;
+  src: url("../../fonts/Roboto-Bold.ttf");
+}
+@font-face {
+  font-family: roboto_black;
+  src: url("../../fonts/Roboto-BLack.ttf");
+}
+@font-face {
+  font-family: proxima_nova_regular;
+  src: url("../../fonts/ProximaNova-Regular.otf");
+}
+@font-face {
+  font-family: proxima_nova_black;
+  src: url("../../fonts/Proxima Nova Black.otf");
+}
+@font-face {
+  font-family: proxima_nova_bold;
+  src: url("../../fonts/Proxima Nova Bold.otf");
+}
+@font-face {
+  font-family: proxima_nova_extra_bold;
+  src: url("../../fonts/Proxima Nova Extrabold.otf");
+}
+@font-face {
+  font-family: proxima_nova_thin;
+  src: url("../../fonts/Proxima Nova Thin.otf");
+}
+@font-face {
+  font-family: proxima_nova_thin;
+  src: url("../../fonts/Proxima Nova Thin.otf");
+}
+.modal-backdrop.show {
+  opacity: 0.7;
+  background-color: #696596;
+}
+body {
+  background-color: #F3F8FD;
+  transition: 0.21s;
+}
+body .wrapper {
+  display: table;
+  width: 100%;
+}
+body .wrapper aside {
+  background-color: #fff;
+  border-right: 1px solid #E5EDF5;
+  height: 100vh;
+  padding: 0px 7px;
+  position: fixed;
+  text-align: center;
+  vertical-align: top;
+  width: 80px;
+  z-index: 2;
+}
+body .wrapper aside > a {
+  display: inline-block;
+  height: 80px;
+  vertical-align: top;
+  width: 100%;
+}
+body .wrapper aside > a img {
+  margin-top: 19px;
+}
+body .wrapper aside ul {
+  margin-top: 17px;
+}
+body .wrapper aside ul li a {
+  background-image: url("../../images/product_icon.svg");
+  background-position: -65px 0px;
+  border-radius: 20px;
+  display: inline-block;
+  height: 65px;
+  vertical-align: top;
+  width: 65px;
+}
+body .wrapper aside ul li.active a {
+  background-color: #F3F8FD;
+  background-position: 0px 0px;
+}
+body .wrapper header {
+  background-color: #fff;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.03);
+  display: block;
+  height: 80px;
+  padding: 18px 60px 18px 138px;
+  position: fixed;
+  text-align: right;
+  width: 100%;
+  z-index: 2;
+}
+body .wrapper header h1 {
+  color: #ADA9C0;
+  display: inline-block;
+  font: 22px/27px proxima_nova_bold, sans-serif;
+  margin-top: 8px;
+  position: absolute;
+  left: 140px;
+}
+body .wrapper header h1::before {
+  background-image: url("../../images/leaf.svg");
+  content: "";
+  display: inline-block;
+  height: 23px;
+  margin-right: 27px;
+  vertical-align: top;
+  width: 25px;
+}
+body .wrapper header div {
+  display: inline-block;
+  vertical-align: top;
+}
+body .wrapper header div a {
+  border-radius: 10px;
+  border: none;
+  font: 16px/42px roboto, sans-serif;
+  height: 45px;
+  transition: 0.21s;
+  width: 95px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+body .wrapper header div a:hover {
+  opacity: 0.8;
+}
+body .wrapper header div a.signup_btn {
+  background-color: #fff;
+  border: 1px solid #9C89FF;
+  color: #9C89FF;
+  margin-right: 5px;
+}
+body .wrapper header div a.login_btn {
+  background-color: #9C89FF;
+  color: #fff;
+}
+body .wrapper header div .profile_btn {
+  font: 18px/46px proxima_nova_bold, sans-serif;
+  color: #A1A1A1;
+  width: auto;
+  background-color: transparent;
+  border: none;
+}
+body .wrapper header div .profile_btn span {
+  width: 42px;
+  height: 42px;
+  background-color: #E6E2FF;
+  border-radius: 50%;
+  font: 18px/21px proxima_nova_bold, sans-serif;
+  color: #9987FA;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  padding: 13px 0px;
+  margin-right: 5px;
+}
+body .wrapper ul {
+  list-style: none;
+}
+body .wrapper > section {
+  padding: 141px 60px 0px 140px;
+  position: relative;
+}
+body .wrapper > section .search_form {
+  border-right: 1px solid #C0CDDA;
+  display: inline-block;
+  margin-bottom: 47px;
+  margin-right: 26px;
+  padding-right: 30px;
+  vertical-align: top;
+  position: sticky;
+  top: 12px;
+  z-index: 3;
+}
+body .wrapper > section .search_form::after {
+  width: 21px;
+  height: 21px;
+  content: "";
+  background-image: url("../../images/search.svg");
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  top: 16px;
+  right: 47px;
+}
+body .wrapper > section .search_form input {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid #D4E1EC;
+  height: 55px;
+  padding: 0px 22px;
+  width: 440px;
+  font: 16px/19px proxima_nova_regular, sans-serif;
+  color: #787878;
+}
+body .wrapper > section .search_form input::placeholder {
+  color: #A1A1A1;
+}
+body .wrapper > section .show_cart {
+  background-color: #9C89FF;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  display: inline-block;
+  font: 16px/19px proxima_nova_regular, sans-serif;
+  height: 55px;
+  transition: 0.21s;
+  vertical-align: top;
+  width: 120px;
+  text-align: center;
+  padding: 17px 0px;
+  text-decoration: none;
+  position: sticky;
+  top: 12px;
+  z-index: 3;
+}
+body .wrapper > section .show_cart:hover {
+  opacity: 0.8;
+}
+body .wrapper > section .show_cart::before {
+  background-image: url("../../images/cart.svg");
+  content: "";
+  display: inline-block;
+  height: 20px;
+  margin: 0px 10px 0px 0px;
+  vertical-align: top;
+  width: 20px;
+}
+body .form_modal .modal-dialog {
+  max-width: 557px;
+}
+body .form_modal .modal-dialog .modal-content {
+  text-align: right;
+  position: relative;
+  border-radius: 23px;
+}
+body .form_modal .modal-dialog .modal-content .close_modal {
+  background-color: transparent;
+  background-image: url("../../images/close.svg");
+  border: none;
+  height: 14px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 14px;
+  z-index: 99;
+}
+body .form_modal .modal-dialog .modal-content form {
+  position: relative;
+  text-align: center;
+}
+body .form_modal .modal-dialog .modal-content form::before {
+  background-image: url("../../images/visa_mastercard.png");
+  content: "";
+  display: inline-block;
+  height: 52px;
+  left: 50px;
+  position: absolute;
+  top: 50px;
+  vertical-align: top;
+  width: 200px;
+}
+body .form_modal .modal-dialog .modal-content form h2 {
+  color: #7D7D7D;
+  font: 16px/20px roboto_medium, sans-serif;
+  margin-bottom: 26px;
+  margin-top: 147px;
+  padding-left: 50px;
+  text-align: left;
+}
+body .form_modal .modal-dialog .modal-content form ul {
+  border-bottom: 1px solid #E2E2E2;
+  margin-bottom: 33px;
+  padding-bottom: 25px;
+  padding: 0px 50px;
+  text-align: left;
+}
+body .form_modal .modal-dialog .modal-content form ul li {
+  position: relative;
+}
+body .form_modal .modal-dialog .modal-content form ul li:nth-child(3),
+body .form_modal .modal-dialog .modal-content form ul li:nth-child(4) {
+  display: inline-block;
+  vertical-align: top;
+  width: 219px;
+}
+body .form_modal .modal-dialog .modal-content form ul li:nth-child(3) {
+  margin-right: 10px;
+}
+body .form_modal .modal-dialog .modal-content form ul li input {
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #DAD3FF;
+  height: 48px;
+  margin-bottom: 25px;
+  outline: none;
+  padding-left: 13px;
+  transition: 0.1s;
+  width: 100%;
+}
+body .form_modal .modal-dialog .modal-content form ul li input:focus,
+body .form_modal .modal-dialog .modal-content form ul li input:valid {
+  border-color: #9C89FF;
+  padding: 0px 0px 0px 19px;
+}
+body .form_modal .modal-dialog .modal-content form ul li input:focus + label,
+body .form_modal .modal-dialog .modal-content form ul li input:valid + label {
+  color: #78716C;
+  left: 12px;
+  top: -12px;
+}
+body .form_modal .modal-dialog .modal-content form ul li label {
+  background-color: #fff;
+  color: #A1A1A1;
+  font: 16px/26px proxima_nova_regular, sans-serif;
+  left: 15px;
+  padding: 0px 7px;
+  pointer-events: none;
+  position: absolute;
+  top: 12px;
+  transition: 0.21s;
+}
+body .form_modal .modal-dialog .modal-content form h3 {
+  color: #B8B8B8;
+  font: 16px/20px roboto_regular, sans-serif;
+  padding-right: 50px;
+  text-align: right;
+}
+body .form_modal .modal-dialog .modal-content form h3 span {
+  color: #9C89FF;
+  font: 22px/20px roboto_medium, sans-serif;
+  margin-left: 30px;
+}
+body .form_modal .modal-dialog .modal-content form button {
+  background-color: #9C89FF;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font: 16px/19px proxima_nova_bold, sans-serif;
+  height: 55px;
+  margin: 10px 0px 50px 0px;
+  transition: 0.21s;
+  width: 457px;
+}
+body .form_modal .modal-dialog .modal-content form button:hover {
+  opacity: 0.8;
+}
+body #login_modal .modal-dialog,
+body #signup_modal .modal-dialog {
+  max-width: 741px;
+}
+body #login_modal .modal-dialog .modal-content,
+body #signup_modal .modal-dialog .modal-content {
+  padding-right: 165px;
+  position: relative;
+}
+body #login_modal .modal-dialog .modal-content .close_modal,
+body #signup_modal .modal-dialog .modal-content .close_modal {
+  background-color: #fff;
+  width: 38px;
+  height: 38px;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  background-position: 50%;
+}
+body #login_modal .modal-dialog .modal-content::after,
+body #signup_modal .modal-dialog .modal-content::after {
+  width: 165px;
+  height: 522px;
+  content: "";
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background-image: url("../../images/vegetable_bg.png");
+  border-radius: 0px 20px 20px 0px;
+  background-position: 50% 100%;
+}
+body #login_modal .modal-dialog .modal-content form h2,
+body #signup_modal .modal-dialog .modal-content form h2 {
+  margin-bottom: 40px;
+}
+body #login_modal .modal-dialog .modal-content form::before,
+body #signup_modal .modal-dialog .modal-content form::before {
+  width: 50px;
+}
+body #login_modal .modal-dialog .modal-content form ul,
+body #signup_modal .modal-dialog .modal-content form ul {
+  padding-bottom: 20px;
+}
+body #login_modal .modal-dialog .modal-content form .switch_to_signup,
+body #signup_modal .modal-dialog .modal-content form .switch_to_signup {
+  font: 16px/19px proxima_nova_regular, sans-serif;
+  color: #9C89FF;
+  background-color: transparent;
+  width: auto;
+  height: auto;
+  margin: 0px;
+  position: absolute;
+  top: 148px;
+  right: 50px;
+}
+body #login_modal .modal-dialog .modal-content form button,
+body #signup_modal .modal-dialog .modal-content form button {
+  width: 474px;
+}
+body #signup_modal .modal-dialog .modal-content::after {
+  height: 668px;
+}
+body #signup_modal .modal-dialog .modal-content form li {
+  width: 100%;
+}
+body #signup_modal .modal-dialog .modal-content form li:nth-child(1),
+body #signup_modal .modal-dialog .modal-content form li:nth-child(2) {
+  display: inline-block;
+  width: 229px;
+}
+body #signup_modal .modal-dialog .modal-content form li:nth-child(1) {
+  margin-right: 10px;
+}
+body .popover_overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #696596;
+  z-index: 100;
+  opacity: 0.7;
+  display: none;
+}
+.logout_btn {
+  background-color: #fff;
+  border-radius: 20px;
+  border: 1px solid #fff;
+  box-shadow: 0px 4.37332px 21.8666px rgba(0, 0, 0, 0.07);
+  color: #787878;
+  display: inline-block;
+  font: 16px/22px proxima_nova_regular, sans-serif;
+  height: 64px;
+  opacity: 0;
+  padding: 21px 20px;
+  pointer-events: none;
+  position: fixed;
+  right: 60px;
+  top: 0px;
+  transition: 0.41s;
+  vertical-align: top;
+  width: 197px;
+  z-index: -121212;
+}
+.logout_btn::after {
+  width: 18px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: top;
+  background-image: url("../../images/logout.svg");
+  content: "";
+  position: absolute;
+  right: 20px;
+}
+.logout_btn:hover {
+  color: #9C89FF;
+  box-shadow: 0px 4.37332px 12px rgba(156, 137, 255, 0.28);
+  border: 1px solid #9C89FF;
+}
+.logout_btn.show {
+  opacity: 1;
+  z-index: 999;
+  top: 70px;
+  pointer-events: auto;
+}
+.category {
+  display: inline-block;
+  vertical-align: top;
+  text-transform: capitalize;
+}
+.category::before {
+  background-image: url("../../images/star.svg");
+  display: inline-block;
+  height: 13px;
+  margin-right: 3px;
+  vertical-align: top;
+  width: 13px;
+  content: "";
+}
+.error {
+  border: 1px solid #F84F4F !important;
+}
+.show_popover_overlay {
+  overflow: hidden;
+}
