@@ -2,6 +2,7 @@
 ## Timestamps:
 Day 1: 1h27m
   - Planning and creation of database & ERD
+
 Day 2:
   - Upload of clickable prototype, and update of ERD to remove currency, since bank payments usually do the currency conversion anyway. (1h40m)
 ## ERD:
