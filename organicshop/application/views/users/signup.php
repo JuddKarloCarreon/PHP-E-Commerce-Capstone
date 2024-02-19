@@ -31,17 +31,17 @@
             <ul>
                 <li>
                     <?= (!empty($errors))?$errors['first_name']:"" ?>
-                    <input type="text" name="first_name" placeholder = ' '>
+                    <input type="text" name="first_name" placeholder = ' ' value="<?= (!empty($form))?$form['first_name']:"" ?>">
                     <label>First Name</label>
                 </li>
                 <li>
                     <?= (!empty($errors))?$errors['last_name']:"" ?>
-                    <input type="text" name="last_name" placeholder = ' '>
+                    <input type="text" name="last_name" placeholder = ' ' value="<?= (!empty($form))?$form['last_name']:"" ?>">
                     <label>Last Name</label>
                 </li>
                 <li>
                     <?= (!empty($errors))?$errors['email']:"" ?>
-                    <input type="text" name="email" placeholder = ' '>
+                    <input type="text" name="email" placeholder = ' ' value="<?= (!empty($form))?$form['email']:"" ?>">
                     <label>Email</label>
                 </li>
                 <li>

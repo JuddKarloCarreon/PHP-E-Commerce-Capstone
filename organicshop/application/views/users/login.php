@@ -42,7 +42,7 @@
             <a href="<?= base_url('signup') ?>">New Member? Register here.</a>
             <ul>
                 <li>
-                    <input type="text" name="email" placeholder = ' '>
+                    <input type="text" name="email" placeholder = ' ' value="<?= (!empty($form))?$form['email']:"" ?>">
                     <label>Email</label>
                 </li>
                 <li>

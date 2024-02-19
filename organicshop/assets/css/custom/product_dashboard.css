@@ -213,3 +213,35 @@ body .wrapper > section > div > ul > li a > span {
   font: 11px/16px roboto_regular, sans-serif;
   vertical-align: top;
 }
+body .wrapper header div {
+  position: absolute;
+  right: 90px;
+  top: 17px;
+}
+#dropdownMenuLink {
+  color: #7D7D7D;
+}
+body #dropdownMenuLink img {
+  position: relative;
+  border-radius: 50%;
+  height: 40px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  bottom: 5px;
+}
+.profile_dropdown {
+  position: absolute;
+  left: -20px;
+  top: 0px;
+  border: none !important;
+  background: none !important;
+}
+.user_dropdown.show {
+  display: block !important;
+  top: 20px !important;
+  left: -10px !important;
+}
+a.dropdown-item {
+  width: 100% !important;
+  text-align: left !important;
+}
