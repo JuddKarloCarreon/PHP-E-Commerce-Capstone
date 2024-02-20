@@ -17,37 +17,38 @@
         }
         public function add_product() {
             $post = $this->Defence->clean();
-            $errors = $this->Dashboard->validate($post);
+            list($errors, $post) = $this->Dashboard->validate($post);
+            if (empty($errors)) {
+                $this->Dashboard->add_product($post);
+            }
             redirect('/');
-            // if (count($_FILES) > 0 && empty($errors)) {
-            //     $config['upload_path'] = '././assets/images/products';
-            //     $config['allowed_types'] = 'gif|jpg|jpeg|png|svg';
-            //     $this->load->library('upload', $config);
-            //     $files = $_FILES;
-            //     $data = array();
-            //     $errors = array();
-            //     for($i = 0; $i < count($files['images']['name']); $i++) {
-            //         $_FILES['images']['name'] = $files['images']['name'][$i];
-            //         $_FILES['images']['type'] = $files['images']['type'][$i];
-            //         $_FILES['images']['tmp_name'] = $files['images']['tmp_name'][$i];
-            //         $_FILES['images']['error'] = $files['images']['error'][$i];
-            //         $_FILES['images']['size'] = $files['images']['size'][$i];    
-            //         if (!$this->upload->do_upload('images')) {
-            //             $errors = array($this->upload->display_errors('<p class="errors">', '</p>'));
-            //             break;
-            //         } else {
-            //             $data[$i] = $this->upload->data();
-            //         }
-            //     }
-            //     if (!empty($errors)) {
-            //         foreach ($data as $row) {
-            //             unlink($row['full_path']);
-            //         }
-            //         $data = array();
-            //     }
-            //     var_dump($data);
-            //     var_dump($errors);
-            // }
+        }
+        public function edit_product() {
+            $post = $this->Defence->clean();
+            var_dump($post);
+        }
+        public function get_record($id) {
+            $id = $this->Defence->clean($id);
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+            if ($id) {
+                $this->load->model('Database');
+                echo json_encode($this->Database->get_record('products', 'id', $id));
+            }
+        }
+        public function test() {
+            var_dump($this->session->userdata());
+            $dir = '././assets/images/products/temp/' . $this->session->userdata('user')['id'];
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            } else {
+                $files = glob($dir . '/*');
+                var_dump($files);
+                foreach($files as $file){
+                    if(is_file($file)) {
+                        unlink($file);
+                    }
+                }
+            }
         }
     }
 ?>

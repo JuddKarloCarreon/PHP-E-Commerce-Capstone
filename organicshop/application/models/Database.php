@@ -4,8 +4,8 @@
             $query = "SELECT * FROM $table WHERE $field=?";
             return $this->db->query($query, array($value))->result_array();
         }
-        public function get_record($table, $field, $value) {
-            $query = "SELECT * FROM $table WHERE $field=?";
+        public function get_record($table, $field, $value, $order = '') {
+            $query = "SELECT * FROM $table WHERE $field=? $order";
             return $this->db->query($query, array($value))->row_array();
         }
         public function count_records($table, $field = 1, $value = 1) {

@@ -31,17 +31,24 @@
 <body>
     <div class="wrapper">
         <header>
-            <h1>Let’s provide fresh items for everyone.</h1>
-            <h2>Products</h2>
             <div>
-                <a class="switch" href="catalogue.html">Switch to Shop View</a>
-            </div>
-            <div class="dropdown show">
-                <a class="btn btn-secondary dropdown-toggle profile_dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="<?= base_url('assets/images/users/' . $user['image']) ?>" alt="#">
-                </a>
-                <div class="dropdown-menu admin_dropdown" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="login.html">Logout</a>
+                <section>
+                    <h1>Let’s provide fresh items for everyone.</h1>
+                    <h2>Products</h2>
+                </section>
+                <div>
+                    <div>
+                        <a class="switch" href="catalogue.html">Switch to Shop View</a>
+                    </div>
+                    <div class="dropdown show">
+                        <a class="btn btn-secondary dropdown-toggle profile_dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="<?= base_url('assets/images/users/' . $user['image']) ?>" alt="#">
+                            <?= $user['name'] ?>
+                        </a>
+                        <div class="dropdown-menu admin_dropdown" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="login.html">Logout</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -88,18 +95,18 @@
                         <tr>
                             <td>
                                 <span>
-                                    <img src="<?= base_url('assets/images/products/' . $data['id'] . $data['image']) ?>" alt="#">
-                                    <?= $data['name'] ?>
+                                    <img src="<?= base_url('assets/images/' . (($row['main_img'] != '')?'products/' . $row['id'] . '/' . $row['main_img']:'close.svg')) ?>" alt="#">
+                                    <?= $row['name'] ?>
                                 </span>
                             </td>
-                            <td><span><?= $data['id'] ?></span></td>
-                            <td><span>$ <?= $data['price'] ?></span></td>
-                            <td><span><?= $data['category'] ?></span></td>
-                            <td><span><?= $data['stock'] ?></span></td>
-                            <td><span><?= $data['sold'] ?></span></td>
+                            <td><span><?= $row['id'] ?></span></td>
+                            <td><span>$ <?= $row['price'] ?></span></td>
+                            <td><span><?= $row['category'] ?></span></td>
+                            <td><span><?= $row['stock'] ?></span></td>
+                            <td><span><?= $row['sold'] ?></span></td>
                             <td>
                                 <span>
-                                    <button class="edit_product">Edit</button>
+                                    <button class="edit_product" get="<?= base_url('dashboards/get_record/' . $row['id']) ?>">Edit</button>
                                     <button class="delete_product">X</button>
                                 </span>
                                 <form class="delete_product_form" action="<?= base_url('dashboards/delete_product') ?>" method="post">
@@ -138,10 +145,10 @@
                                 <label>Category</label>
                                 <select class="selectpicker" name="category">
 <?php
-                            foreach ($prod_count as $key => $val) {
+                            foreach ($prod_type as $key => $val) {
                                 if ($key != 'All Products') {
 ?>
-                                    <option value="<?= $key ?>"><?= $key ?></option>
+                                    <option value="<?= $val ?>"><?= $key ?></option>
 <?php
                                 }
                             }
@@ -159,11 +166,11 @@
                                 <label>Inventory</label>
                             </li>
                             <li>
-                                <label>Upload Images (5 Max)</label>
+                                <?= (!empty($errors))?$errors['images']:"" ?>
+                                <label>Upload Images (4 Max)</label>
                                 <ul>
-                                    <li><button type="button" class="upload_image"></button></li>
                                 </ul>
-                                <input type="file" name="images[]" accept="image/*" multiple>
+                                <input type="file" id="images" name="images[]" accept="image/*" multiple>
                             </li>
                         </ul>
                         <button type="button" data-dismiss="modal" aria-label="Close">Cancel</button>

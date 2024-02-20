@@ -1,3 +1,98 @@
+//add remove button for old images in edit products
+$(document).ready(function () {
+    if ($('.form_modal .errors').length) {
+        $('.form_modal').modal('show');
+    }
+
+    function image_errors(str) {
+        $('#images').parent().append($.parseHTML('<p class="errors">' + str + '</p>'));
+        $('#images').val('');
+        $('#images').siblings('ul').children().not('.old_img').remove();
+    }
+
+    $('#images').change(function () {
+        $('#images').siblings('.errors').remove();
+        var files = this.files;
+        var old_imgs = $('#images').siblings('ul').children('.old_img').length;
+        if (files && files.length < 5 - old_imgs) {
+            $('#images').siblings('ul').children().not('.old_img').remove();
+            /* Checks if all file sizes are correct. This cannot be included in the similar for loop
+                below, otherwise the preview of successful files won't be deleted. */
+            for (i = 0; i < files.length; i++) {
+                var allowed_types = ['gif', 'jpg', 'jpeg', 'png', 'svg'];
+                allowed_types = allowed_types.map(function (val) {
+                    return 'image/' + val;
+                });
+                if (files[i].size > 2000000) {
+                    image_errors(files[i].name + ' exceeds maximum size of 2MB');
+                    break;
+                } else if (!allowed_types.includes(files[i].type)) {
+                    image_errors(files[i].name + ' is not an acceptable image');
+                    break;
+                }
+            };
+            if (!($('#images').siblings('.errors').length)) {
+                for (i = 0; i < files.length; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        var checked = '';
+                        if (event.target.count == 0) {
+                            checked = ' checked';
+                        }
+                        $('#images').siblings('ul').append($.parseHTML('<li><label><img src="' + event.target.result + '"><input type="radio" name="main_image" value="' + event.target.fileName + '"' + checked + '>Mark as main</label></li>'));
+                    }
+                    reader.fileName = files[i].name;
+                    reader.count = i;
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+        } else if (files.length + old_imgs >= 5) {
+            image_errors('Maximum uploaded files exceeded');
+        }
+    });
+
+    function fill_form(arr) {
+        var base = $('#add_product_modal form').attr('action');
+        base = base.substring(0, base.lastIndexOf('/'));
+        $('#add_product_modal form').attr('action', base + '/' + arr.shift());
+
+        var arr2 = ['h2', 'input[name="product_name"]', 'textarea', 'input[name="price"]', 'input[name="stock"]'];
+        arr2.forEach(function (val, index) {
+            $('#add_product_modal').find(val).val(arr[index]);
+        });
+        $('#add_product_modal').find('.selectpicker').selectpicker('refresh');
+        $('#images').siblings('ul').empty();
+    }
+
+    $(document).on('click', '.add_product', function () {
+        $('#add_product_modal').find('option').first().attr('selected', 'selected');
+        fill_form(['add_product', 'Add a Product', '', '', '1', '1']);
+    });
+
+    $(document).on("click", ".edit_product", function() {
+        console.log($(this).closest('tr').children('.asd').length);
+        $.get($(this).attr('get'), function(res) {
+            if (res != 'null') {
+                $('#add_product_modal').find('.selectpicker').selectpicker('refresh');
+                fill_form(['edit_product', 'Edit Product #' + res.id, res.name, res.description, res.price, res.stock]);
+                if (res.image_names_json != 'null') {
+                    var url = $('#add_product_modal form').attr('action');
+                    url = url.substring(0, url.lastIndexOf('dashboards/edit_product'));
+                    url += 'assets/images/products/';
+                    $.each(jQuery.parseJSON(res.image_names_json), function (key, val) {
+                        var checked = '';
+                        if (key == 0) {
+                            checked = ' checked';
+                        }
+                        $('#images').siblings('ul').append($.parseHTML('<li class="old_img"><label><img src="' + url + res.id + '/' + val + '"><input type="radio" name="main_image" value="' + val + '"' + checked + '>Mark as main</label></li>'));
+                    });
+                }
+                $('.form_modal').modal('show');
+            }
+        }, 'JSON');
+    });
+});
+
 // $(document).ready(function() {
 
 //     /* To delete a product */

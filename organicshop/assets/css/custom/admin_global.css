@@ -143,10 +143,21 @@ body .wrapper header h2 {
   color: #fff;
   margin-top: 8px;
 }
-body .wrapper header div {
+body .wrapper header > div {
+  position: relative;
+}
+body .wrapper header > div > section {
+  display: inline-block;
+  position: relative;
+}
+body .wrapper header > div > div {
+  text-align: right;
   position: absolute;
-  right: 90px;
-  top: 25px;
+  right: 0px;
+  bottom: 80px;
+}
+body .wrapper header > div > div > div {
+  display: inline-block;
 }
 body .wrapper header div button {
   border-radius: 10px;
@@ -439,6 +450,9 @@ body .wrapper > section .product_content > div .products_table tbody tr.no_data 
 body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(1) {
   text-align: left;
 }
+body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(3) {
+  width: 200px !important;
+}
 body .wrapper > section .product_content > div .products_table tbody tr td:nth-child(1) span {
   padding: 0px;
   border-right: 1px solid #45495D;
@@ -689,7 +703,7 @@ body .wrapper > section > div .products_table tbody tr td:nth-child(2) span {
   border-left: 1px solid #45495D;
 }
 body .wrapper > section > div .products_table tbody tr td:nth-child(3) span {
-  padding: 32px 20px;
+  padding: 32px 5px;
   text-align: center;
 }
 body .wrapper > section > div .products_table tbody tr td:nth-child(4) span,
@@ -948,6 +962,12 @@ body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > inpu
   height: 150px;
   border-color: transparent !important;
 }
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) input[type="radio"] {
+  appearance: checkbox;
+}
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) .errors {
+  left: 170px;
+}
 body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul {
   list-style: none;
   font-size: 0px;
@@ -959,6 +979,7 @@ body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul l
   vertical-align: top;
   position: relative;
   margin-right: 22px;
+  margin-bottom: 10px;
   height: 188px;
   background-color: #fff;
   border-radius: 10px;
@@ -974,6 +995,7 @@ body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul l
   border: 1px solid #C1C1C1;
   border-radius: 10px;
   display: block;
+  margin-bottom: 5px;
 }
 body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li .delete_image {
   width: 25px;
@@ -1009,8 +1031,9 @@ body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul l
 body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li:hover {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 }
-body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li:hover label {
-  padding: 15px 0px 0px 15px;
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li:hover label,
+body .form_modal .modal-dialog .modal-content form > ul > li:nth-child(6) > ul li label:has(input[type="radio"]:checked) {
+  padding: 15px 15px 0px 15px;
   opacity: 1;
 }
 body .form_modal .modal-dialog .modal-content form > ul > li > input,
@@ -1098,16 +1121,19 @@ body .form_modal .modal-dialog .modal-content form > button[type=button] {
   color: #B1B1B1;
   margin-right: 5px;
 }
+body div:has(#dropdownMenuLink) {
+  position: relative;
+}
 body #dropdownMenuLink {
   position: relative;
-  left: 80px;
-  top: -13px;
+  top: 0px;
 }
 body #dropdownMenuLink img {
   border-radius: 50%;
   height: 40px;
   aspect-ratio: 1 / 1;
   object-fit: contain;
+  margin-right: 5px;
 }
 .hidden {
   display: none !important;

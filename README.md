@@ -28,6 +28,13 @@ Day 3: ~7h38m
     - Linked categories to the product_types table
     - Linked the products table to the admin products dashboard
     - Created and tested the validation for the add product form, including the upload of multiple images, and deletion of uploaded images if errors are detected.
+Day 4: 7h42m
+  - Use of JS to show preview of images to upload, and selection of main image. (55m)
+  - Made client side validation for images to upload. (1h30m)
+  - Finished add product. (2h25m)
+  - Fixed admin product view. (46m)
+  - Edit product 90% complete (2h6m)
+
 ## ERD:
 
 *Note: user_billings, user_shippings, and user_cards are encrypted, as well as the password field in the users table*
