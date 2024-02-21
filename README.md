@@ -33,7 +33,12 @@ Day 4: 7h42m
   - Made client side validation for images to upload. (1h30m)
   - Finished add product. (2h25m)
   - Fixed admin product view. (46m)
-  - Edit product 90% complete (2h6m)
+  - Edit product 80% complete. (2h6m)
+Day 5: 7h23m
+  - Finished edit product, and fixed add product and edit product bugs. (3h22m)
+  - Delete product completed. (18m)
+  - Finished switching admin product categories. (1h13m)
+  - Finished search function, with interaction with categories, and completion admin product page (2h30m)
 
 ## ERD:
 

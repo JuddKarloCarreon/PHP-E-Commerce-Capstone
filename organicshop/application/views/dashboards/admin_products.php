@@ -38,7 +38,7 @@
                 </section>
                 <div>
                     <div>
-                        <a class="switch" href="catalogue.html">Switch to Shop View</a>
+                        <a class="switch" href="<?= base_url('catalogues') ?>">Switch to Shop View</a>
                     </div>
                     <div class="dropdown show">
                         <a class="btn btn-secondary dropdown-toggle profile_dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,17 +60,20 @@
             </ul>
         </aside>
         <section>
-            <form action="process.php" method="post" class="search_form">
+            <form action="<?= base_url('dashboards/search') ?>" method="post" class="search_form">
+                <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
                 <input type="text" name="search" placeholder="Search Products">
             </form>
             <button class="add_product" data-toggle="modal" data-target="#add_product_modal">Add Product</button>
             <form action="<?= base_url('dashboards/change_category') ?>" method="post" class="categories_form">
+                <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
+                <input type="hidden" name="product_type" value="0" alt_name="for_button">
                 <h3>Categories</h3>
                 <ul>
 <?php           foreach ($prod_count as $key => $val) { ?>
                     <li>
-                        <button type="submit" class="active" name="product_type" value="<?= str_replace(' ', '_', strtolower($key)) ?>">
-                            <span><?= $val ?></span><img src="<?= base_url('assets/images/' . str_replace(' ', '_', strtolower($key)) . '.png') ?>" alt="<?= str_replace(' ', '_', strtolower($key)) ?>"><h4><?= $key ?></h4>
+                        <button type="submit" <?= ($key == 'All Products')?'class="active" ':' ' ?>value="<?= $val[1] ?>">
+                            <span><?= $val[0] ?></span><img src="<?= base_url('assets/images/' . str_replace(' ', '_', strtolower($key)) . '.png') ?>" alt="<?= str_replace(' ', '_', strtolower($key)) ?>"><h4><?= $key ?></h4>
                         </button>
                     </li>
 <?php           } ?>
@@ -83,42 +86,15 @@
                             <th><h3>All Products</h3></th>
                             <th>ID #</th>
                             <th>Price</th>
-                            <th>Caregory</th>
+                            <th>Category</th>
                             <th>Inventory</th>
                             <th>Sold</th>
                             <th></th>
                         </tr>
                     </thead>
-<?php           if (!empty($data)) { ?>
                     <tbody>
-<?php               foreach ($data as $row) { ?>
-                        <tr>
-                            <td>
-                                <span>
-                                    <img src="<?= base_url('assets/images/' . (($row['main_img'] != '')?'products/' . $row['id'] . '/' . $row['main_img']:'close.svg')) ?>" alt="#">
-                                    <?= $row['name'] ?>
-                                </span>
-                            </td>
-                            <td><span><?= $row['id'] ?></span></td>
-                            <td><span>$ <?= $row['price'] ?></span></td>
-                            <td><span><?= $row['category'] ?></span></td>
-                            <td><span><?= $row['stock'] ?></span></td>
-                            <td><span><?= $row['sold'] ?></span></td>
-                            <td>
-                                <span>
-                                    <button class="edit_product" get="<?= base_url('dashboards/get_record/' . $row['id']) ?>">Edit</button>
-                                    <button class="delete_product">X</button>
-                                </span>
-                                <form class="delete_product_form" action="<?= base_url('dashboards/delete_product') ?>" method="post">
-                                    <p>Are you sure you want to remove this item?</p>
-                                    <button type="button" class="cancel_remove">Cancel</button>
-                                    <button type="submit">Remove</button>
-                                </form>
-                            </td>
-                        </tr>
-<?php               } ?>
+<?php $this->load->view('partials/dashboards/admin_products_data'); ?>
                     </tbody>
-<?php           } ?>
                 </table>
             </div>
         </section>
@@ -127,7 +103,8 @@
                 <div class="modal-content">
                     <button data-dismiss="modal" aria-label="Close" class="close_modal"></button>
                     <form class="add_product_form" action="<?= base_url('dashboards/add_product') ?>" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>">
+                        <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
+                        <input type="hidden" name="id" value="0">
                         <h2>Add a Product</h2>
                         <ul>
                             <li>

@@ -27,5 +27,29 @@
             }
             $this->db->query($query, array_values($post));
         }
+        public function update_record($table, $id, $data) {
+            $query = "UPDATE $table SET";
+            $values = array();
+            $last_key = array_keys(array_slice($data, -1))[0];
+            foreach ($data as $key => $val) {
+                $query .= " $key=?";
+                array_push($values, $val);
+                if ($key !== $last_key) {
+                    $query .= ', ';
+                }
+            }
+            $query .= ' WHERE id=?';
+            array_push($values, $id);
+            $this->db->query($query, $values);
+        }
+        public function delete_record($table, $id) {
+            $query = "DELETE FROM $table WHERE id=?";
+            $values = array($id);
+            $this->db->query($query, $values);
+        }
+        public function validate_id($id) {
+            $id = $this->Defence->clean($id);
+            return filter_var($id, FILTER_VALIDATE_INT);
+        }
     }
 ?>

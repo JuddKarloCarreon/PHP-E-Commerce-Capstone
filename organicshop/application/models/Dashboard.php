@@ -4,9 +4,9 @@
             $this->load->model('Defence');
             $this->load->model('Database');
             $table = $this->Database->get_records('product_types');
-            $prod_count = array('All Products' => $this->Database->count_records('products'));
+            $prod_count = array('All Products' => array($this->Database->count_records('products'), 0));
             foreach ($table as $row) {
-                $prod_count[$row['name']] = $this->Database->count_records('products','product_type_id', $row['id']);
+                $prod_count[$row['name']] = array($this->Database->count_records('products','product_type_id', $row['id']), $row['id']);
                 $prod_type[$row['name']] = $row['id'];
             }
             $data = $this->session->flashdata('data');
@@ -47,25 +47,13 @@
                 $errors['images'] = '';
             }
             $data = array();
-            if (count($_FILES) > 0 && empty($errors)) {
-                if (!array_key_exists('main_image', $post)) {
-                    $main = $_FILES['images']['name'][0];
-                } else {
-                    $main = $post['main_image'];
-                }
-                
+            if ((count($_FILES['images']['name']) > 1 || $_FILES['images']['name'][0] !== '') && empty($errors)) {
                 /* This part creates or clears the temporary upload directory */
-                $dir = '././assets/images/products/temp/' . $this->session->userdata('user')['id'];
+                $dir = FCPATH . 'assets/images/products/temp/' . $this->session->userdata('user')['id'];
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 } else {
-                    $files = glob($dir . '/*');
-                    var_dump($files);
-                    foreach($files as $file){
-                        if(is_file($file)) {
-                            unlink($file);
-                        }
-                    }
+                    $this->delete_files($dir);
                 }
 
                 $config['upload_path'] = $dir;
@@ -91,12 +79,7 @@
                         if (!array_key_exists('imgs', $data)) {
                             $data['imgs'] = array();
                         }
-                        if ($_FILES['images']['name'] == $main) {
-                            /* Puts the main image as first in the array */
-                            $data['imgs'] = array_merge(array($temp['file_name']), $data['imgs']);
-                        } else {
-                            array_push($data['imgs'], $temp['file_name']);
-                        }
+                        array_push($data['imgs'], $temp['file_name']);
                     }
                 }
                 if (!empty($errors)) {
@@ -110,7 +93,6 @@
                 }
             }
             $post['validated_imgs'] = $data;
-            var_dump($post);
             $this->session->set_flashdata('errors', $errors);
             return array($errors, $post);
         }
@@ -132,9 +114,35 @@
             }
             return FALSE;
         }
-        public function add_product($post) {
+        public function add_product($post) {  
+            $this->load->model('Database'); 
+            list($post, $upload_imgs) = $this->prep_for_db($post);
+            var_dump($post);
+            var_dump($upload_imgs);
+            /* Add to database */
+            // $this->Database->add_record('products', $post);
+            // $id = $this->Database->get_record('products', 'product_type_id', $post['product_type_id'], 'ORDER BY created_at DESC')['id'];
+            
+            /* Move images to proper directory */
+            if (array_key_exists('validated_imgs', $post)) {
+                $this->move_product_imgs($upload_imgs, $id);
+            }
+        }
+        public function edit_product($post) {
             $this->load->model('Database');
-            /* Preparing $post for addition to database */
+            $id = $post['id'];
+
+            list($data, $upload_imgs) = $this->prep_for_db($post);
+            /* Edit record */
+            $this->Database->update_record('products', $id, $data);
+            /* Move images to proper directory */
+            if (!empty($post['validated_imgs']['imgs'])) {
+                $this->move_product_imgs($upload_imgs, $id);
+            }
+        }
+        private function prep_for_db($post) {
+            $this->load->model('Database');
+            /* Preparing $post for addition/update to database */
             $temp = array(
                 'name' => 'product_name',
                 'product_type_id' => 'category'
@@ -144,46 +152,114 @@
                 unset($post[$val]);
             }
 
-            $path = substr($post['validated_imgs']['file_path'], 0, -5);
-            $post['image_names_json'] = json_encode($post['validated_imgs']['imgs']);
-
-            $temp = array('main_image', 'validated_imgs');
+            /* Prepare images */
+            $images = array();
+            if (array_key_exists('id', $post)) {
+                /* Get images from database */
+                $temp = $this->Database->get_record('products', 'id', $post['id']);
+                if (!in_array($temp['image_names_json'], array('null', '[]', NULL, '[null]'))) {
+                    $images = json_decode($temp['image_names_json']);
+                }
+            }
+            $upload_imgs = array();
+            if (!empty($post['validated_imgs'])) {
+                $images = array_merge($images, $post['validated_imgs']['imgs']);
+                $upload_imgs = $post['validated_imgs']['imgs'];
+            }
+            /* Put main image to the beginning of the array, then encode */
+            if (array_key_exists('main_image', $post)) {
+                $images = array_diff($images, array($post['main_image']));
+                $images = array_merge(array($post['main_image']), $images);
+            }
+            $post['image_names_json'] = json_encode($images);
+            /* Remove excess key value pairs from post */
+            $temp = array('main_image', 'validated_imgs', 'id');
             foreach ($temp as $val) {
                 unset($post[$val]);
             }
-            
-            /* Add to database */
-            $this->Database->add_record('products', $post);
-            $id = $this->Database->get_record('products', 'product_type_id', $post['product_type_id'], 'ORDER BY created_at DESC')['id'];
-            
-            /* Move images to proper directory */
-            $this->handle_product_imgs($path, json_decode($post['image_names_json']), $id);
+            return array($post, $upload_imgs);
         }
-        private function handle_product_imgs($path, $imgs, $id) {
-            $new .= $id . '/';
+        private function move_product_imgs($imgs, $id) {
+            $path = str_replace('\\', '/', FCPATH . 'assets/images/products/');
+            $new = $path . $id . '/';
             if (!is_dir($new)) {
                 mkdir($new, 0777, true);
             }
             foreach ($imgs as $img) {
-                rename($path . 'temp/' . $img, $new . $img);
+                rename($path . 'temp/' . $this->session->userdata('user')['id'] . '/' . $img, $new . $img);
             }
         }
-        private function get_products($type = 0) {
-            $where = '';
-            if ($type != 0) {
-                $where = "t1.product_type_id='$type'";
-            }
+        public function get_products($type = 0) {
+            $this->load->model('Database');
+            $type = $this->Database->validate_id($type);
+            $data = array();
+            if ($type !== FALSE) {
+                $where = '';
+                if ($type != 0) {
+                    $where = "WHERE t1.product_type_id='$type'";
+                }
 
-            $query = "SELECT t1.*, t2.name as category FROM products t1 LEFT JOIN product_types t2 ON t1.product_type_id=t2.id $where";
-            $data = $this->db->query($query)->result_array();
+                $query = "SELECT t1.*, t2.name as category FROM products t1 LEFT JOIN product_types t2 ON t1.product_type_id=t2.id $where";
+                $data = $this->db->query($query)->result_array();
 
-            foreach ($data as $key => $row) {
-                $data[$key]['main_img'] = '';
-                if ($row['image_names_json'] !== 'null') {
-                    $data[$key]['main_img'] = json_decode($row['image_names_json'])[0];
+                foreach ($data as $key => $row) {
+                    $data[$key]['main_img'] = '';
+                    if (!in_array($row['image_names_json'], array('null', '[]', NULL, '[null]'))) {
+                        $data[$key]['main_img'] = json_decode($row['image_names_json'])[0];
+                    } else {
+                        $data[$key]['image_names_json'] = '';
+                    }
                 }
             }
+            $this->session->set_flashdata('data', $data);
             return $data;
+        }
+        public function delete_image($id, $name) {
+            $this->load->model('Database');
+            $images = $this->Database->get_record('products', 'id', $id)['image_names_json'];
+            $images = json_decode($images);
+            $images = array_diff($images, array($name));
+            $images = array_merge(array(), $images);
+            $images = array('image_names_json' => json_encode($images));
+            $this->Database->update_record('products', $id, $images);
+
+            $file = str_replace('\\', '/', FCPATH . "assets/images/products/$id/$name");
+            unlink($file);
+        }
+        public function delete_record($table, $id) {
+            $dir = str_replace('\\', '/', FCPATH . "assets/images/products/$id");
+            $this->delete_files($dir);
+            $this->Database->delete_record($table, $id);
+        }
+        private function delete_files($dir) {
+            $files = glob($dir . '/*');
+            foreach($files as $file){
+                if(is_file($file)) {
+                    unlink($file);
+                }
+            }
+        }
+        public function search($post, $data = 'none') {
+            if ($data === 'none') {
+                $data = $this->get_products();
+            }
+            if ($post['search'] == '') {
+                return $data;
+            }
+            $results = array();
+            foreach ($data as $row) {
+                if (strpos(strtolower($row['name']), strtolower($post['search'])) !== FALSE) {
+                    array_push($results, $row);
+                }
+            }
+            return $results;
+        }
+        public function check_not_admin() {
+            $user = $this->session->userdata('user');
+            if ($user === NULL || $user['is_admin'] == 0) {
+                return TRUE;
+            }
+            return FALSE;
         }
     }
 ?>
