@@ -14,20 +14,9 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/vendor/bootstrap-select.min.css') ?>">
 
     <link rel="stylesheet" href="<?= base_url('assets/css/custom/admin_global.css') ?>">
+    <script src="<?= base_url('assets/js/global/products.js') ?>"></script>
     <script src="<?= base_url('assets/js/global/admin_products.js') ?>"></script>
 </head>
-<script>
-    // $(document).ready(function() {
-    //     // $("form").submit(function(event) {
-    //     //     event.preventDefault();
-    //     //     return false;
-    //     // });
-    //     /* prototype add */
-    //     $(".switch").click(function() {
-    //         window.location.href = "products_dashboard.html";
-    //     });
-    // });
-</script>
 <body>
     <div class="wrapper">
         <header>
@@ -46,7 +35,7 @@
                             <?= $user['name'] ?>
                         </a>
                         <div class="dropdown-menu admin_dropdown" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="login.html">Logout</a>
+                            <a class="dropdown-item" href="<?= base_url('logout') ?>">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -60,24 +49,13 @@
             </ul>
         </aside>
         <section>
-            <form action="<?= base_url('dashboards/search') ?>" method="post" class="search_form">
+            <form action="<?= base_url('dashboards/filter') ?>" method="post" class="search_form">
                 <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
                 <input type="text" name="search" placeholder="Search Products">
             </form>
             <button class="add_product" data-toggle="modal" data-target="#add_product_modal">Add Product</button>
-            <form action="<?= base_url('dashboards/change_category') ?>" method="post" class="categories_form">
-                <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
-                <input type="hidden" name="product_type" value="0" alt_name="for_button">
-                <h3>Categories</h3>
-                <ul>
-<?php           foreach ($prod_count as $key => $val) { ?>
-                    <li>
-                        <button type="submit" <?= ($key == 'All Products')?'class="active" ':' ' ?>value="<?= $val[1] ?>">
-                            <span><?= $val[0] ?></span><img src="<?= base_url('assets/images/' . str_replace(' ', '_', strtolower($key)) . '.png') ?>" alt="<?= str_replace(' ', '_', strtolower($key)) ?>"><h4><?= $key ?></h4>
-                        </button>
-                    </li>
-<?php           } ?>
-                </ul>
+            <form action="<?= base_url('dashboards/filter') ?>" method="post" class="categories_form">
+<?php $this->load->view('partials/global/categories_form') ?>
             </form>
             <div>
                 <table class="products_table">

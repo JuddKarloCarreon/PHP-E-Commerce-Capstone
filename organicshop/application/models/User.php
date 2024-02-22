@@ -77,9 +77,9 @@
         }
         /* Handles obtaining parameters to pass to the login and signup views */
         public function get_param() {
-            $this->load->model('Defence');
+            $this->load->model('General');
             return array(
-                'csrf' => $this->Defence->get_csrf(),
+                'csrf' => $this->General->get_csrf(),
                 'errors' => $this->session->flashdata('errors'),
                 'form' => $this->session->flashdata('form')
             );
@@ -115,7 +115,7 @@
             $this->session->set_userdata('user', array(
                 'id' => $record['id'],
                 'name' => $record['first_name'],
-                'is_admin' => $record['is_admin'],
+                'is_admin' => $record['user_level'],
                 'image' => $record['image']
             ));
         }

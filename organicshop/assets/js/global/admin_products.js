@@ -1,17 +1,6 @@
-function get_dashboard_url() {
-    var base = $('#add_product_modal form').attr('action');
-    return base.substring(0, base.lastIndexOf('/'));
-}
-function update_csrf() {
-    var base = get_dashboard_url();
-    $.get(base + '/get_csrf', function (res) {
-        $('input[alt_name="csrf"]').attr('name', res.name);
-        $('input[alt_name="csrf"]').attr('value', res.hash);
-    }, 'JSON');
-}
 function prepare_form(arr) {
     var base = get_dashboard_url();
-    $('#add_product_modal form').attr('action', base + '/' + arr.shift());
+    $('#add_product_modal form').attr('action', base + '/dashboards/' + arr.shift());
 
     var arr2 = ['h2', 'input[name="product_name"]', 'textarea', 'input[name="price"]', 'input[name="stock"]', 'input[name="id"]'];
     arr2.forEach(function (val, index) {
@@ -21,27 +10,6 @@ function prepare_form(arr) {
     $('#images').siblings('ul').empty();
     $('#images').val('');
     $('#add_product_modal').find('option').removeAttr('selected');
-}
-/* Counts data returned when using search */
-function count_data() {
-    /* Zero all category count */
-    $('.categories_form button span').each(function () {
-        $(this).text('0');
-    });
-    /* Counts data by category */
-    var counts = {};
-    $('.products_table tbody > tr').each(function () {
-        var text = $(this).children('td:nth-child(4)').children('span').text();
-        if (counts[text] === undefined) {
-            counts[text] = 0;
-        }
-        counts[text]++;
-    });
-    /* Sets count */
-    for (var key in counts) {
-        $('.categories_form').find('h4:contains("' + key + '")').siblings('span').text(counts[key]);
-    }
-    $('.categories_form').find('h4:contains("All Products")').siblings('span').text($('.products_table tbody > tr').length);
 }
 $(document).ready(function () {
     if ($('.form_modal .errors').length) {
@@ -107,7 +75,7 @@ $(document).ready(function () {
             if (res != 'null') {
                 /* Set form parameters */
                 prepare_form(['edit_product', 'Edit Product #' + res.id, res.name, res.description, res.price, res.stock, res.id]);
-                $('#add_product_modal').find('option[value="' + res.product_type_id + '"]').attr('selected', 'selected');
+                $('#add_product_modal').find('option[value="' + res.product_type + '"]').attr('selected', 'selected');
                 $('#add_product_modal').find('.selectpicker').selectpicker('refresh');
 
                 /* Set old images */
@@ -149,38 +117,6 @@ $(document).ready(function () {
         $(this).closest("tr").removeClass("show_delete");
         $(".popover_overlay").fadeOut();
         $("body").removeClass("show_popover_overlay");
-    });
-
-    $(document).on('click', '.categories_form button[type="submit"][value]', function (event) {
-        event.preventDefault();
-        $(this).closest('form').find('button[class="active"]').removeClass('active');
-        $(this).addClass('active');
-        $(this).closest('form').find('input[alt_name="for_button"]').attr('value', $(this).attr('value'))
-        $(this).closest('form').trigger('submit');
-    });
-    $(document).on('submit', '.categories_form, .search_form', function () {
-        var serialize = $(this).serialize();
-        var form = $(this).attr('class');
-        if (form == 'categories_form') {
-            serialize += '&' + $('.search_form input[name="search"]').attr('name') + '=' + $('.search_form input[name="search"]').val();
-        } else if (form == 'search_form') {
-            $('.categories_form').find('button[class="active"]').removeClass('active');
-            $('.categories_form').find('button[type="submit"][value="0"]').addClass('active');
-        }
-        $('.categories_form input, .categories_form button', '.search_form input', '.search_form button').prop('disabled', true);
-        $.post($(this).closest('form').attr('action'), serialize, function (res) {
-            $('.products_table tbody').html(res);
-        }).always(function () {
-            update_csrf();
-            $('.categories_form input, .categories_form button', '.search_form input', '.search_form button').prop('disabled', false);
-            if (form == 'search_form') {
-                count_data();
-            }
-        });
-        return false;
-    });
-    $(document).on('change', 'input[name="search"]', function () {
-        $('.search_form').trigger('submit');
     });
 });
 

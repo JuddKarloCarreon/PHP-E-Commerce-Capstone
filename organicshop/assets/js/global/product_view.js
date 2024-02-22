@@ -1,5 +1,15 @@
 $(document).ready(function(){
-
+    $('body > .wrapper > section > section > h3').text('Similar Items');
+    $("#add_to_cart").click(function(){
+        $("<span class='added_to_cart'>Added to cart succesfully!</span>")
+        .insertAfter(this)
+        .fadeIn()
+        .delay(1000)
+        .fadeOut(function() {
+            $(this).remove();
+        });
+        return false;
+    });
 
     $("body").on("click", ".increase_decrease_quantity", function() {
 

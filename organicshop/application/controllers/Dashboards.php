@@ -4,19 +4,19 @@
         public function __construct() {
             parent::__construct();
             $this->load->model('Dashboard');
-            $this->load->model('Defence');
+            $this->load->model('General');
         }
         /* The default page of the website */
         public function index() {
             $param = $this->Dashboard->get_param();
             if ($this->Dashboard->check_not_admin()) {
-                $this->load->view('dashboards/catalogue', $param);
+                redirect('catalogues');
             } else {
                 $this->load->view('dashboards/admin_products', $param);
             }
         }
         public function add_product() {
-            $post = $this->Defence->clean();
+            $post = $this->General->clean();
             if ($this->Dashboard->check_not_admin() || empty($post)) {
                 redirect('/');
             }
@@ -27,7 +27,7 @@
             redirect('/');
         }
         public function edit_product() {
-            $post = $this->Defence->clean();
+            $post = $this->General->clean();
             if ($this->Dashboard->check_not_admin() || empty($post)) {
                 redirect('/');
             }
@@ -42,7 +42,7 @@
                 redirect('/');
             }
             $this->load->model('Database');
-            $name = $this->Defence->clean($name);
+            $name = $this->General->clean($name);
             $id = $this->Database->validate_id($id);
             if ($id) {
                 $this->Dashboard->delete_image($id, $name);
@@ -66,30 +66,22 @@
             $id = $this->input->post('id', TRUE);
             $id = $this->Database->validate_id($id);
             if ($id) {
-                $this->Dashboard->delete_record('products', $id);
+                $this->Dashboard->soft_delete_record('products', $id);
             }
             redirect('/');
         }
-        public function change_category() {
-            $post = $this->Defence->clean();
+        public function filter() {
+            $post = $this->General->clean();
             if ($this->Dashboard->check_not_admin() || empty($post)) {
                 redirect('/');
             }
-            $data = $this->Dashboard->get_products($post['product_type']);
-            $data = $this->Dashboard->search($post, $data);
-            // redirect('/');
-            $this->load->view('partials/dashboards/admin_products_data', array('data' => $data, 'csrf' => $this->Defence->get_csrf()));
-        }
-        public function get_csrf() {
-            echo json_encode($this->Defence->get_csrf());
-        }
-        public function search() {
-            if ($this->Dashboard->check_not_admin()) {
-                redirect('/');
+            if (!array_key_exists('product_type', $post)) {
+                $post['product_type'] = 0;
             }
-            $post = $this->Defence->clean();
-            $data = $this->Dashboard->search($post);
-            $this->load->view('partials/dashboards/admin_products_data', array('data' => $data, 'csrf' => $this->Defence->get_csrf()));
+            $data = $this->Dashboard->get_products($post['product_type']);
+            $data = $this->General->search_products($post, $data);
+            // redirect('/');
+            $this->load->view('partials/dashboards/admin_products_data', array('data' => $data, 'csrf' => $this->General->get_csrf()));
         }
     }
 ?>

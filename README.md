@@ -1,6 +1,7 @@
 # PHP-E-Commerce-Capstone
 ## To-do:
-  - Add products for admin with images
+  - Add pagination
+  - Finish product_view
   
 ## Timestamps:
 Day 1: 1h27m
@@ -39,6 +40,10 @@ Day 5: 7h23m
   - Delete product completed. (18m)
   - Finished switching admin product categories. (1h13m)
   - Finished search function, with interaction with categories, and completion admin product page (2h30m)
+Day 6: 6h45m
+  - Finalized ERD, updated affected code, and ensured the uploaded images will have a unique, url friendly name (2h10m)
+  - Completed catalogue/product page with search and category switching. (2h45m)
+  - Finished 50% of product view page (1h50m)
 
 ## ERD:
 

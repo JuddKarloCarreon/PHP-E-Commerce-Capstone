@@ -25,8 +25,8 @@
         /* Handles form submission for login and signup. First cleans and checks the existence post data,
             then validates it, and if doing signup, adds new user to the database, then logs in. */
         public function process_post() {
-            $this->load->model('Defence');
-            $post = $this->Defence->clean();
+            $this->load->model('General');
+            $post = $this->General->clean();
             if (empty($post)) {
                 redirect('/');
             }
