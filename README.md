@@ -29,17 +29,20 @@ Day 3: ~7h38m
     - Linked categories to the product_types table
     - Linked the products table to the admin products dashboard
     - Created and tested the validation for the add product form, including the upload of multiple images, and deletion of uploaded images if errors are detected.
+
 Day 4: 7h42m
   - Use of JS to show preview of images to upload, and selection of main image. (55m)
   - Made client side validation for images to upload. (1h30m)
   - Finished add product. (2h25m)
   - Fixed admin product view. (46m)
   - Edit product 80% complete. (2h6m)
+
 Day 5: 7h23m
   - Finished edit product, and fixed add product and edit product bugs. (3h22m)
   - Delete product completed. (18m)
   - Finished switching admin product categories. (1h13m)
   - Finished search function, with interaction with categories, and completion admin product page (2h30m)
+  
 Day 6: 6h45m
   - Finalized ERD, updated affected code, and ensured the uploaded images will have a unique, url friendly name (2h10m)
   - Completed catalogue/product page with search and category switching. (2h45m)
