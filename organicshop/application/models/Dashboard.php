@@ -12,13 +12,18 @@
             if ($data === NULL) {
                 $data = $this->get_products();
             }
+            $page = $this->session->flashdata('page');
+            if ($page === NULL) {
+                $page = $this->General->get_page_param();
+            }
             return array(
                 'user' => $this->session->userdata('user'),
                 'data' => $data,
                 'errors' => $this->session->flashdata('errors'),
                 'csrf' => $this->General->get_csrf(),
                 'prod_count' => $prod_count,
-                'prod_type' => $prod_type
+                'prod_type' => $prod_type,
+                'page' => $page
             );
         }
         public function validate($post) {
@@ -188,17 +193,16 @@
                 rename($path . 'temp/' . $this->session->userdata('user')['id'] . '/' . $img, $new . $img);
             }
         }
-        public function get_products($type = 0) {
+        public function get_products($type = 0, $page = 1, $lim = '', $search = '') {
             $this->load->model('Database');
             $type = $this->Database->validate_id($type);
             $data = array();
             if ($type !== FALSE) {
+                $field = 1;
                 if ($type != 0) {
-                    $data = $this->Database->get_records('products', 'product_type', $type);
-                } else {
-                    $data = $this->Database->get_records('products');
+                    $field = 'product_type';
                 }
-
+                $data = $this->Database->get_records('products', $field, $type, 1, 0, $page, $lim, 'name', "%$search%");
                 foreach ($data as $key => $row) {
                     $data[$key]['category'] = $this->Database->product_types[intval($row['product_type']) - 1];
                     $data[$key]['main_img'] = '';
@@ -224,19 +228,19 @@
             $file = str_replace('\\', '/', FCPATH . "assets/images/products/$id/$name");
             unlink($file);
         }
-        public function soft_delete_record($table, $id) {
-            // $dir = str_replace('\\', '/', FCPATH . "assets/images/products/$id");
-            // $this->delete_files($dir);
-            $this->Database->soft_delete_record($table, $id);
-        }
-        private function delete_files($dir) {
-            $files = glob($dir . '/*');
-            foreach($files as $file){
-                if(is_file($file)) {
-                    unlink($file);
-                }
-            }
-        }
+        // public function soft_delete_record($table, $id) {
+        //     // $dir = str_replace('\\', '/', FCPATH . "assets/images/products/$id");
+        //     // $this->delete_files($dir);
+        //     $this->Database->soft_delete_record($table, $id);
+        // }
+        // private function delete_files($dir) {
+        //     $files = glob($dir . '/*');
+        //     foreach($files as $file){
+        //         if(is_file($file)) {
+        //             unlink($file);
+        //         }
+        //     }
+        // }
         public function search($post, $data = 'none') {
             if ($data === 'none') {
                 $data = $this->get_products();

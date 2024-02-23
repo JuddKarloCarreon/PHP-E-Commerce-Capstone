@@ -1,7 +1,8 @@
 # PHP-E-Commerce-Capstone
 ## To-do:
-  - Add pagination
-  - Finish product_view
+  - Do cart page
+  - Do checkout
+  - Do admin orders
   
 ## Timestamps:
 Day 1: 1h27m
@@ -47,6 +48,14 @@ Day 6: 6h45m
   - Finalized ERD, updated affected code, and ensured the uploaded images will have a unique, url friendly name (2h10m)
   - Completed catalogue/product page with search and category switching. (2h45m)
   - Finished 50% of product view page (1h50m)
+
+Day 7: 9h57m
+  - Added pagination and updated admin products and catalogue accordingly. Also added to database fetching model, and unified the filtering of products via search and categories into one controller/model. (6h)
+  - Allowed product view page to have a proxy for missing images. (10m)
+  - Fixed use of total amount, ensured avoidance of using floating point datatype, and ensures the content of the input will always be an integer. (50m)
+  - In product view, ensured that the amount of stock will limit the amount available to be bought. (17m)
+  - Accomplished search in product view (30m)
+  - Finished addition to cart and updating of number of items in cart. This completes product view (2h10m)
 
 ## ERD:
 

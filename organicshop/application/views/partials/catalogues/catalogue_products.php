@@ -1,3 +1,8 @@
+<?php       if ($hide_pages === NULL) { ?>
+                <form class="page" action="<?= base_url('generals/filter/catalogue') ?>" method="post">
+<?php $this->load->view('partials/global/page_select'); ?>
+                </form>
+<?php       } ?>
                 <h3>All Products (<?= count($data) ?>)</h3>
 <?php       if (!empty($data)) { ?>
                 <ul>

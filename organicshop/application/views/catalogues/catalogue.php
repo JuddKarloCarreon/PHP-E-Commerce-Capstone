@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" href="<?= base_url('assets/css/custom/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/custom/product_dashboard.css') ?>">
+    <script src="<?= base_url('assets/js/global/functions.js') ?>"></script>
     <script src="<?= base_url('assets/js/global/products.js') ?>"></script>
 </head>
 <body>
@@ -30,12 +31,12 @@
             </ul> -->
         </aside>
         <section>
-            <form action="<?= base_url('catalogues/filter') ?>" method="post" class="search_form">
+            <form action="<?= base_url('generals/filter/catalogue') ?>" method="post" class="search_form">
                 <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
-                <input type="text" name="search" placeholder="Search Products">
+                <input type="text" name="search" value="<?= $search_val ?>" placeholder="Search Products">
             </form>
-            <a class="show_cart" href="cart.html">Cart (0)</a>
-            <form action="<?= base_url('catalogues/filter') ?>" method="post" class="categories_form">
+            <a class="show_cart" href="cart.html">Cart (<?= $cart_count ?>)</a>
+            <form action="<?= base_url('generals/filter/catalogue') ?>" method="post" class="categories_form">
 <?php $this->load->view('partials/global/categories_form') ?>
             </form>
             <div>

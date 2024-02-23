@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/vendor/bootstrap-select.min.css') ?>">
 
     <link rel="stylesheet" href="<?= base_url('assets/css/custom/admin_global.css') ?>">
+    <script src="<?= base_url('assets/js/global/functions.js') ?>"></script>
     <script src="<?= base_url('assets/js/global/products.js') ?>"></script>
     <script src="<?= base_url('assets/js/global/admin_products.js') ?>"></script>
 </head>
@@ -49,15 +50,18 @@
             </ul>
         </aside>
         <section>
-            <form action="<?= base_url('dashboards/filter') ?>" method="post" class="search_form">
+            <form action="<?= base_url('generals/filter/dashboard') ?>" method="post" class="search_form">
                 <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
                 <input type="text" name="search" placeholder="Search Products">
             </form>
             <button class="add_product" data-toggle="modal" data-target="#add_product_modal">Add Product</button>
-            <form action="<?= base_url('dashboards/filter') ?>" method="post" class="categories_form">
+            <form action="<?= base_url('generals/filter/dashboard') ?>" method="post" class="categories_form">
 <?php $this->load->view('partials/global/categories_form') ?>
             </form>
             <div>
+                <form class="page" action="<?= base_url('generals/filter/dashboard') ?>" method="post">
+<?php $this->load->view('partials/global/page_select'); ?>
+                </form>
                 <table class="products_table">
                     <thead>
                         <tr>
@@ -112,7 +116,7 @@
                             </li>
                             <li>
                                 <?= (!empty($errors))?$errors['price']:"" ?>
-                                <input type="number" name="price" value="1" required>
+                                <input type="number" name="price" value="1" step=".01" required>
                                 <label>Price</label>
                             </li>
                             <li>

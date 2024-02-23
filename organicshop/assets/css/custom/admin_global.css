@@ -1187,3 +1187,25 @@ body #dropdownMenuLink img {
   top: 70%;
   background-color: white;
 }
+form.page {
+  position: absolute;
+  right: 60px;
+}
+form.page > * {
+  border-radius: 5px;
+  color: #fcd8ff;
+  line-height: 1.4em;
+}
+form.page > select {
+  background-color: #2a2d3e;
+  padding-bottom: 1px;
+}
+form.page > button {
+  padding-inline: 5px;
+  background-color: #6f7597;
+  border-color: transparent;
+}
+form.page > label {
+  color: white;
+  margin-right: 5px;
+}

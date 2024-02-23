@@ -9,18 +9,25 @@
             $prod_count = array('All Products' => array($this->Database->count_records('products'), 0));
             foreach ($this->Database->product_types as $key => $val) {
                 $prod_count[$val] = array($this->Database->count_records('products','product_type', $key + 1), $key + 1);
-                $prod_type[$val] = $key + 1;
             }
             $this->session->flashdata('data'); /* To unset data from the admin_products if used */
             $data = $this->session->flashdata('cat_data');
             if ($data === NULL) {
                 $data = $this->get_products();
             }
+            $page = $this->session->flashdata('page');
+            if ($page === NULL) {
+                $page = $this->General->get_page_param();
+            }
             return array(
                 'user' => $this->session->userdata('user'),
                 'csrf' => $this->General->get_csrf(),
                 'prod_count' => $prod_count,
-                'data' => $data
+                'data' => $data,
+                'page' => $page,
+                'hide_pages' => NULL,
+                'search_val' => '',
+                'cart_count' => $this->count_cart()
             );
         }
         public function get_product_param($id) {
@@ -30,29 +37,40 @@
                 'user' => $this->session->userdata('user'),
                 'csrf' => $this->General->get_csrf(),
                 'main_data' => $main_data,
-                'data' => $data
+                'data' => $data,
+                'hide_pages' => '',
+                'cart_count' => $this->count_cart()
             );
         }
-        public function get_products($type = 0, $not_id = 0) {
-            if ($type != 0) {
-                $data = $this->Database->get_records('products', 'product_type', $type, 'id', $not_id);
-            } else {
-                $data = $this->Database->get_records('products');
-            }
-            foreach ($data as $key => $row) {
-                if (!in_array($row['image_names_json'], array('null', '[]', NULL, '[null]'))) {
-                    $data[$key]['main_img'] = json_decode($row['image_names_json'])[0];
-                } else {
-                    $data[$key]['main_img'] = '';
+        public function get_products($type = 0, $not_id = 0, $page = 1, $lim = '', $search = '') {
+            $this->load->model('Database');
+            $type = $this->Database->validate_id($type);
+            $data = array();
+            if ($type !== FALSE) {
+                $not_field = 1;
+                if ($not_id != 0) {
+                    $not_field = 'id';
                 }
-                $data[$key]['category'] = $this->Database->product_types[intval($row['product_type']) - 1];
-                $data[$key]['full'] = intval($row['rating'][0]);
-                $data[$key]['half'] = 0;
-                if (intval($row['rating'][2]) >= 5) {
-                    $data[$key]['half'] = 1;
+                $field = 1;
+                if ($type != 0) {
+                    $field = 'product_type';
                 }
-                $data[$key]['empty'] = 5 - ($data[$key]['full'] + $data[$key]['half']);
-                $data[$key]['rating_count'] = $this->Database->count_records('reviews', 'product_id', $row['id']);
+                $data = $this->Database->get_records('products', $field, $type, $not_field, $not_id, $page, $lim, 'name', "%$search%");
+                foreach ($data as $key => $row) {
+                    if (!in_array($row['image_names_json'], array('null', '[]', NULL, '[null]'))) {
+                        $data[$key]['main_img'] = json_decode($row['image_names_json'])[0];
+                    } else {
+                        $data[$key]['main_img'] = '';
+                    }
+                    $data[$key]['category'] = $this->Database->product_types[intval($row['product_type']) - 1];
+                    $data[$key]['full'] = intval($row['rating'][0]);
+                    $data[$key]['half'] = 0;
+                    if (intval($row['rating'][2]) >= 5) {
+                        $data[$key]['half'] = 1;
+                    }
+                    $data[$key]['empty'] = 5 - ($data[$key]['full'] + $data[$key]['half']);
+                    $data[$key]['rating_count'] = $this->Database->count_records('reviews', 'product_id', $row['id']);
+                }
             }
             $this->session->set_flashdata('data', $data);
             return $data;
@@ -66,6 +84,12 @@
         public function get_product($id) {
             $data = $this->Database->get_record('products', 'id', $id);
             $data['images'] = json_decode($data['image_names_json']);
+            foreach ($data['images'] as $key => $val) {
+                $data['images'][$key] = 'products/' . $data['id'] . '/' . $val;
+            }
+            while (count($data['images']) < 4) {
+                array_push($data['images'], 'close.svg');
+            }
             $data['full'] = intval($data['rating'][0]);
                 $data['half'] = 0;
                 if (intval($data['rating'][2]) >= 5) {
@@ -74,6 +98,56 @@
                 $data['empty'] = 5 - ($data['full'] + $data['half']);
                 $data['rating_count'] = $this->Database->count_records('reviews', 'product_id', $data['id']);
             return $data;
+        }
+        public function add_cart($post) {
+            /* Validation */
+            $check = 'Product does not exist.';
+            $id = $this->Database->validate_id($post['id']);
+            if ($id === FALSE) {
+                return $check;
+            }
+            $amount = intval($post['amount']);
+            $record = $this->Database->get_record('products', 'id', $id);
+            if ($record !== NULL) {
+                if (intval($record['stock']) >= $amount && $amount > 0) {
+                    $check = TRUE;
+                }
+            }
+            /* Add to cart */
+            if ($check === TRUE) {
+                /* Check if user exists */
+                $user = $this->session->userdata('user');
+                if (empty($user)) {
+                    return 'You must login before adding to cart.';
+                }
+                /* Check if item is already in cart */
+                $cart_item = $this->Database->get_record('cart_items', array('user_id', 'product_id'), array($user['id'], $id));
+                // return $cart_item['amount'];
+                if ($cart_item === NULL) {
+                    $data = array(
+                        'user_id' => $user['id'],
+                        'product_id' => $id,
+                        'amount' => $amount
+                    );
+                    $this->Database->add_record('cart_items', $data);
+                    return 'Successfully added to cart.';
+                } else if ((intval($cart_item['amount']) + $amount) > intval($record['stock'])) {
+                    return 'Already reached stock limit.';
+                } else {
+                    $this->Database->update_record('cart_items', $cart_item['id'], array('amount' => (intval($cart_item['amount']) + $amount)));
+                    return 'Successfully increased quantity in cart.';
+                }
+                
+            }
+            return 'Unable to add to cart.';
+        }
+        public function count_cart() {
+            $user = $this->session->userdata('user');
+            $cart_count = 0;
+            if (!empty($user)) {
+                $cart_count = $this->Database->count_records('cart_items', 'user_id', $user['id']);
+            }
+            return $cart_count;
         }
     }
 ?>

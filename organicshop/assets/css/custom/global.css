@@ -513,3 +513,24 @@ body .popover_overlay {
 .show_popover_overlay {
   overflow: hidden;
 }
+form.page {
+  position: absolute;
+  right: 60px;
+}
+form.page > * {
+  border-radius: 5px;
+  color: black;
+  line-height: 1.4em;
+}
+form.page > select {
+  padding-bottom: 1px;
+  background-color: #ffffff;
+}
+form.page > button {
+  padding-inline: 5px;
+  border-color: #d4e1ec;
+  background-color: #ffffff;
+}
+form.page > label {
+  margin-right: 5px;
+}

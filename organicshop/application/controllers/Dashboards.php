@@ -66,7 +66,8 @@
             $id = $this->input->post('id', TRUE);
             $id = $this->Database->validate_id($id);
             if ($id) {
-                $this->Dashboard->soft_delete_record('products', $id);
+                $this->Database->soft_delete_record('products', $id);
+                // $this->Dashboard->soft_delete_record('products', $id);
             }
             redirect('/');
         }
@@ -75,13 +76,8 @@
             if ($this->Dashboard->check_not_admin() || empty($post)) {
                 redirect('/');
             }
-            if (!array_key_exists('product_type', $post)) {
-                $post['product_type'] = 0;
-            }
-            $data = $this->Dashboard->get_products($post['product_type']);
-            $data = $this->General->search_products($post, $data);
             // redirect('/');
-            $this->load->view('partials/dashboards/admin_products_data', array('data' => $data, 'csrf' => $this->General->get_csrf()));
+            echo json_encode($this->General->filter($post, 'dashboard'));
         }
     }
 ?>

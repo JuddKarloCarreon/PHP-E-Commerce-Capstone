@@ -1,5 +1,5 @@
 function prepare_form(arr) {
-    var base = get_dashboard_url();
+    var base = get_base();
     $('#add_product_modal form').attr('action', base + '/dashboards/' + arr.shift());
 
     var arr2 = ['h2', 'input[name="product_name"]', 'textarea', 'input[name="price"]', 'input[name="stock"]', 'input[name="id"]'];
