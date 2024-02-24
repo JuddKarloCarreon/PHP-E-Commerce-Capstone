@@ -19,16 +19,15 @@
             if ($page === NULL) {
                 $page = $this->General->get_page_param();
             }
-            return array(
-                'user' => $this->session->userdata('user'),
-                'csrf' => $this->General->get_csrf(),
+            $param = $this->General->get_base_param();
+            return array_merge($param, array(
                 'prod_count' => $prod_count,
                 'data' => $data,
                 'page' => $page,
                 'hide_pages' => NULL,
                 'search_val' => '',
                 'cart_count' => $this->count_cart()
-            );
+            ));
         }
         public function get_product_param($id) {
             $main_data = $this->get_product($id);
@@ -99,7 +98,7 @@
                 $data['rating_count'] = $this->Database->count_records('reviews', 'product_id', $data['id']);
             return $data;
         }
-        public function add_cart($post) {
+        public function add_cart($post, $process = 'add') {
             /* Validation */
             $check = 'Product does not exist.';
             $id = $this->Database->validate_id($post['id']);
@@ -122,7 +121,11 @@
                 }
                 /* Check if item is already in cart */
                 $cart_item = $this->Database->get_record('cart_items', array('user_id', 'product_id'), array($user['id'], $id));
-                // return $cart_item['amount'];
+                /* Set final amount */
+                $final_amt = $amount;
+                if ($cart_item !== NULL && $process == 'add') {
+                    $final_amt = intval($cart_item['amount']) + $amount;
+                }
                 if ($cart_item === NULL) {
                     $data = array(
                         'user_id' => $user['id'],
@@ -131,13 +134,14 @@
                     );
                     $this->Database->add_record('cart_items', $data);
                     return 'Successfully added to cart.';
-                } else if ((intval($cart_item['amount']) + $amount) > intval($record['stock'])) {
+                } else if ($final_amt > intval($record['stock'])) {
                     return 'Already reached stock limit.';
+                } else if (intval($cart_item['amount']) == $amount) {
+                    return 'No change in database necessary';
                 } else {
-                    $this->Database->update_record('cart_items', $cart_item['id'], array('amount' => (intval($cart_item['amount']) + $amount)));
+                    $this->Database->update_record('cart_items', $cart_item['id'], array('amount' => $final_amt));
                     return 'Successfully increased quantity in cart.';
                 }
-                
             }
             return 'Unable to add to cart.';
         }
@@ -148,6 +152,45 @@
                 $cart_count = $this->Database->count_records('cart_items', 'user_id', $user['id']);
             }
             return $cart_count;
+        }
+        public function get_cart_param() {
+            $data = $this->Database->get_cart_records();
+            $cart_totals = $this->get_cart_totals($data);
+
+            $param = $this->General->get_base_param();
+            return array_merge($param, array(
+                'data' => $data,
+                'cart_count' => $this->count_cart(),
+                'cart_total' => $cart_totals['cart_total'],
+                'grand_total' => $cart_totals['grand_total'],
+                'shipping_fee' => $this->Database->shipping_fee,
+                'stripe_key' => $this->config->item('stripe_key'),
+                'errors' => array('ship' => array(), 'bill' => array()),
+                'form' => array('ship' => array(), 'bill' => array())
+            ));
+        }
+        public function get_cart_totals($data) {
+            $cart_totals = array('cart_total' => 0, 'grand_total' => 0);
+            foreach ($data as $row) {
+                $cart_totals['cart_total'] += intval(str_replace('.', '', $row['total']));
+            }
+            $cart_totals['grand_total'] = $cart_totals['cart_total'] + intval(str_replace('.', '', $this->Database->shipping_fee));
+            foreach ($cart_totals as $key => $val) {
+                $decimal = substr($val, -2);
+                if (strlen($decimal) < 2) {
+                    $decimal .= '0';
+                }
+                $cart_totals[$key] = substr($val, 0, -2) . '.' . $decimal;
+            }
+            return $cart_totals;
+        }
+        public function delete_cart_item($id) {
+            /* Check if cart item exists */
+            $cart_item = $this->Database->get_record('cart_items', 'id', $id);
+            if ($cart_item === NULL) {
+                return 'Item in cart does not exist.';
+            }
+            $this->Database->delete_record('cart_items', $cart_item['id']);
         }
     }
 ?>

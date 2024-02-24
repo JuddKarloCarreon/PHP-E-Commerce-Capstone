@@ -33,7 +33,7 @@
                 <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
                 <input type="text" name="search" placeholder="Search Products">
             </form>
-            <a class="show_cart" href="cart.html">Cart (<?= $cart_count ?>)</a>
+            <a class="show_cart" href="<?= base_url('cart') ?>">Cart (<?= $cart_count ?>)</a>
             <a href="<?= base_url('catalogues') ?>">Go Back</a>
             <ul>
 <?php $this->load->view('partials/catalogues/product_data'); ?>

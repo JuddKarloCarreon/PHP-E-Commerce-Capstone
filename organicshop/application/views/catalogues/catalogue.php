@@ -35,7 +35,7 @@
                 <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
                 <input type="text" name="search" value="<?= $search_val ?>" placeholder="Search Products">
             </form>
-            <a class="show_cart" href="cart.html">Cart (<?= $cart_count ?>)</a>
+            <a class="show_cart" href="<?= base_url('cart') ?>">Cart (<?= $cart_count ?>)</a>
             <form action="<?= base_url('generals/filter/catalogue') ?>" method="post" class="categories_form">
 <?php $this->load->view('partials/global/categories_form') ?>
             </form>

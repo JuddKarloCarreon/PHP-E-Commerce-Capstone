@@ -22,7 +22,6 @@
                     </ul>
                     <span><?= $main_data['rating'] ?> (<?= $main_data['rating_count'] ?> Reviews)</span>
                     <span class="amount">$ <?= $main_data['price'] ?></span>
-                    <span class="stock" hidden><?= $main_data['stock'] ?></span>
                     <p><?= $main_data['description'] ?></p>
                     <form action="<?= base_url('catalogues/add_cart') ?>" method="post" id="add_to_cart_form">
                         <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">

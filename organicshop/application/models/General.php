@@ -20,6 +20,12 @@
                 'hash' => $this->security->get_csrf_hash()
             );
         }
+        public function get_base_param() {
+            return array(
+                'user' => $this->session->userdata('user'),
+                'csrf' => $this->get_csrf()
+            );
+        }
         public function get_page_param($current = 1, $type = 0, $search = '') {
             $this->load->model('Database');
             $page = array();

@@ -46,5 +46,38 @@
                 echo json_encode($res);
             }
         }
+        public function view_cart() {
+            if (empty($this->session->userdata('user'))) {
+                redirect('login');
+            }
+            $this->load->model('Database');
+            if (empty($this->Database->get_records('cart_items', 'user_id', $this->session->userdata('user')['id']))) {
+                redirect('catalogues');
+            }
+            $param = $this->Catalogue->get_cart_param();
+            $this->load->view('catalogues/cart', $param);
+        }
+        public function modify_cart() {
+            $post = $this->General->clean();
+            $result = $this->Catalogue->add_cart($post, 'replace');
+            $this->view_cart_ajax();
+        }
+        public function delete_cart_item($id) {
+            $id = $this->General->clean($id);
+            $id = $this->Database->validate_id($id);
+            if ($id !== FALSE && $id > 0) {
+                $this->Catalogue->delete_cart_item($id);
+            }
+            $this->view_cart_ajax();
+        }
+        private function view_cart_ajax() {
+            $param = $this->Catalogue->get_cart_param();
+            echo json_encode(array(
+                'view' => $this->load->view('partials/catalogues/cart_items', $param, TRUE),
+                'cart_total' => $param['cart_total'],
+                'grand_total' => $param['grand_total'],
+                'cart_count' => $param['cart_count']
+            ));
+        }
     }
 ?>

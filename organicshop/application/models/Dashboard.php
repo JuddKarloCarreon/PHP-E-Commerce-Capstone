@@ -16,15 +16,14 @@
             if ($page === NULL) {
                 $page = $this->General->get_page_param();
             }
-            return array(
-                'user' => $this->session->userdata('user'),
+            $param = $this->General->get_base_param();
+            return array_merge($param, array(
                 'data' => $data,
                 'errors' => $this->session->flashdata('errors'),
-                'csrf' => $this->General->get_csrf(),
                 'prod_count' => $prod_count,
                 'prod_type' => $prod_type,
                 'page' => $page
-            );
+            ));
         }
         public function validate($post) {
             $this->load->library('form_validation');
@@ -233,14 +232,14 @@
         //     // $this->delete_files($dir);
         //     $this->Database->soft_delete_record($table, $id);
         // }
-        // private function delete_files($dir) {
-        //     $files = glob($dir . '/*');
-        //     foreach($files as $file){
-        //         if(is_file($file)) {
-        //             unlink($file);
-        //         }
-        //     }
-        // }
+        private function delete_files($dir) {
+            $files = glob($dir . '/*');
+            foreach($files as $file){
+                if(is_file($file)) {
+                    unlink($file);
+                }
+            }
+        }
         public function search($post, $data = 'none') {
             if ($data === 'none') {
                 $data = $this->get_products();

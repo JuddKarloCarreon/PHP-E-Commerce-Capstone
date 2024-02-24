@@ -1,7 +1,6 @@
 # PHP-E-Commerce-Capstone
 ## To-do:
-  - Do cart page
-  - Do checkout
+  - Do checking of checkout details and card details
   - Do admin orders
   
 ## Timestamps:
@@ -56,6 +55,10 @@ Day 7: 9h57m
   - In product view, ensured that the amount of stock will limit the amount available to be bought. (17m)
   - Accomplished search in product view (30m)
   - Finished addition to cart and updating of number of items in cart. This completes product view (2h10m)
+
+Day 8: 11h47m
+  - Modification of cart via the cart page completed. (3h10m)
+  - Finished creation of form with optional billing, it's validation, stripe payment integration, final update of ERD (since storing cvc is illegal, md5 encryption always results in 32 characters, and I forgot to set the ID of a table to auto increment), addition and/or update of necessary information to the database (8h37m)
 
 ## ERD:
 

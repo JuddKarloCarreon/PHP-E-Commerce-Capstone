@@ -33,16 +33,16 @@ body .wrapper > section > section::before {
   vertical-align: top;
   width: 30px;
 }
-body .wrapper > section > section .cart_items_form {
+body .wrapper > section > section > ul {
   display: inline-block;
   height: 500px;
   vertical-align: top;
   width: 812px;
 }
-body .wrapper > section > section .cart_items_form > ul {
+body .wrapper > section > section > ul > li {
   width: 100%;
 }
-body .wrapper > section > section .cart_items_form > ul > li {
+body .wrapper > section > section > ul > li > .cart_items_form {
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0px 4.37332px 21.8666px rgba(0, 0, 0, 0.07);
@@ -55,18 +55,18 @@ body .wrapper > section > section .cart_items_form > ul > li {
   width: 100%;
   transition: 0.21s;
 }
-body .wrapper > section > section .cart_items_form > ul > li.confirm_delete {
+body .wrapper > section > section > ul > li.confirm_delete {
   z-index: 101;
 }
-body .wrapper > section > section .cart_items_form > ul > li.confirm_delete > div {
+body .wrapper > section > section > ul > li.confirm_delete > .cart_items_form > div {
   z-index: 102;
   right: -330px;
   opacity: 1;
 }
-body .wrapper > section > section .cart_items_form > ul > li:hover {
+body .wrapper > section > section > ul > li > .cart_items_form:hover {
   box-shadow: 0px 0px 14.87px rgba(156, 137, 255, 0.33);
 }
-body .wrapper > section > section .cart_items_form > ul > li img {
+body .wrapper > section > section > ul > li > .cart_items_form > img {
   border-radius: 20px;
   height: 119px;
   left: 0px;
@@ -75,12 +75,12 @@ body .wrapper > section > section .cart_items_form > ul > li img {
   top: 0px;
   width: 126px;
 }
-body .wrapper > section > section .cart_items_form > ul > li h3 {
+body .wrapper > section > section > ul > li > .cart_items_form > h3 {
   color: #7D7D7D;
   font: 16px/20px roboto_medium, sans-serif;
   margin-top: 30px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > span {
+body .wrapper > section > section > ul > li > .cart_items_form > span {
   background-color: #F1F1F1;
   border-radius: 33px;
   color: #7971D9;
@@ -90,23 +90,23 @@ body .wrapper > section > section .cart_items_form > ul > li > span {
   padding: 7px 14px;
   vertical-align: top;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul {
+body .wrapper > section > section > ul > li > .cart_items_form > ul {
   position: absolute;
   right: 0px;
   top: 0px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li {
   display: inline-block;
   margin-right: 30px;
   padding: 18px 0px;
   vertical-align: top;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li label {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > label {
   color: #7D7D7D;
   display: block;
   font: 11px/13px roboto_regular, sans-serif;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li input {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > input {
   border-radius: 10px;
   border: 1px solid #D4E1EC;
   color: #A1A1A1;
@@ -117,7 +117,7 @@ body .wrapper > section > section .cart_items_form > ul > li > ul > li input {
   vertical-align: top;
   width: 110px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li .remove_item {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > .remove_item {
   background-color: transparent;
   background-image: url("../../images/remove.svg");
   background-repeat: no-repeat;
@@ -125,14 +125,16 @@ body .wrapper > section > section .cart_items_form > ul > li > ul > li .remove_i
   border-left: 1px solid #F1F1F1;
   height: 119px;
   width: 60px;
+  position: relative;
+  bottom: 18px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li .remove_item:hover {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > .remove_item:hover {
   background-position: -59px 0px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li > ul {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > ul {
   display: inline-block;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li > ul li button {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > ul li button {
   background-color: #F6F6F6;
   background-image: url("../../images/left.svg");
   background-position: 50% 47%;
@@ -143,26 +145,27 @@ body .wrapper > section > section .cart_items_form > ul > li > ul > li > ul li b
   rotate: 90deg;
   width: 26px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li > ul li:last-child button {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > ul li:last-child button {
   rotate: 270deg;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li .total_amount {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li > .total_amount {
   background-color: #F6F6F6;
   border-radius: 10px;
   color: #9C89FF;
   display: inline-block;
   font: 16px/22px roboto_bold, sans-serif;
   height: 58px;
+  line-height: 58px;
   padding: 17px 0px;
   text-align: center;
   vertical-align: top;
   width: 110px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > ul > li:last-child {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li >:last-child {
   margin-right: 0px;
   padding: 0px;
 }
-body .wrapper > section > section .cart_items_form > ul > li > div {
+body .wrapper > section > section > ul > li > .cart_items_form > div {
   position: absolute;
   width: 316px;
   height: 119px;
@@ -176,11 +179,11 @@ body .wrapper > section > section .cart_items_form > ul > li > div {
   transition: 0.41s;
   opacity: 0;
 }
-body .wrapper > section > section .cart_items_form > ul > li > div p {
+body .wrapper > section > section > ul > li > .cart_items_form > div p {
   font: 14px/20px roboto_regular, sans-serif;
   color: #B8B8B8;
 }
-body .wrapper > section > section .cart_items_form > ul > li > div button {
+body .wrapper > section > section > ul > li > .cart_items_form > div button {
   width: 80px;
   height: 34px;
   font: 14px/17px roboto_regular, sans-serif;
@@ -189,16 +192,16 @@ body .wrapper > section > section .cart_items_form > ul > li > div button {
   background-color: #fff;
   color: #A1A1A1;
 }
-body .wrapper > section > section .cart_items_form > ul > li > div .remove { /* changed to .remove */
+body .wrapper > section > section > ul > li > .cart_items_form > div .remove { /* changed to .remove */
   border-color: #E98D8D;
   color: #E98D8D;
 }
-body .wrapper > section > section .cart_items_form > ul > li.no_data {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li.no_data {
   height: 213px;
   text-align: center;
   padding: 32px 0px;
 }
-body .wrapper > section > section .cart_items_form > ul > li.no_data a {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li.no_data a {
   width: 176px;
   height: 55px;
   border: 1px solid #9C89FF;
@@ -212,7 +215,7 @@ body .wrapper > section > section .cart_items_form > ul > li.no_data a {
   text-decoration: none;
   transition: 0.21s;
 }
-body .wrapper > section > section .cart_items_form > ul > li.no_data a:hover {
+body .wrapper > section > section > ul > li > .cart_items_form > ul > li.no_data a:hover {
   background-color: #9C89FF;
   color: #fff;
 }
@@ -335,4 +338,17 @@ body #card_details_modal .modal-dialog .modal-content button.success {
 .disable_button {
   pointer-events: none !important;
   opacity: 0.5;
+}
+form.checkout_form > label {
+  position: absolute;
+  right: 0px;
+}
+form.checkout_form > label > input[type="checkbox"] {
+  margin-right: 5px;
+}
+.disappear {
+  display:none;
+}
+.errors {
+  top: 74%;
 }
