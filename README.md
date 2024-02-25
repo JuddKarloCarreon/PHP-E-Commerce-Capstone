@@ -1,7 +1,5 @@
 # PHP-E-Commerce-Capstone
-## To-do:
-  - Add reviews and replies
-  
+
 ## Timestamps:
 Day 1: 1h27m
   - Planning and creation of database & ERD
