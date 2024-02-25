@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    /* Handles changing pages */
     $(document).on('click', 'form.page > button', function (event) {
         event.preventDefault();
         var min = $(this).siblings('select').children('option').first().val();
@@ -18,15 +19,19 @@ $(document).ready(function () {
         }
 
     });
+    /* Handles of clicking the categories */
     $(document).on('click', '.categories_form button[type="submit"][value]', function (event) {
         event.preventDefault();
+        /* Highlights category */
         $(this).closest('form').find('button[class="active"]').removeClass('active');
         $(this).addClass('active');
         $(this).closest('form').find('input[alt_name="for_button"]').attr('value', $(this).attr('value'));
+        /* Reset pages */
         $('form.page > select > option[selected]').removeAttr('selected');
         $('form.page > select > option').first().attr('selected', 'selected');
         $(this).closest('form').trigger('submit');
     });
+    /* Handles the submission of form cateogries, search forms, and page changes */
     $(document).on('submit', 'form.categories_form, form.search_form, form.page', function () {
         var serialize = $(this).serialize();
         var form = $(this).attr('class');
@@ -43,8 +48,10 @@ $(document).ready(function () {
             }
             serialize += '&product_type=' + $('form.categories_form').find('button[class="active"]').val();
         }
+        /* Disables form contents */
         $('.categories_form input, .categories_form button', '.search_form input', '.search_form button').prop('disabled', true);
         $.post($(this).closest('form').attr('action'), serialize, function (res) {
+            /* Updates page */
             var elem = $('section > div');
             if ($('.products_table tbody').length > 0) {
                 var elem = $('.products_table tbody');
@@ -58,6 +65,7 @@ $(document).ready(function () {
                 $('form.categories_form').html(res.categories);
             }
         }, 'JSON').always(function () {
+            /* Refreshes the bootstrap select */
             $('.selectpicker').selectpicker('refresh');
             update_csrf();
             $('.categories_form input, .categories_form button', '.search_form input', '.search_form button').prop('disabled', false);
@@ -71,6 +79,7 @@ $(document).ready(function () {
         });
         return false;
     });
+    /* Handles search */
     $(document).on('change', 'input[name="search"], form.page > select', function () {
         $(this).closest('form').trigger('submit');
     });

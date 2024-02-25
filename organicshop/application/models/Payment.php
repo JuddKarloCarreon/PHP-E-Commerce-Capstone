@@ -1,5 +1,6 @@
 <?php
     class Payment extends CI_Model {
+        /* Validates the checkout shipping and billing info */
         public function validate_checkout($post) {
             $fields = array('first_name', 'last_name', 'address_1', 'address_2', 'city', 'state');
             $prefix = array('ship_', 'bill_');
@@ -27,8 +28,10 @@
                     }
                 }
             }
+            /* $form is for repopulation purposes */
             return array($errors, $form);
         }
+        /* Function that handles making the payment via stripe */
         public function make_payment($post) {
             $this->load->model('Database');
             $this->load->model('Catalogue');
@@ -65,6 +68,7 @@
                 return $e->getMessage();
             }             
         }
+        /* Function that adds the necessary details to the database after all validations are successful */
         public function add_details($post) {
             $this->load->model('Database');
             /* Add checkout details to database */
@@ -121,6 +125,7 @@
             /* END */
             return 'success';
         }
+        /* Checks the amount stock, then reduces the requested amount. Used when user is checking out */
         public function check_stock($post) {
             $this->load->model('Database');
             $error = 'Item in cart is out of stock.';

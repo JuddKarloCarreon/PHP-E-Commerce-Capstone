@@ -375,7 +375,7 @@ body .wrapper #success_modal .modal-dialog .modal-content h3::before {
   margin-right: 15px;
 }
 .added_to_cart{
-  background-color: #FFFFFF;
+  background-color: transparent;
   border-radius: 8px;
   color: #7D7D7D;
   padding: 14px 45px;

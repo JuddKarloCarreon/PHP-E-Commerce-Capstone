@@ -1,39 +1,17 @@
 $(document).ready(function() {
-    /* $("body").on("click", ".switch", function() {
-        window.open("/dashboard", '_blank');
-    }); */
-
-    // $("body").on("submit", ".update_status_form", function() {
-    //     let form = $(this);
-    //     $.post(form.attr("action"), form.serialize(), function(res) {
-    //         $(".wrapper > section").html(res);
-    //         $(".selectpicker").selectpicker("refresh");
-    //     });
-
-    //     return false;
-    // });
-
-    // $("body").on("click", ".status_form button", function() {
-    //     let button = $(this);
-    //     $(".status_form").find("input[name=status_id]").val(button.val());
-    //     $(".status_form").find(".active").removeClass("active");
-    //     button.addClass("active");
-    // })
-    
+    /* Submits when a different item is selected */
     $("body").on("change", "select.selectpicker", function() {
         $(this).closest("form").trigger("submit");
     });
-
-
+    /* Handles submission of new status */
     $("body").on("submit", ".set_status_form", function() {
         let form = $(this);
         let serialize = form.serialize();
+        /* Include search contents for ajax purposes */
         serialize += '&search=' + $('.search_form input[name="search"]').val();
         $.post(form.attr("action"), serialize, function(res) {
             /* Update the count numbers */
-            console.log(res);
             res = JSON.parse(res);
-            console.log(res);
             $('form.categories_form button span').each(function (index) {
                 $(this).text(res[index][0]);
             });

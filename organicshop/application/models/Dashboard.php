@@ -1,5 +1,6 @@
 <?php
     class Dashboard extends CI_Model {
+        /* Obtain the parameters to pass to the admin pages */
         public function get_param() {
             $this->load->model('General');
             $this->load->model('Database');
@@ -25,6 +26,7 @@
                 'page' => $page
             ));
         }
+        /* Validation for the addition of a product. Includes custom validations */
         public function validate($post) {
             $this->load->library('form_validation');
             $do = $this->form_validation;
@@ -64,6 +66,7 @@
                 $this->load->library('upload', $config);
                 $files = $_FILES;
                 $errors = array();
+                /* Handles the image uploads */
                 for($i = 0; $i < count($files['images']['name']); $i++) {
                     $_FILES['images']['name'] = $files['images']['name'][$i];
                     $_FILES['images']['type'] = $files['images']['type'][$i];
@@ -93,6 +96,7 @@
             $this->session->set_flashdata('errors', $errors);
             return array($errors, $post);
         }
+        /* Function that checks the category of the input. This is a custom validation */
         public function check_category($str) {
             $this->load->model('Database');
             $type_ids = array_keys($this->Database->product_types);
@@ -104,12 +108,14 @@
             }
             return FALSE;
         }
+        /* Function that checks if the price is greater than 0. This is a custom validation */
         public function check_price($str) {
             if (floatval($str) > 0) {
                 return TRUE;
             }
             return FALSE;
         }
+        /* Function that handles the addition of products to the database */
         public function add_product($post) {  
             $this->load->model('Database'); 
             list($post, $upload_imgs) = $this->prep_for_db($post);
@@ -122,6 +128,7 @@
                 $this->move_product_imgs($upload_imgs, $id);
             }
         }
+        /* Handles the update of products to the database */
         public function edit_product($post) {
             $this->load->model('Database');
             $id = $post['id'];
@@ -134,6 +141,7 @@
                 $this->move_product_imgs($upload_imgs, $id);
             }
         }
+        /* Prepares the data formatting/arrangement for database upload */
         private function prep_for_db($post) {
             $this->load->model('Database');
             /* Preparing $post for addition/update to database */
@@ -155,6 +163,7 @@
                     $images = json_decode($temp['image_names_json']);
                 }
             }
+            /* Ensures unique filename for images */
             $upload_imgs = array();
             if (!empty($post['validated_imgs'])) {
                 $path = str_replace('\\', '/', FCPATH . 'assets/images/products/temp/') . $this->session->userdata('user')['id'] . '/';
@@ -182,6 +191,7 @@
             }
             return array($post, $upload_imgs);
         }
+        /* Moves images from the temporary location to a permanent one */
         private function move_product_imgs($imgs, $id) {
             $path = str_replace('\\', '/', FCPATH . 'assets/images/products/');
             $new = $path . $id . '/';
@@ -192,6 +202,7 @@
                 rename($path . 'temp/' . $this->session->userdata('user')['id'] . '/' . $img, $new . $img);
             }
         }
+        /* Function to obtain the all the information about the products in the database */
         public function get_products($type = 0, $page = 1, $lim = '', $search = '') {
             $this->load->model('Database');
             $type = $this->Database->validate_id($type);
@@ -215,6 +226,7 @@
             $this->session->set_flashdata('data', $data);
             return $data;
         }
+        /* Function to delete the images from both the database and the file storage */
         public function delete_image($id, $name) {
             $this->load->model('Database');
             $images = $this->Database->get_record('products', 'id', $id)['image_names_json'];
@@ -227,11 +239,7 @@
             $file = str_replace('\\', '/', FCPATH . "assets/images/products/$id/$name");
             unlink($file);
         }
-        // public function soft_delete_record($table, $id) {
-        //     // $dir = str_replace('\\', '/', FCPATH . "assets/images/products/$id");
-        //     // $this->delete_files($dir);
-        //     $this->Database->soft_delete_record($table, $id);
-        // }
+        /* Deletes all files in a directory */
         private function delete_files($dir) {
             $files = glob($dir . '/*');
             foreach($files as $file){
@@ -240,12 +248,15 @@
                 }
             }
         }
+        /* Handles the search of data by obtaining all data and then passing it to the search products 
+            function in the general model */
         public function search($post, $data = 'none') {
             if ($data === 'none') {
                 $data = $this->get_products();
             }
             return $this->General->search_products($post, $data);
         }
+        /* Checks if the logged in user is an admin or not */
         public function check_not_admin() {
             $user = $this->session->userdata('user');
             if ($user === NULL || $user['is_admin'] == 0) {

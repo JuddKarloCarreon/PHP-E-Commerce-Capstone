@@ -1,3 +1,6 @@
+/* These are the functions generally used by most pages */
+
+/* Obtain the base url via the search form */
 function get_base() {
     var base = $('.search_form').attr('action');
     for (i = 0; i < 3; i++) {
@@ -5,6 +8,7 @@ function get_base() {
     }
     return base;
 }
+/* Obtains and sets the csrf data */
 function update_csrf() {
     var url = get_base();
     $.get(url + '/generals/get_csrf', function (res) {
@@ -19,6 +23,7 @@ function check_nan(item, def = 0) {
     }
     return item;
 }
+/* Handles the changing of quantity for cart items */
 function change_quantity_button(elem) {
     let input = elem.closest('ul').siblings('input');
     let input_val = parseInt(input.val());
@@ -31,6 +36,7 @@ function change_quantity_button(elem) {
     };
     input.trigger('change');
 }
+/* Handles changes in the quantity field of the item */
 function change_quantity_form(elem, form) {
     /* Ensures the value in the input is an integer */
     let stock = parseInt(elem.attr('max-value'));
@@ -54,11 +60,13 @@ function change_quantity_form(elem, form) {
     total_amount = total_amount.slice(0,-2) + '.' + total_amount.slice(-2);
     form.find(".total_amount").text("$ " + total_amount);
 }
+/* Serializes form then disables them to prevent multiple inputs */
 function start_forms(form) {
     var serialize = form.serialize();
     $('form input, form select, form button').prop('disabled', true);
     return serialize;
 }
+/* Updates the csrf and enables the form items */
 function after_forms() {
     update_csrf();
     $('form input, form select, form button').prop('disabled', false);

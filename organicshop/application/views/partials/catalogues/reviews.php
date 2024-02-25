@@ -28,9 +28,9 @@
                         <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>" alt_name="csrf">
                         <input type="hidden" name="review_id" value="<?= $row['id'] ?>">
                         <input type="hidden" name="product_id" value="<?= $main_data['id'] ?>">
-                        <textarea name="content"></textarea>
+                        <textarea name="content" hidden></textarea>
                         <p class="errors reply"></p>
-                        <button type="submit">Post</button>
+                        <button type="submit">Reply</button>
                     </form>
                 </div>
 <?php       } ?>

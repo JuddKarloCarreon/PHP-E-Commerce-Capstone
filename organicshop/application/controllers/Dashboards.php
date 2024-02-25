@@ -15,6 +15,7 @@
                 $this->load->view('dashboards/admin_products', $param);
             }
         }
+        /* Handles the request to add a new product */
         public function add_product() {
             $post = $this->General->clean();
             if ($this->Dashboard->check_not_admin() || empty($post)) {
@@ -26,6 +27,7 @@
             }
             redirect('/');
         }
+        /* Handes the request to edit a product */
         public function edit_product() {
             $post = $this->General->clean();
             if ($this->Dashboard->check_not_admin() || empty($post)) {
@@ -37,6 +39,7 @@
             }
             redirect('/');
         }
+        /* Handles image deletion from the product */
         public function delete_image($id, $name) {
             if ($this->Dashboard->check_not_admin()) {
                 redirect('/');
@@ -48,6 +51,7 @@
                 $this->Dashboard->delete_image($id, $name);
             }
         }
+        /* Handles obtaining the data view file for a specific product when editing */
         public function get_record($id) {
             if ($this->Dashboard->check_not_admin()) {
                 redirect('/');
@@ -58,6 +62,7 @@
                 echo json_encode($this->Database->get_record('products', 'id', $id));
             }
         }
+        /* Handles product deletion by setting the active column to 0 */
         public function delete_product() {
             if ($this->Dashboard->check_not_admin()) {
                 redirect('/');
@@ -71,6 +76,7 @@
             }
             redirect('/');
         }
+        /* Handles the filtering of data from the search and switching of columns */
         public function filter() {
             $post = $this->General->clean();
             if ($this->Dashboard->check_not_admin() || empty($post)) {

@@ -1,20 +1,24 @@
 <?php
     class Database extends CI_Model {
+        /* Set parameters */
         public $product_types = array('Vegetables', 'Fruits', 'Pork', 'Beef', 'Chicken');
         public $order_status = array('Pending', 'On-Process', 'Shipped', 'Delivered');
         public $item_limit = 10;
         public $shipping_fee = '5.00';
         
+        /* Function called by other functions within this model to check for the products table */
         private function products_where($table) {
             if ($table == 'products') {
                 return array('active=?', array(1));
             }
             return array('', array());
         }
+        /* General function to obtain multiple records */
         public function get_records($table, $field = 1, $value = 1, $not_f = 1, $not_v = 0, $page = 1, $limit='', $s_field = '', $s_val='', $order = '') {
             list($where, $values) = $this->products_where($table);
             $fields = array($field, $not_f);
             $vals = array($value, $not_v);
+            /* Set fields and values */
             foreach ($fields as $key => $field) {
                 if ($field != 1) {
                     $where .= $this->and_add($where);
@@ -27,11 +31,13 @@
                     array_push($values, $vals[$key]);
                 }
             }
+            /* Set search parameters for the query */
             if (!in_array($s_val, array('', '%%'))) {
                 $where .= $this->and_add($where);
                 $where .= " $s_field LIKE ?";
                 array_push($values, $s_val);
             }
+            /* Set limit and offset */
             if ($limit == 'all') {
                 $lim = '';
             } else {
@@ -48,9 +54,11 @@
             $query = "SELECT * FROM $table WHERE $where $lim $order";
             return $this->db->query($query, $values)->result_array();
         }
+        /* Generic fetching of a single record */
         public function get_record($table, $field, $value, $order = '') {
             list($where, $values) = $this->products_where($table);
             $where .= $this->and_add($where);
+            /* Set where fields */
             if (!is_array($field)) {
                 $field = array($field);
                 $value = array($value);
@@ -65,6 +73,7 @@
             $query = "SELECT * FROM $table WHERE $where $order";
             return $this->db->query($query, $values)->row_array();
         }
+        /* Function to fetch records with a certain string */
         public function search_string($table, $field, $value, $field2 = 1, $value2 = 1) {
             list($where, $values) = $this->products_where($table);
             if ($field2 != 1) {
@@ -81,12 +90,14 @@
             $values = array($value, $value2);
             return $this->db->query($query, $values)->result_array();
         }
+        /* Function called by other functions here to check contents of the where variable */
         private function and_add($where) {
             if ($where != '') {
                 return ' AND';
             }
             return '';
         }
+        /* Generic function to obtain the count of records */
         public function count_records($table, $field = 1, $value = 1) {
             list($where, $values) = $this->products_where($table);
             if ($field != 1) {
@@ -100,16 +111,19 @@
             }
             return $this->db->query($query, $values)->row_array()['count'];
         }
+        /* Generic function to obtain the count of records with a search parameter */
         public function count_records_search($type = 0, $search = '', $kind = 'products') {
             $query = "SELECT COUNT($kind.id) AS count FROM $kind";
             $where = '';
             $values = array();
+            /* Initialization */
             if ($kind == 'products') {
                 $where = 'WHERE active=?';
                 $values = array(1);
             } else {
                 $query .= " LEFT JOIN checkout_details AS t2 ON $kind.shipping_id=t2.id";
             }
+            /* Check for type or column to filter */
             if ($type != 0) { 
                 if ($kind == 'products') {
                     $where .= " AND product_type=?";
@@ -123,6 +137,8 @@
                 }
                 array_push($values, $type);
             }
+            
+            /* Check for search string */
             if ($search != '') {
                 if ($where == '') {
                     $where = 'WHERE';
@@ -139,6 +155,7 @@
             $count = $this->db->query("$query $where", $values)->row_array()['count'];
             return $count;
         }
+        /* Generic function to add a record to a table */
         public function add_record($table, $post) {
             if ($this->count_records('users') == 0 && $table == 'users') {
                 $post['user_level'] = 1;
@@ -156,6 +173,7 @@
             $this->db->query($query, array_values($post));
             return $this->db->insert_id();
         }
+        /* Generic function to update a record */
         public function update_record($table, $id, $data) {
             $query = "UPDATE $table SET";
             $values = array();
@@ -171,11 +189,13 @@
             array_push($values, $id);
             $this->db->query($query, $values);
         }
+        /* Makes a record inactive, by setting the active column to 0 */
         public function soft_delete_record($table, $id) {
             $query = "UPDATE $table SET active=? WHERE id=?";
             $values = array(0, $id);
             $this->db->query($query, $values);
         }
+        /* Actually deleting a record from the database */
         public function delete_record($table, $id) {
             if (!is_array($id)) {
                 $id = array('id' => $id);
@@ -183,17 +203,21 @@
             $query = "DELETE FROM $table WHERE " . array_key_first($id) . "=?";
             $this->db->query($query, array_values($id));
         }
+        /* Checks if the $id variable is actually an integer */
         public function validate_id($id) {
             $id = $this->General->clean($id);
             return filter_var($id, FILTER_VALIDATE_INT);
         }
+        /* Function to obtain all records and necessary information from the cart_items table */
         public function get_cart_records() {
             $query = "SELECT t1.*, t1.amount * t2.price AS total, IF(t2.image_names_json = '[]', 'close.svg', CONCAT('products/',t1.product_id,'/',SUBSTRING(SUBSTRING(t2.image_names_json, 3),1,POSITION('" . '"' . "' IN SUBSTRING(t2.image_names_json, 3)) - 1))) AS img, t2.name, t2.price, t2.stock, t2.active FROM cart_items AS t1 LEFT JOIN products AS t2 ON t1.product_id=t2.id WHERE t1.user_id=?";
             return $this->db->query($query, array($this->session->userdata('user')['id']))->result_array();
         }
+        /* Function to obtain records from the orders table */
         public function get_order_records($filt = array(), $page = 1, $limit='', $s_val='') {
             $values = array();
             $where = '';
+            /* Filter for the status column */
             if (array_key_exists('status', $filt)) {
                 $filt['status'] = intval($filt['status']);
                 if ($filt['status'] == 0) {
@@ -210,6 +234,7 @@
                     }
                 }
             }
+            /* Filter for the search parameter for the name */
             if (!in_array($s_val, array('', '%%'))) {
                 if ($where != '') {
                     $where .= ' AND';
@@ -219,6 +244,7 @@
                 $where .= " CONCAT(t2.first_name, ' ', t2.last_name) LIKE ?";
                 array_push($values, "%$s_val%");
             }
+            /* Sets the limit settings */
             if ($limit == 'all') {
                 $lim = '';
             } else {

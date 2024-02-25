@@ -6,6 +6,7 @@ $(document).ready(function() {
     var cart_items = '';
     var $stripeForm = $(".payment_form");
     $('form.payment_form').bind('submit', function (e) {
+        /* Set the form and the inpus into variables */
         var $stripeForm = $(".payment_form"),
             inputSelector = [
                 'input[type=email]', 'input[type=password]',
@@ -29,6 +30,7 @@ $(document).ready(function() {
         cvc = 0;
         start_forms($stripeForm);
 
+        /* Handles error messages */
         $stripeForm.find('p.success').addClass('disappear');
         $errorMessage.addClass('disappear');
         $('.has-error').removeClass('has-error');
@@ -40,6 +42,7 @@ $(document).ready(function() {
                 e.preventDefault();
             }
         });
+        /* Submits the card data for validation */
         if (!$stripeForm.data('cc-on-file')) {
             e.preventDefault();
             Stripe.setPublishableKey($stripeForm.data('stripe-publishable-key'));
@@ -60,15 +63,18 @@ $(document).ready(function() {
                 .removeClass('disappear')
                 .text(res.error.message);
         } else {
+            /* Add contents of the other forms for the submission */
             var token = res['id'];
             serialize += '&' + checkout;
             serialize += '&stripeToken=' + token;
             serialize += '&' + cart_items;
             $.post($stripeForm.attr("action"), serialize, function(res) {
+                /* Update page contents */
                 $(".wrapper > section > section > ul").html(res.view);
                 $('form.checkout_form').html(res.checkout_form);
                 $('form.payment_form > h3 > span').text('$ ' + res.grand_total);
                 $('button.show_cart').text('Cart (' + res.cart_count + ')');
+                /* Handles errors */
                 if (res.error_count > 0) {
                     $stripeForm.find('p.pay_error').removeClass('disappear').text('Errors found in checkout details.');
                 }
@@ -79,6 +85,7 @@ $(document).ready(function() {
                         break;
                     }
                 }
+                /* Run if there are no errors */
                 if ($stripeForm.find('p.pay_error').hasClass('disappear')){
                     $('form.payment_form > input, form.payment_form > button').prop('disabled', true);
                     $('form.payment_form > button').remove();

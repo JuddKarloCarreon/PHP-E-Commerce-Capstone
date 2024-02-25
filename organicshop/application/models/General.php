@@ -20,12 +20,14 @@
                 'hash' => $this->security->get_csrf_hash()
             );
         }
+        /* Obtains the parameters necessary for all views */
         public function get_base_param() {
             return array(
                 'user' => $this->session->userdata('user'),
                 'csrf' => $this->get_csrf()
             );
         }
+        /* Obtains the necessary parameters for pagination */
         public function get_page_param($current = 1, $type = 0, $search = '', $kind = 'products') {
             $this->load->model('Database');
             $page = array();
@@ -40,6 +42,7 @@
             }
             return $page;
         }
+        /* Handles the filtering of data from searches, changes in categories for all pages */
         public function filter($post, $page_type, $ret = 0) {
             $check = array('product_type' => 0, 'page' => 1, 'status' => 0);
             foreach ($check as $key => $val) {
@@ -47,6 +50,7 @@
                     $post[$key] = $val;
                 }
             }
+            /* Obtains the view data for the requested page */
             $csrf = $this->get_csrf();
             if ($page_type == 'catalogue') {
                 $this->load->model('Catalogue');
@@ -61,7 +65,7 @@
                 $data = $this->Database->get_order_records(array('status' => $post['status']), $post['page'], '', $post['search']);
                 $data_view = $this->load->view('partials/dashboards/admin_orders_data', array('data' => $data, 'csrf' => $csrf, 'status_types' => $this->Database->order_status), TRUE);
             }
-
+            /* Obtains the count to show in the categories */
             if ($page_type != 'order') {
                 $kind = 'products';
                 $type = $post['product_type'];
@@ -74,6 +78,7 @@
                 $type = $post['status'];
                 $prod_count = $this->Order->get_order_counts($this->Database->get_order_records(array('status' => $post['status']), $post['page'], 'all', $post['search']));
             }
+            /* Data for the pagination */
             $page = $this->get_page_param($post['page'], $type, $post['search'], $kind);
             // redirect('/');
             if ($ret == 0) {

@@ -1,10 +1,12 @@
 <?php
     class Catalogue extends CI_Model {
+        /* Loads the models for all functions here */
         public function __construct() {
             parent::__construct();
             $this->load->model('General');
             $this->load->model('Database');
         }
+        /* Function to obtain the parameters to pass to the view catalogue file */
         public function get_param() {
             $prod_count = array('All Products' => array($this->Database->count_records('products'), 0));
             foreach ($this->Database->product_types as $key => $val) {
@@ -29,6 +31,7 @@
                 'cart_count' => $this->count_cart()
             ));
         }
+        /* Function to obtain the parameters to pass to the product_view view file */
         public function get_product_param($id) {
             $this->load->model('User');
             $main_data = $this->get_product($id);
@@ -43,11 +46,13 @@
                 'reviews' => $this->User->get_reviews($main_data['id'])
             );
         }
+        /* Function to obtain the product data for the product_view view file */
         public function get_products($type = 0, $not_id = 0, $page = 1, $lim = '', $search = '') {
             $this->load->model('Database');
             $type = $this->Database->validate_id($type);
             $data = array();
             if ($type !== FALSE) {
+                /* Excludes currently viewed product for the 'similar items' area */
                 $not_field = 1;
                 if ($not_id != 0) {
                     $not_field = 'id';
@@ -56,6 +61,7 @@
                 if ($type != 0) {
                     $field = 'product_type';
                 }
+                /* Obtain the data for the 'similar items' area and set the required information */
                 $data = $this->Database->get_records('products', $field, $type, $not_field, $not_id, $page, $lim, 'name', "%$search%");
                 foreach ($data as $key => $row) {
                     if (!in_array($row['image_names_json'], array('null', '[]', NULL, '[null]'))) {
@@ -64,6 +70,7 @@
                         $data[$key]['main_img'] = '';
                     }
                     $data[$key]['category'] = $this->Database->product_types[intval($row['product_type']) - 1];
+                    /* For the star rating */
                     $data[$key]['full'] = intval($row['rating'][0]);
                     $data[$key]['half'] = 0;
                     if (intval($row['rating'][2]) >= 5) {
@@ -76,12 +83,14 @@
             $this->session->set_flashdata('data', $data);
             return $data;
         }
+        /* First obtains data, then passes it to the search_products function in the general model */
         public function search($post, $data = 'none') {
             if ($data === 'none') {
                 $data = $this->get_products();
             }
             return $this->General->search_products($post, $data);
         }
+        /* Obtains the main product data for the product_view */
         public function get_product($id) {
             $data = $this->Database->get_record('products', 'id', $id);
             $data['images'] = json_decode($data['image_names_json']);
@@ -100,6 +109,7 @@
                 $data['rating_count'] = $this->Database->count_records('reviews', 'product_id', $data['id']);
             return $data;
         }
+        /* Processes the handling of the database processes when adding to the cart */
         public function add_cart($post, $process = 'add') {
             /* Validation */
             $check = 'Product does not exist.';
@@ -147,6 +157,7 @@
             }
             return 'Unable to add to cart.';
         }
+        /* Returns the amount of items in the user's cart */
         public function count_cart() {
             $user = $this->session->userdata('user');
             $cart_count = 0;
@@ -155,6 +166,7 @@
             }
             return $cart_count;
         }
+        /* Get parameters to pass to the cart view file */
         public function get_cart_param() {
             $data = $this->Database->get_cart_records();
             $cart_totals = $this->get_cart_totals($data);
@@ -171,6 +183,8 @@
                 'form' => array('ship' => array(), 'bill' => array())
             ));
         }
+        /* Obtain the total cost of items in the cart. cart_total is for all items, grand_total is for all items
+            and the shipping fee */
         public function get_cart_totals($data) {
             $cart_totals = array('cart_total' => 0, 'grand_total' => 0);
             foreach ($data as $row) {
@@ -178,6 +192,7 @@
             }
             $cart_totals['grand_total'] = $cart_totals['cart_total'] + intval(str_replace('.', '', $this->Database->shipping_fee));
             foreach ($cart_totals as $key => $val) {
+                /* Ensures a decimal value without resorting to using floatpoint values for computation */
                 $decimal = substr($val, -2);
                 if (strlen($decimal) < 2) {
                     $decimal .= '0';
@@ -186,6 +201,7 @@
             }
             return $cart_totals;
         }
+        /* Delete cart items */
         public function delete_cart_item($id) {
             /* Check if cart item exists */
             $cart_item = $this->Database->get_record('cart_items', 'id', $id);

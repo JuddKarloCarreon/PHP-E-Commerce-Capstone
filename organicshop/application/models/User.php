@@ -119,6 +119,7 @@
                 'image' => $record['image']
             ));
         }
+        /* Handles the posting for reviews and replies. Returns the resulting view for the reviews and the product rating */
         public function user_post($post, $type) {
             if ($post['content'] == '') {
                 return array('errors' => 'Review cannot be empty');
@@ -149,6 +150,7 @@
             $review_param = array('main_data' => array('id' => $prod_id), 'csrf' => $this->General->get_csrf(), 'reviews' => $reviews);
             return array('view' => $this->load->view('partials/catalogues/reviews', $review_param, TRUE), 'product_data' => $this->load->view('partials/catalogues/product_data', $this->Catalogue->get_product_param($prod_id), TRUE));
         }
+        /* Obtains and sets the reviews, and their respective replies */
         public function get_reviews($prod_id) {
             $reviews = $this->db->query("SELECT reviews.*, CONCAT(first_name, ' ', last_name) as name, DATE_FORMAT(reviews.created_at, '%b %d %Y') as date FROM reviews LEFT JOIN users ON reviews.user_id=users.id WHERE product_id=? ORDER BY reviews.created_at DESC", array($prod_id))->result_array();
             foreach ($reviews as $key => $row) {

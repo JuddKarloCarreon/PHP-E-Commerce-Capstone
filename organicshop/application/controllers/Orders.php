@@ -1,11 +1,13 @@
 <?php
     class Orders extends CI_Controller {
+        /* Loads models */
         public function __construct() {
             parent::__construct();
             $this->load->model('General');
             $this->load->model('Dashboard');
             $this->load->model('Order');
         }
+        /* Default page */
         public function index() {
             if ($this->Dashboard->check_not_admin()) {
                 redirect('catalogues');
@@ -14,6 +16,7 @@
                 $this->load->view('dashboards/admin_orders', $param);
             }
         }
+        /* Handles the setting of a new status */
         public function set_status() {
             $post = $this->General->clean();
             if (!empty($post)) {

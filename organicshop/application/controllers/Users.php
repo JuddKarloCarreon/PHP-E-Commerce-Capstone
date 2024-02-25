@@ -42,12 +42,15 @@
             }
             redirect('/');
         }
+        /* Handles review posting */
         public function post_review() {
             echo $this->user_post('reviews');
         }
+        /* Handles reply posting */
         public function post_reply() {
             echo $this->user_post('replies');
         }
+        /* Handles both reviews and replies, including validation and database updates */
         private function user_post($type) {
             $this->load->model('General');
             $post = $this->General->clean();

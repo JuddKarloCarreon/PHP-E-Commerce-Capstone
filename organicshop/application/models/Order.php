@@ -1,5 +1,6 @@
 <?php
     class Order extends CI_Model {
+        /* Loads models for all functions */
         public function __construct() {
             parent::__construct();
             $this->load->model('General');
@@ -28,6 +29,7 @@
                 'search_val' => ''
             ));
         }
+        /* Returns all the count values of for the admin orders page categories/status */
         public function get_order_counts($data) {
             $statuses = $this->Database->order_status;
             $result = array('All Orders' => array(count($data), 0));
@@ -39,6 +41,7 @@
             }
             return $result;
         }
+        /* Updates the status in the database */
         public function set_status($post) {
             $status = intval($post['status']);
             $order_status = array_keys($this->Database->order_status);

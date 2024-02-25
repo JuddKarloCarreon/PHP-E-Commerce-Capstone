@@ -1,3 +1,4 @@
+/* Sends the user a message in the product view page */
 function message(mess) {
     $('span.added_to_cart').remove();
     $('<span class="added_to_cart">' + mess + '</span>')
@@ -20,11 +21,23 @@ function set_rating() {
 }
 $(document).ready(function(){
     set_rating();
-
+    /* Shows the textarea if hidden, submits the contents of the textarea if not hidden */
+    $(document).on('click', 'form.reply_form button', function (event) {
+        event.preventDefault();
+        $('form.reply_form button').not($(this)).siblings('textarea').prop('hidden', true);
+        if ($(this).siblings('textarea').is(':hidden')) {
+            $(this).siblings('textarea').prop('hidden', false);
+            $(this).siblings('textarea').focus();
+        } else {
+            $(this).closest('form').trigger('submit');
+        }
+    });
+    /* Handles the submission of the reviews and replies */
     $(document).on('submit', 'form.review_form, form.reply_form', function () {
         console.log('submitted');
         $.post($(this).attr('action'), $(this).serialize(), function (res) {
             console.log(res);
+            /* Updates page */
             if (res.hasOwnProperty('errors')) {
                 $('#review_err').text(res.errors);
             } else {
@@ -41,20 +54,22 @@ $(document).ready(function(){
     /* Set title of area */
     $('body > .wrapper > section > section > h3').text('Similar Items');
 
+    /* Handles increase and decrease quantity buttons */
     $("body").on("click", ".increase_decrease_quantity", function() {
         change_quantity_button($(this));
     });
+    /* Handles changes in the quantity field */
     $(document).on('change', '#add_to_cart_form > ul > li > input[type="text"]', function () {
         change_quantity_form($(this), $(this).closest('form'));
     });
-
+    /* Shows the clicked image in the larger area */
     $("body").on("click", ".show_image", function() {
         let show_image_btn = $(this);
         show_image_btn.closest("ul").find(".active").removeClass("active");
         show_image_btn.closest("li").addClass("active");
         show_image_btn.closest("ul").closest("li").children().first().attr("src", show_image_btn.find("img").attr("src"));
     });
-
+    /* Handles addition of cart items */
     $("body").on("submit", "#add_to_cart_form", function() {
         let form = $(this);
         $.post(form.attr("action"), form.serialize(), function(res) {

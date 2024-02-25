@@ -1,3 +1,4 @@
+/* Handles the overlays for clicking the profile */
 $(document).ready(function(){
     $("body").on("click", ".profile_btn", function() {
         $(".logout_btn").addClass("show");
