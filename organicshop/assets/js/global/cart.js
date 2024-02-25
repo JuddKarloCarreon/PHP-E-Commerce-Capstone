@@ -80,12 +80,13 @@ $(document).ready(function() {
                     }
                 }
                 if ($stripeForm.find('p.pay_error').hasClass('disappear')){
+                    $('form.payment_form > input, form.payment_form > button').prop('disabled', true);
+                    $('form.payment_form > button').remove();
+                    $('form.payment_form > h3 > span').text('');
                     $stripeForm.find('p.success').removeClass('disappear').text('Payment successful. Order is being processed. Redirecting to catalogues...');
                     setTimeout(function () {
                         window.location.href = get_base() + '/catalogues';
                     }, 2000);
-                    $('form.payment_form > input, form.payment_form > button').prop('disabled', true);
-                    $('form.payment_form > button').remove();
                 }
             }, 'JSON').always(function () {
                 after_forms();

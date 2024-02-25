@@ -1,7 +1,6 @@
 # PHP-E-Commerce-Capstone
 ## To-do:
-  - Do checking of checkout details and card details
-  - Check checkout details if they both contain the same info
+  - Add reviews and replies
   
 ## Timestamps:
 Day 1: 1h27m
@@ -63,6 +62,7 @@ Day 8: 11h47m
 Day 9:
   - Created error handling for checkout and stipe payment (1h30m)
   - Updated ERD to remove md5 encryption since it can't be decrypted without a brute force algorithm. Completed admin orders backend (6h)
+  - Checking for bugs (1h)
 
 ## ERD:
 

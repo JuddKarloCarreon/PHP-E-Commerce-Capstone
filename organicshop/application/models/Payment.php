@@ -66,23 +66,27 @@
             }             
         }
         public function add_details($post) {
+            $this->load->model('Database');
             /* Add checkout details to database */
             $fields = array('first_name', 'last_name', 'address_1', 'address_2', 'city', 'state', 'zip_code');
             $prefix = array('ship_', 'bill_');
-            $type = array(1,2);
             if (array_key_exists('type', $post)) {
                 $prefix = array('ship_');
-                $type = array(0);
             }
             $ids = array();
+            $matching = TRUE;
             foreach ($prefix as $key => $pre) {
                 $checkout = array();
                 foreach ($fields as $field) {
                     $checkout[str_replace('_code', '', $field)] = $post[$pre . $field];
                 }
-                $checkout['user_id'] = $this->session->userdata('user')['id'];
-                $checkout['type'] = $type[$key];
-                array_push($ids, $this->Database->add_record('checkout_details', $checkout));
+                /* Check if record already exists before adding */
+                $record = $this->Database->get_record('checkout_details', array_keys($checkout), array_values($checkout));
+                if ($record === NULL) {
+                    array_push($ids, $this->Database->add_record('checkout_details', $checkout));
+                } else {
+                    array_push($ids, $record['id']);
+                }
             }
             /* End of checkout details, start of order details */
             if (count($ids) == 1) {
@@ -107,7 +111,11 @@
             foreach ($fields as $field => $val) {
                 $card[$field] = $post[$val];
             }
-            $this->Database->add_record('user_cards', $card);
+            /* Add to database if it doesn't exist yet */
+            $record = $this->Database->get_record('user_cards', array_keys($card), array_values($card));
+            if ($record === NULL) {
+                $this->Database->add_record('user_cards', $card);
+            }
             /* Delete cart_items */
             $this->Database->delete_record('cart_items', array('user_id' => $this->session->userdata('user')['id']));
             /* END */
