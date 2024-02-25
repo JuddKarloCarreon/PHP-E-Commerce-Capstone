@@ -59,10 +59,11 @@ Day 8: 11h47m
   - Modification of cart via the cart page completed. (3h10m)
   - Finished creation of form with optional billing, it's validation, stripe payment integration, final update of ERD (since storing cvc is illegal, md5 encryption always results in 32 characters, and I forgot to set the ID of a table to auto increment), addition and/or update of necessary information to the database (8h37m)
 
-Day 9:
+Day 9: 14h30m
   - Created error handling for checkout and stipe payment (1h30m)
   - Updated ERD to remove md5 encryption since it can't be decrypted without a brute force algorithm. Completed admin orders backend (6h)
   - Checking for bugs (1h)
+  - Done (6h)
 
 ## ERD:
 
