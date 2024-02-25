@@ -66,8 +66,8 @@ Day 9:
 
 ## ERD:
 
-*Note: user_billings, user_shippings, and user_cards are encrypted, as well as the password field in the users table*
-![image](https://github.com/JuddKarloCarreon/PHP-E-Commerce-Capstone/assets/156634638/3ec210f0-89ed-469d-b465-448c5944dd02)
+![image](https://github.com/JuddKarloCarreon/PHP-E-Commerce-Capstone/assets/156634638/5f00a395-aa33-40c0-998a-2752b9b54318)
+
 
 
 
