@@ -8,7 +8,37 @@ function message(mess) {
         $(this).remove();
     });
 }
+function set_rating() {
+    /* Set rating parameters */
+    $('#rating-input').rating({
+        min: 0,
+        max: 5,
+        step: 1,
+        size: 'sm',
+        showClear: false
+    });
+}
 $(document).ready(function(){
+    set_rating();
+
+    $(document).on('submit', 'form.review_form, form.reply_form', function () {
+        console.log('submitted');
+        $.post($(this).attr('action'), $(this).serialize(), function (res) {
+            console.log(res);
+            if (res.hasOwnProperty('errors')) {
+                $('#review_err').text(res.errors);
+            } else {
+                $('.wrapper > section > div').html(res.view);
+                $('.wrapper > section > ul').html(res.product_data);
+            }
+        }, 'JSON').always(function () {
+            update_csrf();
+            set_rating();
+        });
+        return false;
+    });
+
+    /* Set title of area */
     $('body > .wrapper > section > section > h3').text('Similar Items');
 
     $("body").on("click", ".increase_decrease_quantity", function() {

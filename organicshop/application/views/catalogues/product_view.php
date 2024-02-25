@@ -10,13 +10,20 @@
     <script src="<?= base_url('assets/js/vendor/popper.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/vendor/bootstrap.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/vendor/bootstrap-select.min.js') ?>"></script>
-    <link rel="stylesheet" href="<?= base_url('assets/css/vendor/bootstrap.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/vendor/bootstrap-select.min.css') ?>">
+    
+    <script src="<?= base_url('assets/js/vendor/star-rating.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/themes/krajee-fas/theme.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('assets/themes/krajee-svg/theme.js') ?>" type="text/javascript"></script>
+    <link href="<?= base_url('assets/css/vendor/star-rating.css') ?>" media="all" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('assets/themes/krajee-fas/theme.css') ?>" media="all" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('assets/themes/krajee-svg/theme.css') ?>" media="all" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="<?= base_url('assets/css/custom/global.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/custom/product_view.css') ?>">
     <script src="<?= base_url('assets/js/global/functions.js') ?>"></script>
     <script src="<?= base_url('assets/js/global/product_view.js') ?>"></script>
+
+    
 </head>
 <body>
     <div class="wrapper">
@@ -41,6 +48,9 @@
             <section>
 <?php $this->load->view('partials/catalogues/catalogue_products'); ?>
             </section>
+            <div>
+<?php $this->load->view('partials/catalogues/reviews'); ?>
+            </div>
         </section>
     </div>
 </body>

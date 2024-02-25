@@ -30,6 +30,7 @@
             ));
         }
         public function get_product_param($id) {
+            $this->load->model('User');
             $main_data = $this->get_product($id);
             $data = $this->get_products($main_data['product_type'], $main_data['id']);
             return array(
@@ -38,7 +39,8 @@
                 'main_data' => $main_data,
                 'data' => $data,
                 'hide_pages' => '',
-                'cart_count' => $this->count_cart()
+                'cart_count' => $this->count_cart(),
+                'reviews' => $this->User->get_reviews($main_data['id'])
             );
         }
         public function get_products($type = 0, $not_id = 0, $page = 1, $lim = '', $search = '') {

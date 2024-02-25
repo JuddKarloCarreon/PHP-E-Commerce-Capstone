@@ -1,5 +1,10 @@
 <?php
     class Users extends CI_Controller {
+        /* Loads the User model */
+        public function __construct() {
+            parent::__construct();
+            $this->load->model('User');
+        }
         /* Handles user login */
         public function login() {
             $this->base_view('users/login');
@@ -13,7 +18,6 @@
             if ($this->session->userdata('user') !== NULL) {
                 redirect('/');
             }
-            $this->load->model('User');
             $param = $this->User->get_param();
             $this->load->view($view, $param);
         }
@@ -30,7 +34,6 @@
             if (empty($post)) {
                 redirect('/');
             }
-            $this->load->model('User');
             $errors = $this->User->validate($post);
             if (empty($errors)) {
                 $this->User->process_user($post);
@@ -38,6 +41,20 @@
                 redirect($post['action']);
             }
             redirect('/');
+        }
+        public function post_review() {
+            echo $this->user_post('reviews');
+        }
+        public function post_reply() {
+            echo $this->user_post('replies');
+        }
+        private function user_post($type) {
+            $this->load->model('General');
+            $post = $this->General->clean();
+            if (empty($post)) {
+                redirect('/');
+            }
+            return json_encode($this->User->user_post($post, $type));
         }
     }
 ?>

@@ -96,7 +96,7 @@ $(document).ready(function() {
     /* ------------------------ STRIPE PAYMENT END ------------------------ */
 
     /* Displays/hides billing fields */
-    $(document).on('change', 'form.checkout_form > label > input[type="checkbox"]', function () {
+    $(document).on('change', 'form.checkout_form label > input[type="checkbox"]', function () {
         $('#billing').removeClass('disappear');
         var check = $(this).is(':checked');
         if (check) {

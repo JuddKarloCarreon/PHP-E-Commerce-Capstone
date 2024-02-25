@@ -1,3 +1,4 @@
+                    
                     <label><input type="checkbox" name="type" value="3"<?= (empty($form['bill']))?" checked":"" ?>>Same in Billing</label>
                     <div id="shipping">
                         <h3>Shipping Information</h3>
@@ -79,8 +80,10 @@
                             </li>
                         </ul>
                     </div>
-                    <h3>Order Summary</h3>
-                    <h4>Items <span>$ <?= $cart_total ?></span></h4>
-                    <h4>Shipping Fee <span>$ <?= $shipping_fee ?></span></h4>
-                    <h4 class="total_amount">Total Amount <span>$ <?= $grand_total ?></span></h4>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#card_details_modal">Proceed to Checkout</button>
+                    <section>
+                        <h3>Order Summary</h3>
+                        <h4>Items <span>$ <?= $cart_total ?></span></h4>
+                        <h4>Shipping Fee <span>$ <?= $shipping_fee ?></span></h4>
+                        <h4 class="total_amount">Total Amount <span>$ <?= $grand_total ?></span></h4>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#card_details_modal">Proceed to Checkout</button>
+                    </section>

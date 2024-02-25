@@ -11,7 +11,7 @@
             }
             return array('', array());
         }
-        public function get_records($table, $field = 1, $value = 1, $not_f = 1, $not_v = 0, $page = 1, $limit='', $s_field = '', $s_val='') {
+        public function get_records($table, $field = 1, $value = 1, $not_f = 1, $not_v = 0, $page = 1, $limit='', $s_field = '', $s_val='', $order = '') {
             list($where, $values) = $this->products_where($table);
             $fields = array($field, $not_f);
             $vals = array($value, $not_v);
@@ -45,7 +45,7 @@
                 $lim = "LIMIT $limit OFFSET ?";
                 array_push($values, $offset);
             }
-            $query = "SELECT * FROM $table WHERE $where $lim";
+            $query = "SELECT * FROM $table WHERE $where $lim $order";
             return $this->db->query($query, $values)->result_array();
         }
         public function get_record($table, $field, $value, $order = '') {

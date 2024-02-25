@@ -60,7 +60,7 @@ body .wrapper > section > section > ul > li.confirm_delete {
 }
 body .wrapper > section > section > ul > li.confirm_delete > .cart_items_form > div {
   z-index: 102;
-  right: -330px;
+  right: 100px;
   opacity: 1;
 }
 body .wrapper > section > section > ul > li > .cart_items_form:hover {
@@ -339,16 +339,38 @@ body #card_details_modal .modal-dialog .modal-content button.success {
   pointer-events: none !important;
   opacity: 0.5;
 }
-form.checkout_form > label {
-  position: absolute;
-  right: 0px;
+form.checkout_form {
+  display: block !important;
+  margin-top: 50px;
+  margin-left: 0px !important;
+  width: fit-content !important;
+  text-align: center;
+  margin: auto !important;
 }
-form.checkout_form > label > input[type="checkbox"] {
-  margin-right: 5px;
+form.checkout_form > div {
+  display: inline-block;
+}
+form.checkout_form > section {
+  text-align: left;
+}
+form.checkout_form > label {
+  display: block;
+}
+form.checkout_form > label input[type="checkbox"] {
+  margin-right: 10px;
 }
 .disappear {
-  display:none;
+  display: none !important;
 }
 .errors {
   top: 74%;
+}
+body .wrapper > section > section > ul {
+  display: block !important;
+  height: fit-content;
+  width: 100% !important;
+  margin-bottom: 20px;
+}
+.wrapper > section {
+  width: 100% !important;
 }

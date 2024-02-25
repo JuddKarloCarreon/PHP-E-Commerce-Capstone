@@ -119,5 +119,44 @@
                 'image' => $record['image']
             ));
         }
+        public function user_post($post, $type) {
+            if ($post['content'] == '') {
+                return array('errors' => 'Review cannot be empty');
+            }
+            $this->load->model('Database');
+            $this->load->model('General');
+            $this->load->model('Catalogue');
+            $prod_id = $post['product_id'];
+            if ($type == 'replies') {
+                unset($post['product_id']);
+            } else {
+                /* Check new rating value and update product */
+                $rating = intval($post['rating']);
+                $sum = $this->db->query("SELECT SUM(rating) as sum FROM reviews WHERE product_id=?", array($prod_id))->row_array()['sum'];
+                $count = $this->db->query("SELECT count(id) as count FROM reviews WHERE product_id=?", array($prod_id))->row_array()['count'];
+                $avg = strval(intval($sum) + $rating) / (intval($count) + 1);
+                if (strlen($avg) == 1) {
+                    $avg .= '.0';
+                } else if (strlen($avg) == 2) {
+                    $avg .= '0';
+                }
+                $avg = substr($avg, 0, 3);
+                $this->Database->update_record('products', $prod_id, array('rating' => $avg));
+            }
+            $post['user_id'] = $this->session->userdata('user')['id'];
+            $this->Database->add_record($type, $post);
+            $reviews = $this->get_reviews($prod_id);
+            $review_param = array('main_data' => array('id' => $prod_id), 'csrf' => $this->General->get_csrf(), 'reviews' => $reviews);
+            return array('view' => $this->load->view('partials/catalogues/reviews', $review_param, TRUE), 'product_data' => $this->load->view('partials/catalogues/product_data', $this->Catalogue->get_product_param($prod_id), TRUE));
+        }
+        public function get_reviews($prod_id) {
+            $reviews = $this->db->query("SELECT reviews.*, CONCAT(first_name, ' ', last_name) as name, DATE_FORMAT(reviews.created_at, '%b %d %Y') as date FROM reviews LEFT JOIN users ON reviews.user_id=users.id WHERE product_id=? ORDER BY reviews.created_at DESC", array($prod_id))->result_array();
+            foreach ($reviews as $key => $row) {
+                $reviews[$key]['full'] = intval($row['rating'][0]);
+                $reviews[$key]['empty'] = 5 - $reviews[$key]['full'];
+                $reviews[$key]['replies'] = $this->db->query("SELECT replies.*, CONCAT(first_name, ' ', last_name) as name, DATE_FORMAT(replies.created_at, '%b %d %Y') as date FROM replies LEFT JOIN users ON replies.user_id=users.id WHERE review_id=? ORDER BY replies.created_at", array($row['id']))->result_array();
+            }
+            return $reviews;
+        }
     }
 ?>
