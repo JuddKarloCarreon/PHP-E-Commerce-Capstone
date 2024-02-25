@@ -15,9 +15,19 @@
             $status = '';
             $checkout = '';
             if (empty($errors['ship'] && empty($errors['bill']))) {
+                $continue = FALSE;
                 $stock_check = $this->Payment->check_stock($post);
                 if ($stock_check === 'success') {
+                    $continue = TRUE;
+                }
+                if ($continue) {
+                    $continue = FALSE;
                     $status = $this->Payment->make_payment($post);
+                    if ($status == 'succeeded') {
+                        $continue = TRUE;
+                    }
+                }
+                if ($continue) {
                     $checkout = $this->Payment->add_details($post);
                 }
             }
@@ -28,7 +38,8 @@
                 'cart_count' => $cart_param['cart_count'],
                 'grand_total' => $cart_param['grand_total'],
                 'error_count' => (count($errors['bill']) + count($errors['ship'])),
-                'stock_check' => $stock_check
+                'stock_check' => $stock_check,
+                'payment_check' => $status
             ));
         }
 

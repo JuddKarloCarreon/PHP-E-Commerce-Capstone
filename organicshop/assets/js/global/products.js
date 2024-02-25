@@ -37,14 +37,19 @@ $(document).ready(function () {
             $('.categories_form').find('button[type="submit"][value="0"]').addClass('active');
         } else if (form == 'page') { /* Add search value and product_type to include in post */
             serialize += '&' + $('.search_form input[name="search"]').attr('name') + '=' + $('.search_form input[name="search"]').val();
+            $temp = '&product_type=';
+            if ($('form.categories_form > h3').text() == 'Status') {
+                $temp = '&status=';
+            }
             serialize += '&product_type=' + $('form.categories_form').find('button[class="active"]').val();
         }
-        console.log(serialize);
         $('.categories_form input, .categories_form button', '.search_form input', '.search_form button').prop('disabled', true);
         $.post($(this).closest('form').attr('action'), serialize, function (res) {
             var elem = $('section > div');
             if ($('.products_table tbody').length > 0) {
                 var elem = $('.products_table tbody');
+            } else if ($('.orders_table tbody').length > 0) {
+                var elem = $('.orders_table tbody');
             }
             elem.html(res.data);
             $('#page_sel').html(res.page);
@@ -53,6 +58,7 @@ $(document).ready(function () {
                 $('form.categories_form').html(res.categories);
             }
         }, 'JSON').always(function () {
+            $('.selectpicker').selectpicker('refresh');
             update_csrf();
             $('.categories_form input, .categories_form button', '.search_form input', '.search_form button').prop('disabled', false);
             /* Update product display label */

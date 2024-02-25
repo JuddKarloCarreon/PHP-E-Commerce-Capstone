@@ -11,7 +11,7 @@
             $this->load->model('Dashboard');
             $post = $this->General->clean();
             $page = $this->General->clean($page);
-            if (((!$this->Dashboard->check_not_admin() && $page == 'dashboard') || $page == 'catalogue') && !empty($post) && in_array($page, array('dashboard', 'catalogue'))) {
+            if ((((!$this->Dashboard->check_not_admin() && $page == 'dashboard') || (!$this->Dashboard->check_not_admin() && $page == 'order') || $page == 'catalogue')) && !empty($post) && in_array($page, array('dashboard', 'catalogue', 'order'))) {
                 echo json_encode($this->General->filter($post, $page));
             }
         }

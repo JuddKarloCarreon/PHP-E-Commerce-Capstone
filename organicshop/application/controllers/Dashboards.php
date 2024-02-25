@@ -8,10 +8,10 @@
         }
         /* The default page of the website */
         public function index() {
-            $param = $this->Dashboard->get_param();
             if ($this->Dashboard->check_not_admin()) {
                 redirect('catalogues');
             } else {
+                $param = $this->Dashboard->get_param();
                 $this->load->view('dashboards/admin_products', $param);
             }
         }

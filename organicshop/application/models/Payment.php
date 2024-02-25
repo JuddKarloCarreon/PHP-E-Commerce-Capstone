@@ -36,24 +36,34 @@
             $cart_totals = $this->Catalogue->get_cart_totals($data);
             require_once('application/libraries/stripe-php/init.php');
             \Stripe\Stripe::setApiKey($this->config->item('stripe_secret'));
-            $charge = \Stripe\Charge::create ([
+            try { 
+                // Charge a credit or a debit card 
+                $charge = \Stripe\Charge::create (array(
                     "amount" => intval(str_replace('.', '', $cart_totals['grand_total'])),
                     "currency" => "usd",
                     "source" => $post['stripeToken'],
                     "description" => "Dummy stripe payment." 
-            ]);
-            if ($charge) {
-                if ($charge['status'] == 'succeeded') {
-                    /* Update sold */
-                    foreach ($post['id'] as $key => $id) {
-                        $record = $this->Database->get_record('products', 'id', $id);
-                        $new_sold = intval($record['sold']) + intval($post['amount'][$key]);
-                        $this->Database->update_record('products', $id, array('sold' => $new_sold));
+                ));
+                if ($charge) {
+                    if ($charge['status'] == 'succeeded') {
+                        /* Update sold */
+                        foreach ($post['id'] as $key => $id) {
+                            $record = $this->Database->get_record('products', 'id', $id);
+                            $new_sold = intval($record['sold']) + intval($post['amount'][$key]);
+                            $this->Database->update_record('products', $id, array('sold' => $new_sold));
+                        }
+                        return $charge['status'];
                     }
-                    return $charge['status'];
                 }
-            }
-            return $charge;
+            } catch(Exception $e) { 
+                /* Return stock if payment didn't go through */
+                foreach ($post['id'] as $key => $id) {
+                    $record = $this->Database->get_record('products', 'id', $id);
+                    $new_stock = intval($record['stock']) + intval($post['amount'][$key]);
+                    $this->Database->update_record('products', $id, array('stock' => $new_stock));
+                }
+                return $e->getMessage();
+            }             
         }
         public function add_details($post) {
             /* Add checkout details to database */
@@ -64,15 +74,13 @@
                 $prefix = array('ship_');
                 $type = array(0);
             }
-            $checkout = array();
             $ids = array();
             foreach ($prefix as $key => $pre) {
-                $salt = bin2hex(openssl_random_pseudo_bytes(5));
+                $checkout = array();
                 foreach ($fields as $field) {
-                    $checkout[str_replace('_code', '', $field)] = md5($post[$pre . $field] . '' . $salt);
+                    $checkout[str_replace('_code', '', $field)] = $post[$pre . $field];
                 }
                 $checkout['user_id'] = $this->session->userdata('user')['id'];
-                $checkout['salt'] = $salt;
                 $checkout['type'] = $type[$key];
                 array_push($ids, $this->Database->add_record('checkout_details', $checkout));
             }
@@ -95,10 +103,9 @@
             $this->Database->add_record('orders', $order);
             /* End of order details, start of user cards */
             $fields = array('name' => 'card_name', 'number' => 'card_number', 'expiration' => 'expiration');
-            $salt = bin2hex(openssl_random_pseudo_bytes(10));
-            $card = array('salt' => $salt, 'user_id' => $this->session->userdata('user')['id']);
+            $card = array('user_id' => $this->session->userdata('user')['id']);
             foreach ($fields as $field => $val) {
-                $card[$field] = md5($post[$val] . '' . $salt);
+                $card[$field] = $post[$val];
             }
             $this->Database->add_record('user_cards', $card);
             /* Delete cart_items */

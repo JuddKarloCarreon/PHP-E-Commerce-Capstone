@@ -1,6 +1,9 @@
 $(document).ready(function() {
-    // console.log($('form.cart_items_form').serialize().replaceAll('=', '%5B%5D='));
     /* ------------------------ STRIPE PAYMENT ------------------------ */
+    /* Declare variables globally, so they can be accessed anywhere */
+    var serialize = '';
+    var checkout = '';
+    var cart_items = '';
     var $stripeForm = $(".payment_form");
     $('form.payment_form').bind('submit', function (e) {
         var $stripeForm = $(".payment_form"),
@@ -13,6 +16,19 @@ $(document).ready(function() {
             $inputs = $stripeForm.find('.required').find(inputSelector),
             $errorMessage = $stripeForm.find('p.pay_error'),
             valid = true;
+        
+        /* Serialize forms, to prepare so I can disable the forms later to prevent multiple submissions */
+        $('form input[alt_name]').prop('disabled', true);
+        checkout = $('form.checkout_form').serialize();
+        cart_items = $('form.cart_items_form').serialize().replaceAll('=', '%5B%5D=');
+        $('form input[alt_name]').prop('disabled', false);
+        var cvc = $stripeForm.find('input[name="cvc"]').val();
+        $stripeForm.find('input[name="cvc"]').val('');
+        serialize = $stripeForm.serialize();
+        $stripeForm.find('input[name="cvc"]').val(cvc);
+        cvc = 0;
+        start_forms($stripeForm);
+
         $stripeForm.find('p.success').addClass('disappear');
         $errorMessage.addClass('disappear');
         $('.has-error').removeClass('has-error');
@@ -36,71 +52,48 @@ $(document).ready(function() {
             }, stripeResponseHandler);
         }
     });
+    /* Checks validity of card info, and proceeds to post to the server if card is valid */
     function stripeResponseHandler(status, res) {
+        $stripeForm.find('input[name="cvc"]').val('');
         if (res.error) {
-            console.log(res.error);
             $('.pay_error')
                 .removeClass('disappear')
                 .text(res.error.message);
         } else {
             var token = res['id'];
-            $stripeForm.find('input[name=cvc]').empty();
-            $('form input[alt_name]').prop('disabled', true);
-            var checkout = $('form.checkout_form').serialize();
-            var cart_items = $('form.cart_items_form').serialize().replaceAll('=', '%5B%5D=');
-            $('form input[alt_name]').prop('disabled', false);
-            let serialize = start_forms($stripeForm);
             serialize += '&' + checkout;
             serialize += '&stripeToken=' + token;
             serialize += '&' + cart_items;
             $.post($stripeForm.attr("action"), serialize, function(res) {
-                console.log(res);
-                // $(".wrapper > section > section > ul").html(res.view);
-                // $('form.checkout_form').html(res.checkout_form);
-                // $('form.payment_form > h3 > span').text('$ ' + res.grand_total);
-                // $('button.show_cart').text('Cart (' + res.cart_count + ')');
-                // if (res.error_count > 0) {
-                //     $stripeForm.find('p.pay_error').removeClass('disappear').text('Errors found in checkout details.');
-                // }
-                // if (res.stock_check != 'success') {
-                //     $stripeForm.find('p.pay_error').removeClass('disappear').text(res.stock_check);
-                // }
-                // if ($stripeForm.find('p.pay_error').hasClass('disappear')){
-                //     $stripeForm.find('p.success').removeClass('disappear').text('Payment successful. Order is being processed.');
-                // }
+                $(".wrapper > section > section > ul").html(res.view);
+                $('form.checkout_form').html(res.checkout_form);
+                $('form.payment_form > h3 > span').text('$ ' + res.grand_total);
+                $('button.show_cart').text('Cart (' + res.cart_count + ')');
+                if (res.error_count > 0) {
+                    $stripeForm.find('p.pay_error').removeClass('disappear').text('Errors found in checkout details.');
+                }
+                let err_messages = [res.stock_check, res.payment_check];
+                for (i in err_messages) {
+                    if (err_messages[i] != 'success' && err_messages[i] != 'succeeded') {
+                        $stripeForm.find('p.pay_error').removeClass('disappear').text(err_messages[i]);
+                        break;
+                    }
+                }
+                if ($stripeForm.find('p.pay_error').hasClass('disappear')){
+                    $stripeForm.find('p.success').removeClass('disappear').text('Payment successful. Order is being processed. Redirecting to catalogues...');
+                    setTimeout(function () {
+                        window.location.href = get_base() + '/catalogues';
+                    }, 2000);
+                    $('form.payment_form > input, form.payment_form > button').prop('disabled', true);
+                    $('form.payment_form > button').remove();
+                }
             }, 'JSON').always(function () {
                 after_forms();
-                // $('form.cart_items_form > input[alt_name="csrf"]').prop('disabled', false);
             });
-            // console.log($stripeForm.get(0));
-            // $stripeForm.get(0).submit();
         }
     }
     /* ------------------------ STRIPE PAYMENT END ------------------------ */
 
-    /* Form submit handler for payment. Also includes contents of the checkout form */
-    // $(document).on('submit', 'form.payment_form', function () {
-    //     let form = $(this);
-    //     let serialize = start_forms(form);
-    //     serialize += '&' + $('form.checkout_form').serialize();
-    //     // console.log(serialize);
-    //     // after_forms();
-    //     $.post(form.attr("action"), serialize, function(res) {
-    //         console.log(res.error_count);
-    //         $(".wrapper > section > section > ul").html(res.view);
-    //         $('form.checkout_form').html(res.checkout_form);
-    //         $('form.payment_form > h3 > span').text('$ ' + res.grand_total);
-    //         $('button.show_cart').text('Cart (' + res.cart_count + ')');
-    //         if (res.error_count > 0) {
-    //             form.find('p.pay_error').removeClass('disappear').text('Errors found in checkout details.');
-    //         } else {
-    //             form.find('p.success').removeClass('disappear').text('Payment successful. Order is being processed.');
-    //         }
-    //     }, 'JSON').always(function () {
-    //         after_forms();
-    //     });
-    //     return false;
-    // });
     /* Displays/hides billing fields */
     $(document).on('change', 'form.checkout_form > label > input[type="checkbox"]', function () {
         $('#billing').removeClass('disappear');
@@ -165,25 +158,6 @@ $(document).ready(function() {
     $("body").on("submit", ".checkout_form", function() {
         $(".wrapper > section").html(res);
         $("#card_details_modal").modal("show");
-        return false;
-    });
-    $("body").on("submit", ".pay_form", function() {
-        let form = $(this);
-        let serialize = start_forms(form);
-        $(this).find("button").addClass("loading");
-        $.post(form.attr("action"), serialize, function(res) {
-            setTimeout(function(res) {
-                $("#card_details_modal").find("button").removeClass("loading").addClass("success").find("span").text("Payment Successfull!");
-            }, 2000, res);
-            setTimeout(function(res) {
-                $("#card_details_modal").modal("hide");
-            }, 3000, res);
-            setTimeout(function(res) {
-                $(".wrapper > section").html(res);
-            }, 3200, res);
-        }).after(function () {
-            after_forms();
-        });
         return false;
     });
 });

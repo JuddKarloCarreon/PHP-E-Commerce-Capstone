@@ -26,10 +26,10 @@
                 'csrf' => $this->get_csrf()
             );
         }
-        public function get_page_param($current = 1, $type = 0, $search = '') {
+        public function get_page_param($current = 1, $type = 0, $search = '', $kind = 'products') {
             $this->load->model('Database');
             $page = array();
-            $count = $this->Database->count_products($type, $search);
+            $count = $this->Database->count_records_search($type, $search, $kind);
             $page['count'] = ceil($count / $this->Database->item_limit);
             if ($page['count'] == 0) {
                 $page['count'] = 1;
@@ -41,7 +41,7 @@
             return $page;
         }
         public function filter($post, $page_type, $ret = 0) {
-            $check = array('product_type' => 0, 'page' => 1);
+            $check = array('product_type' => 0, 'page' => 1, 'status' => 0);
             foreach ($check as $key => $val) {
                 if (!array_key_exists($key, $post)) {
                     $post[$key] = $val;
@@ -56,12 +56,25 @@
                 $this->load->model('Dashboard');
                 $data = $this->Dashboard->get_products($post['product_type'], $post['page'], '', $post['search']);
                 $data_view = $this->load->view('partials/dashboards/admin_products_data', array('data' => $data, 'csrf' => $csrf), TRUE);
+            } else if ($page_type == 'order') {
+                $this->load->model('Order');
+                $data = $this->Database->get_order_records(array('status' => $post['status']), $post['page'], '', $post['search']);
+                $data_view = $this->load->view('partials/dashboards/admin_orders_data', array('data' => $data, 'csrf' => $csrf, 'status_types' => $this->Database->order_status), TRUE);
             }
-            $page = $this->get_page_param($post['page'], $post['product_type'], $post['search']);
-            $prod_count = array('All Products' => array($this->Database->count_products(0, $post['search']), 0));
-            foreach ($this->Database->product_types as $key => $val) {
-                $prod_count[$val] = array($this->Database->count_products($key + 1, $post['search']), $key + 1);
+
+            if ($page_type != 'order') {
+                $kind = 'products';
+                $type = $post['product_type'];
+                $prod_count = array('All Products' => array($this->Database->count_records_search(0, $post['search']), 0));
+                foreach ($this->Database->product_types as $key => $val) {
+                    $prod_count[$val] = array($this->Database->count_records_search($key + 1, $post['search']), $key + 1);
+                }
+            } else {
+                $kind = 'orders';
+                $type = $post['status'];
+                $prod_count = $this->Order->get_order_counts($this->Database->get_order_records(array('status' => $post['status']), $post['page'], 'all', $post['search']));
             }
+            $page = $this->get_page_param($post['page'], $type, $post['search'], $kind);
             // redirect('/');
             if ($ret == 0) {
                 return array(

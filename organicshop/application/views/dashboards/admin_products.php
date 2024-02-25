@@ -45,7 +45,7 @@
         <aside>
             <a href="#"><img src="<?= base_url('assets/images/organi_shop_logo_dark.svg') ?>" alt="Organic Shop"></a>
             <ul>
-                <li><a href="admin_orders.html">Orders</a></li>
+                <li><a href="<?= base_url('orders') ?>">Orders</a></li>
                 <li class="active"><a href="#">Products</a></li>
             </ul>
         </aside>
